@@ -1,0 +1,131 @@
+import { Link } from 'react-router-dom';
+
+export default function Home() {
+  const grade3Exams = [
+    {
+      id: 'grade3-1',
+      title: '模擬試験1',
+      description: '基礎的な統計の概念や記述統計に関する10問の試験',
+      questions: 10,
+      time: 20,
+      path: '/grade3/exam1',
+      available: true
+    }
+  ];
+
+  const grade4Exams = [
+    {
+      id: 'grade4-1',
+      title: '模擬試験1',
+      description: '中学卒業レベルの統計知識を確認する基礎問題',
+      questions: 10,
+      time: 20,
+      path: '/grade4/exam1',
+      available: true
+    }
+  ];
+
+  const ExamCard = ({ exam }: { exam: typeof grade3Exams[0] }) => (
+    <div
+      className={`bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg p-6 border-2 transition-all ${
+        exam.available
+          ? 'border-blue-200 hover:shadow-xl hover:scale-105'
+          : 'border-gray-200 opacity-60'
+      }`}
+    >
+      <div className="flex justify-between items-start mb-4">
+        <h3 className="text-xl font-bold text-gray-800">
+          {exam.title}
+        </h3>
+        {exam.available && (
+          <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+            利用可能
+          </span>
+        )}
+      </div>
+      <p className="text-gray-600 mb-4">{exam.description}</p>
+      <div className="flex gap-4 text-sm text-gray-500 mb-6">
+        <span>📝 {exam.questions}問</span>
+        <span>⏱️ 約{exam.time}分</span>
+      </div>
+      {exam.available ? (
+        <Link
+          to={exam.path}
+          className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+        >
+          試験を開始
+        </Link>
+      ) : (
+        <button
+          disabled
+          className="w-full bg-gray-300 text-gray-500 py-3 rounded-lg font-semibold cursor-not-allowed"
+        >
+          準備中
+        </button>
+      )}
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 mb-8">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+              📊 統計検定 模擬試験
+            </h1>
+            <p className="text-lg text-gray-600">
+              統計検定の試験対策用の模擬試験です。<br />
+              実際の試験に近い形式で学習できます。
+            </p>
+          </div>
+
+          <div className="mb-10">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-2 rounded-lg font-bold text-lg">
+                3級
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800">統計検定3級</h2>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+              {grade3Exams.map((exam) => (
+                <ExamCard key={exam.id} exam={exam} />
+              ))}
+            </div>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-gray-700">
+              <strong>本試験:</strong> 60分・30問 | <strong>合格ライン:</strong> 65点以上
+            </div>
+          </div>
+
+          <div className="mb-8">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-2 rounded-lg font-bold text-lg">
+                4級
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800">統計検定4級</h2>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+              {grade4Exams.map((exam) => (
+                <ExamCard key={exam.id} exam={exam} />
+              ))}
+            </div>
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-sm text-gray-700">
+              <strong>本試験:</strong> 60分・30問 | <strong>合格ライン:</strong> 60点以上
+            </div>
+          </div>
+
+          <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-6">
+            <h3 className="text-lg font-bold text-gray-800 mb-3">📌 利用について</h3>
+            <ul className="space-y-2 text-gray-700">
+              <li>• 各試験は何度でも受験できます</li>
+              <li>• すべての問題に回答後、採点と解説を確認できます</li>
+              <li>• 3級と4級で難易度と合格ラインが異なります</li>
+              <li>• 問題は随時追加予定です</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
