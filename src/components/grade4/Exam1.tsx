@@ -231,7 +231,7 @@ export default function Grade4Exam1() {
                                 fill="#8884d8"
                                 dataKey="value"
                               >
-                                {q.data.map((entry, index) => (
+                                {q.data.map((_, index) => (
                                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
                               </Pie>
@@ -386,7 +386,7 @@ export default function Grade4Exam1() {
                     fill="#8884d8"
                     dataKey="value"
                   >
-                    {currentQ.data.map((entry, index) => (
+                    {currentQ.data.map((_, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
