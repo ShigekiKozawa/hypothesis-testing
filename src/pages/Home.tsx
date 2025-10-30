@@ -55,6 +55,16 @@ export default function Home() {
         { id: 2, path: '/grade4/section3/set2', questions: 10 },
         { id: 3, path: '/grade4/section3/set3', questions: 10 }
       ]
+    },
+    {
+      id: 'section4',
+      title: 'セクション4: グラフの読み取り',
+      description: '棒グラフ、円グラフ、折れ線グラフの理解',
+      sets: [
+        { id: 1, path: '/grade4/section4/set1', questions: 10 },
+        { id: 2, path: '/grade4/section4/set2', questions: 10 },
+        { id: 3, path: '/grade4/section4/set3', questions: 10 }
+      ]
     }
   ];
 
