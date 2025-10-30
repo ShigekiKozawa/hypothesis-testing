@@ -11,6 +11,10 @@ import Grade4Section2Set1 from './components/grade4/Section2_Dispersion_1';
 import Grade4Section2Set2 from './components/grade4/Section2_Dispersion_2';
 import Grade4Section2Set3 from './components/grade4/Section2_Dispersion_3';
 
+import Grade4Section3Set1 from './components/grade4/Section3_FrequencyTable_1';
+import Grade4Section3Set2 from './components/grade4/Section3_FrequencyTable_2';
+import Grade4Section3Set3 from './components/grade4/Section3_FrequencyTable_3';
+
 function App() {
   return (
     <Router basename="/hypothesis-testing">
@@ -26,6 +30,10 @@ function App() {
         <Route path="/grade4/section2/set1" element={<Grade4Section2Set1 />} />
         <Route path="/grade4/section2/set2" element={<Grade4Section2Set2 />} />
         <Route path="/grade4/section2/set3" element={<Grade4Section2Set3 />} />
+        
+        <Route path="/grade4/section3/set1" element={<Grade4Section3Set1 />} />
+        <Route path="/grade4/section3/set2" element={<Grade4Section3Set2 />} />
+        <Route path="/grade4/section3/set3" element={<Grade4Section3Set3 />} />
       </Routes>
     </Router>
   );

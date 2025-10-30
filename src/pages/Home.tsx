@@ -45,6 +45,16 @@ export default function Home() {
         { id: 2, path: '/grade4/section2/set2', questions: 10 },
         { id: 3, path: '/grade4/section2/set3', questions: 10 }
       ]
+    },
+    {
+      id: 'section3',
+      title: 'セクション3: 度数分布表',
+      description: '度数分布表の読み取りと作成',
+      sets: [
+        { id: 1, path: '/grade4/section3/set1', questions: 10 },
+        { id: 2, path: '/grade4/section3/set2', questions: 10 },
+        { id: 3, path: '/grade4/section3/set3', questions: 10 }
+      ]
     }
   ];
 
