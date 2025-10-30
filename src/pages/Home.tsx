@@ -65,6 +65,66 @@ export default function Home() {
         { id: 2, path: '/grade4/section4/set2', questions: 10 },
         { id: 3, path: '/grade4/section4/set3', questions: 10 }
       ]
+    },
+    {
+      id: 'section5',
+      title: 'セクション5: 確率の基礎',
+      description: '確率の基本的な考え方',
+      sets: [
+        { id: 1, path: '/grade4/section5/set1', questions: 10 },
+        { id: 2, path: '/grade4/section5/set2', questions: 10 },
+        { id: 3, path: '/grade4/section5/set3', questions: 10 }
+      ]
+    },
+    {
+      id: 'section6',
+      title: 'セクション6: 相関と散布図',
+      description: '2つの変数の関係性の理解',
+      sets: [
+        { id: 1, path: '/grade4/section6/set1', questions: 10 },
+        { id: 2, path: '/grade4/section6/set2', questions: 10 },
+        { id: 3, path: '/grade4/section6/set3', questions: 10 }
+      ]
+    },
+    {
+      id: 'section7',
+      title: 'セクション7: 箱ひげ図',
+      description: '四分位数と箱ひげ図の読み方',
+      sets: [
+        { id: 1, path: '/grade4/section7/set1', questions: 10 },
+        { id: 2, path: '/grade4/section7/set2', questions: 10 },
+        { id: 3, path: '/grade4/section7/set3', questions: 10 }
+      ]
+    },
+    {
+      id: 'section8',
+      title: 'セクション8: ヒストグラム',
+      description: 'ヒストグラムとデータ分布',
+      sets: [
+        { id: 1, path: '/grade4/section8/set1', questions: 10 },
+        { id: 2, path: '/grade4/section8/set2', questions: 10 },
+        { id: 3, path: '/grade4/section8/set3', questions: 10 }
+      ]
+    },
+    {
+      id: 'section9',
+      title: 'セクション9: 標本と母集団',
+      description: '標本調査と全数調査の理解',
+      sets: [
+        { id: 1, path: '/grade4/section9/set1', questions: 10 },
+        { id: 2, path: '/grade4/section9/set2', questions: 10 },
+        { id: 3, path: '/grade4/section9/set3', questions: 10 }
+      ]
+    },
+    {
+      id: 'section10',
+      title: 'セクション10: データの収集方法',
+      description: '様々なデータ収集方法',
+      sets: [
+        { id: 1, path: '/grade4/section10/set1', questions: 10 },
+        { id: 2, path: '/grade4/section10/set2', questions: 10 },
+        { id: 3, path: '/grade4/section10/set3', questions: 10 }
+      ]
     }
   ];
 
