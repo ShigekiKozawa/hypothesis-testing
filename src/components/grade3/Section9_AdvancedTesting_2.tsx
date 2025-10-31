@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 export default function Grade3Section9Set2() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showResult, setShowResult] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   const questions = [
     {
