@@ -202,6 +202,12 @@ export default function Grade3Section5Set1() {
               <div className="inline-block bg-gradient-to-br from-purple-500 to-purple-700 text-white rounded-lg px-12 py-8 shadow-xl">
                 <p className="text-6xl font-bold mb-2">{score}/{questions.length}</p>
                 <p className="text-2xl">正答率: {percentage.toFixed(0)}%</p>
+              
+                {bestScore !== null && (
+                  <p className="text-sm mt-2">
+                    あなたのベストスコア: <span className="font-bold">{bestScore.toFixed(1)}%</span>
+                  </p>
+                )}
               </div>
             </div>
 
