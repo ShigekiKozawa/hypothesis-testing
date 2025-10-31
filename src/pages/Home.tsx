@@ -10,7 +10,7 @@ export default function Home() {
       title: '模擬試験1（中級）',
       description: '推測統計・回帰分析・検定の基礎を総合的に問う30問の試験',
       questions: 30,
-      time: 90,
+      time: 60,
       path: '/grade3/exam1',
       difficulty: '⭐⭐⭐☆☆',
       available: true
@@ -20,7 +20,7 @@ export default function Home() {
       title: '模擬試験2（難）',
       description: '多変量解析・高度な検定・機械学習の基礎を含む30問の試験',
       questions: 30,
-      time: 90,
+      time: 60,
       path: '/grade3/exam2',
       difficulty: '⭐⭐⭐⭐☆',
       available: true
@@ -30,7 +30,7 @@ export default function Home() {
       title: '模擬試験3（超難）',
       description: 'ベイズ統計・因果推論・機械学習・最先端手法を含む30問の試験',
       questions: 30,
-      time: 90,
+      time: 60,
       path: '/grade3/exam3',
       difficulty: '⭐⭐⭐⭐⭐',
       available: true

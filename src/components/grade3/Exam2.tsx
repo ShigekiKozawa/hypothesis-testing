@@ -526,7 +526,7 @@ export default function Grade3Exam2() {
           </div>
           <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-4">
             <p className="text-gray-700">
-              <strong>制限時間:</strong> 90分 | <strong>問題数:</strong> 30問 | <strong>合格ライン:</strong> 65%以上（20問以上）
+              <strong>制限時間:</strong> 60分 | <strong>問題数:</strong> 30問 | <strong>合格ライン:</strong> 65%以上（20問以上）
             </p>
             <p className="text-gray-700 mt-2">
               <strong>難易度:</strong> ⭐⭐⭐⭐☆ 難しいレベル
