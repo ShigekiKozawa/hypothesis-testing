@@ -214,7 +214,7 @@ export default function Home() {
             <h3 className="text-xl font-bold text-gray-800 mb-4">📚 セクション別問題</h3>
             <div className="space-y-4 mb-4">
               {grade3Sections.map((section) => (
-                <div key={section.id} className="bg-white rounded-lg border-2 border-blue-200 p-5">
+                <div key={section.id} className="bg-white rounded-lg border-2 border-green-200 p-5">
                   <h4 className="text-lg font-bold text-gray-800 mb-2">{section.title}</h4>
                   <p className="text-sm text-gray-600 mb-4">{section.description}</p>
                   <div className="grid grid-cols-3 gap-3">
@@ -222,7 +222,7 @@ export default function Home() {
                       <Link
                         key={set.id}
                         to={set.path}
-                        className="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-4 rounded-lg text-center hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg"
+                        className="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-lg text-center hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg"
                       >
                         <div className="font-bold text-lg mb-1">セット{set.id}</div>
                         <div className="text-xs opacity-90">{set.questions}問</div>
