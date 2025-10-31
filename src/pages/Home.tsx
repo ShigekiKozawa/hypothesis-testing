@@ -301,6 +301,9 @@ export default function Home() {
     const bestScoreRecord = getBestScore(exam.id);
     const bestScore = bestScoreRecord ? bestScoreRecord.percentage : null;
     
+    // デバッグ用ログ
+    console.log(`[ExamCard] exam.id: ${exam.id}, bestScoreRecord:`, bestScoreRecord, 'bestScore:', bestScore);
+    
     return (
       <div
         className={`bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg p-6 border-2 transition-all ${
