@@ -23,6 +23,76 @@ export default function Home() {
         { id: 2, path: '/grade3/section1/set2', questions: 10 },
         { id: 3, path: '/grade3/section1/set3', questions: 10 }
       ]
+    },
+    {
+      id: 'section2',
+      title: 'セクション2: 確率分布',
+      description: '離散型・連続型確率分布、正規分布、二項分布',
+      sets: [
+        { id: 1, path: '/grade3/section2/set1', questions: 10 },
+        { id: 2, path: '/grade3/section2/set2', questions: 10 },
+        { id: 3, path: '/grade3/section2/set3', questions: 10 }
+      ]
+    },
+    {
+      id: 'section3',
+      title: 'セクション3: 推測統計の基礎',
+      description: '点推定、区間推定、仮説検定の基本',
+      sets: [
+        { id: 1, path: '/grade3/section3/set1', questions: 10 },
+        { id: 2, path: '/grade3/section3/set2', questions: 10 },
+        { id: 3, path: '/grade3/section3/set3', questions: 10 }
+      ]
+    },
+    {
+      id: 'section4',
+      title: 'セクション4: 回帰分析',
+      description: '単回帰・重回帰分析、最小二乗法、決定係数',
+      sets: [
+        { id: 1, path: '/grade3/section4/set1', questions: 10 },
+        { id: 2, path: '/grade3/section4/set2', questions: 10 },
+        { id: 3, path: '/grade3/section4/set3', questions: 10 }
+      ]
+    },
+    {
+      id: 'section5',
+      title: 'セクション5: 実験計画法・分散分析',
+      description: '一元配置・二元配置分散分析、実験計画法',
+      sets: [
+        { id: 1, path: '/grade3/section5/set1', questions: 10 },
+        { id: 2, path: '/grade3/section5/set2', questions: 10 },
+        { id: 3, path: '/grade3/section5/set3', questions: 10 }
+      ]
+    },
+    {
+      id: 'section6',
+      title: 'セクション6: データ収集・調査法',
+      description: '標本抽出法、調査デザイン、バイアス',
+      sets: [
+        { id: 1, path: '/grade3/section6/set1', questions: 10 },
+        { id: 2, path: '/grade3/section6/set2', questions: 10 },
+        { id: 3, path: '/grade3/section6/set3', questions: 10 }
+      ]
+    },
+    {
+      id: 'section7',
+      title: 'セクション7: 時系列分析',
+      description: 'トレンド、季節変動、ARIMA、自己相関',
+      sets: [
+        { id: 1, path: '/grade3/section7/set1', questions: 10 },
+        { id: 2, path: '/grade3/section7/set2', questions: 10 },
+        { id: 3, path: '/grade3/section7/set3', questions: 10 }
+      ]
+    },
+    {
+      id: 'section8',
+      title: 'セクション8: 多変量解析',
+      description: '主成分分析、因子分析、クラスター分析',
+      sets: [
+        { id: 1, path: '/grade3/section8/set1', questions: 10 },
+        { id: 2, path: '/grade3/section8/set2', questions: 10 },
+        { id: 3, path: '/grade3/section8/set3', questions: 10 }
+      ]
     }
   ];
 
