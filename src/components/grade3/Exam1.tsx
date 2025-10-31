@@ -1,129 +1,320 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BarChart, Bar, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-export default function Exam1() {
+export default function Grade3Exam1() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showResult, setShowResult] = useState(false);
-  const [currentQuestion, setCurrentQuestion] = useState(1);
-
-  const histogramData1 = [
-    { range: '50-55', frequency: 2 },
-    { range: '55-60', frequency: 5 },
-    { range: '60-65', frequency: 8 },
-    { range: '65-70', frequency: 12 },
-    { range: '70-75', frequency: 6 },
-    { range: '75-80', frequency: 3 }
-  ];
-
-  const scatterData1 = [
-    { x: 84, y: 90 }, { x: 86, y: 85 }, { x: 88, y: 88 },
-    { x: 90, y: 92 }, { x: 92, y: 89 }, { x: 93, y: 94 },
-    { x: 93, y: 90 }, { x: 94, y: 93 }, { x: 86, y: 87 },
-    { x: 91, y: 91 }
-  ];
 
   const questions = [
     {
       id: 1,
-      question: "次のデータのうち、量的変数はどれですか。",
+      question: "次の回帰分析で、重相関係数R=0.8のとき、決定係数R²はいくつですか。また、これはどのような意味を持ちますか。",
       options: [
-        "血液型（A型、B型、O型、AB型）",
-        "身長（cm）",
-        "性別（男、女）",
-        "満足度（とても満足、やや満足、やや不満、とても不満）"
+        "0.64、説明変数が目的変数の変動の64%を説明する",
+        "0.80、説明変数が目的変数の80%を説明する",
+        "0.64、目的変数が説明変数の変動の64%を説明する",
+        "0.80、相関が80%ある"
       ],
-      correct: 2,
-      explanation: "量的変数は数値として計算可能な変数です。身長は数値で表され、加減乗除などの計算ができるため量的変数です。血液型、性別、満足度は質的変数（カテゴリカル変数）です。"
+      correct: 1,
+      explanation: "決定係数 R² = 0.8² = 0.64。これは説明変数が目的変数の変動の64%を説明していることを意味します。"
     },
     {
       id: 2,
-      question: "あるクラス36人の数学のテスト結果をヒストグラムに表しました。65点以上の生徒は何人ですか。",
-      type: "histogram" as const,
-      data: histogramData1,
-      options: ["15人", "18人", "21人", "24人"],
-      correct: 3,
-      explanation: "65点以上の生徒数は、65-70点の階級（12人）+ 70-75点の階級（6人）+ 75-80点の階級（3人）= 21人です。"
+      question: "標準正規分布において、95%信頼区間に対応するz値（両側）はいくつですか。",
+      options: ["±1.645", "±1.96", "±2.33", "±2.58"],
+      correct: 2,
+      explanation: "95%信頼区間の両側z値は ±1.96 です。これは統計学で最も頻繁に使用される値です。"
     },
     {
       id: 3,
-      question: "次のデータを小さい順に並べたとき、中央値はいくつですか。\nデータ: 15, 8, 23, 12, 18, 9, 20",
-      options: ["12", "15", "18", "20"],
+      question: "次の一元配置分散分析で、F統計量が3.5、自由度が(3, 36)のとき、有意水準5%の臨界値が2.87だとすると、結論はどれですか。",
+      options: [
+        "帰無仮説を棄却できない",
+        "帰無仮説を棄却する",
+        "判定できない",
+        "有意水準を変更する必要がある"
+      ],
       correct: 2,
-      explanation: "データを小さい順に並べると: 8, 9, 12, 15, 18, 20, 23。7個のデータなので、中央値は4番目の値である15です。"
+      explanation: "F統計量3.5 > 臨界値2.87 なので、帰無仮説（すべての群の平均が等しい）を棄却します。"
     },
     {
       id: 4,
-      question: "次のデータの平均値はいくつですか。\nデータ: 8, 12, 10, 15, 5",
-      options: ["8", "9", "10", "11"],
-      correct: 3,
-      explanation: "平均値 = (8 + 12 + 10 + 15 + 5) ÷ 5 = 50 ÷ 5 = 10です。"
+      question: "標本サイズ100、標本平均50、標本標準偏差10のとき、母平均の95%信頼区間はおよそいくつですか。",
+      options: [
+        "[48.04, 51.96]",
+        "[49.02, 50.98]",
+        "[49.5, 50.5]",
+        "[47.5, 52.5]"
+      ],
+      correct: 1,
+      explanation: "標準誤差 = 10/√100 = 1。信頼区間 = 50 ± 1.96×1 = [48.04, 51.96]です。"
     },
     {
       id: 5,
-      question: "あるデータの平均が50、標準偏差が10です。このデータのすべての値に5を加えたとき、新しいデータの平均と標準偏差はどうなりますか。",
-      options: [
-        "平均55、標準偏差10",
-        "平均55、標準偏差15",
-        "平均50、標準偏差10",
-        "平均50、標準偏差15"
-      ],
-      correct: 1,
-      explanation: "すべてのデータに定数を加えると、平均も同じ定数だけ増加しますが、標準偏差（散らばり）は変わりません。したがって、平均は55（50+5）、標準偏差は10のままです。"
+      question: "相関係数0.7、説明変数の標準偏差10、目的変数の標準偏差15のとき、回帰直線の傾きはいくつですか。",
+      options: ["0.467", "0.7", "1.05", "1.5"],
+      correct: 3,
+      explanation: "傾き = 相関係数 × (目的変数の標準偏差 / 説明変数の標準偏差) = 0.7 × (15/10) = 1.05です。"
     },
     {
       id: 6,
-      question: "次のデータの範囲（レンジ）はいくつですか。\nデータ: 25, 18, 32, 20, 28, 15, 30",
-      options: ["13", "15", "17", "20"],
-      correct: 3,
-      explanation: "範囲（レンジ）= 最大値 - 最小値 = 32 - 15 = 17です。"
+      question: "次の2×2分割表でカイ二乗検定を行います。\n\n       A    B   計\n甲    15   35   50\n乙    25   25   50\n計    40   60  100\n\nカイ二乗統計量はおよそいくつですか。",
+      options: ["約3.6", "約4.2", "約5.0", "約6.3"],
+      correct: 2,
+      explanation: "期待度数を計算し、χ² = Σ(O-E)²/E を計算すると約4.17です。"
     },
     {
       id: 7,
-      question: "10人の審査員A、Bの採点結果の散布図を示しました。審査員Aと審査員Bの採点の相関について正しい記述はどれですか。",
-      type: "scatter" as const,
-      data: scatterData1,
-      xLabel: "審査員A（点）",
-      yLabel: "審査員B（点）",
-      options: [
-        "強い正の相関がある",
-        "弱い正の相関がある",
-        "負の相関がある",
-        "相関はない"
-      ],
-      correct: 1,
-      explanation: "散布図を見ると、審査員Aの点数が高いほど審査員Bの点数も高い傾向があり、点が右上がりの直線状に分布しています。したがって、強い正の相関があります。"
+      question: "正規分布N(μ=50, σ=8)において、P(X > 58)はおよそいくつですか。（z=1の上側確率は約0.16）",
+      options: ["約0.08", "約0.16", "約0.32", "約0.50"],
+      correct: 2,
+      explanation: "z = (58-50)/8 = 1。P(Z > 1) ≈ 0.16です。"
     },
     {
       id: 8,
-      question: "箱ひげ図において、箱の中の線が表すのは何ですか。",
+      question: "t分布について正しい説明はどれですか。",
       options: [
-        "平均値",
-        "中央値（第2四分位数）",
-        "最頻値",
-        "標準偏差"
+        "標本サイズが小さく、母分散が未知のときに使用する",
+        "標本サイズが大きく、母分散が既知のときに使用する",
+        "常に正規分布と同じ形をしている",
+        "自由度が無限大のときz分布より尖っている"
       ],
-      correct: 2,
-      explanation: "箱ひげ図の箱の中の線は中央値（第2四分位数）を表します。箱の左端が第1四分位数、右端が第3四分位数、ひげの端が最小値と最大値を表します。"
+      correct: 1,
+      explanation: "t分布は標本サイズが小さく、母分散が未知の場合に使用します。自由度が大きくなると正規分布に近づきます。"
     },
     {
       id: 9,
-      question: "母集団から無作為に標本を抽出する際に用いられるものはどれですか。",
-      options: [
-        "乱数表",
-        "度数分布表",
-        "相関係数",
-        "偏差値"
-      ],
-      correct: 1,
-      explanation: "無作為抽出（ランダムサンプリング）を行う際には、乱数表や乱数発生器を用いて、すべての個体が等しい確率で選ばれるようにします。"
+      question: "重回帰分析で、説明変数が5つ、サンプルサイズが100、決定係数R²=0.6のとき、調整済みR²はおよそいくつですか。",
+      options: ["約0.54", "約0.58", "約0.60", "約0.62"],
+      correct: 2,
+      explanation: "調整済みR² = 1 - (1-0.6)×(99/94) = 1 - 0.4×1.053 ≈ 0.579です。"
     },
     {
       id: 10,
-      question: "次のデータの分散を求めなさい。\nデータ: 2, 4, 6, 8, 10\n（ヒント：平均は6です）",
-      options: ["4", "6", "8", "10"],
+      question: "次の検定で、p値が0.08でした。有意水準5%で判断すると、どうなりますか。",
+      options: [
+        "帰無仮説を棄却する",
+        "帰無仮説を棄却できない",
+        "対立仮説を棄却する",
+        "判定不能"
+      ],
+      correct: 2,
+      explanation: "p値0.08 > 有意水準0.05 なので、帰無仮説を棄却できません。"
+    },
+    {
+      id: 11,
+      question: "層別サンプリングの利点として最も適切なものはどれですか。",
+      options: [
+        "コストが最も安い",
+        "最も簡単に実施できる",
+        "各層の特性を確実に反映できる",
+        "母集団の情報が不要"
+      ],
       correct: 3,
-      explanation: "分散 = {(2-6)² + (4-6)² + (6-6)² + (8-6)² + (10-6)²} ÷ 5 = (16 + 4 + 0 + 4 + 16) ÷ 5 = 40 ÷ 5 = 8です。分散はデータの各値と平均との差の2乗の平均です。"
+      explanation: "層別サンプリングは各層から適切にサンプルを抽出することで、各層の特性を確実に反映できます。"
+    },
+    {
+      id: 12,
+      question: "2群の平均の差の検定で、等分散性の検定（F検定）を行った結果、p=0.30でした。次にどうすべきですか。",
+      options: [
+        "Welchのt検定を使用する",
+        "通常のStudentのt検定を使用する",
+        "Mann-WhitneyのU検定を使用する",
+        "検定を中止する"
+      ],
+      correct: 2,
+      explanation: "p=0.30 > 0.05 なので等分散性が仮定できます。通常のStudentのt検定を使用します。"
+    },
+    {
+      id: 13,
+      question: "次のデータで、ピアソンの積率相関係数が0.9、スピアマンの順位相関係数が0.6でした。この違いから推測されることは何ですか。",
+      options: [
+        "データに外れ値や非線形な関係がある可能性",
+        "計算ミスがある",
+        "サンプルサイズが小さすぎる",
+        "相関がない"
+      ],
+      correct: 1,
+      explanation: "ピアソンとスピアマンの相関係数に大きな差がある場合、外れ値や非線形な関係の存在が疑われます。"
+    },
+    {
+      id: 14,
+      question: "多重比較でBonferroni法を用いて10回比較を行います。全体の有意水準を0.05とするとき、各比較の有意水準はいくつですか。",
+      options: ["0.001", "0.005", "0.01", "0.05"],
+      correct: 2,
+      explanation: "Bonferroni補正: α/k = 0.05/10 = 0.005です。"
+    },
+    {
+      id: 15,
+      question: "次の残差プロットが扇形に広がっている場合、何が疑われますか。",
+      options: [
+        "多重共線性",
+        "不均一分散（heteroscedasticity）",
+        "正規性の仮定の違反",
+        "外れ値"
+      ],
+      correct: 2,
+      explanation: "残差が予測値に応じて広がる場合、不均一分散（heteroscedasticity）が疑われます。"
+    },
+    {
+      id: 16,
+      question: "VIF（分散拡大要因）が10以上の説明変数がある場合、何が問題ですか。",
+      options: [
+        "相関が弱すぎる",
+        "多重共線性が存在する",
+        "外れ値がある",
+        "サンプルサイズが小さい"
+      ],
+      correct: 2,
+      explanation: "VIF≧10は多重共線性の強い兆候です。説明変数間に強い相関があることを示します。"
+    },
+    {
+      id: 17,
+      question: "対応のある2群の比較で、差の分布が正規性を満たさない場合、どの検定を使うべきですか。",
+      options: [
+        "対応のあるt検定",
+        "Wilcoxonの符号付順位和検定",
+        "Mann-WhitneyのU検定",
+        "F検定"
+      ],
+      correct: 2,
+      explanation: "対応のあるデータで正規性を満たさない場合、Wilcoxonの符号付順位和検定を使用します。"
+    },
+    {
+      id: 18,
+      question: "二項分布B(n=100, p=0.5)を正規分布で近似するとき、平均と標準偏差はいくつですか。",
+      options: [
+        "平均50、標準偏差5",
+        "平均50、標準偏差25",
+        "平均25、標準偏差5",
+        "平均25、標準偏差25"
+      ],
+      correct: 1,
+      explanation: "平均 = np = 50、分散 = np(1-p) = 25、標準偏差 = √25 = 5です。"
+    },
+    {
+      id: 19,
+      question: "AICの値が小さいモデルほど良いとされる理由は何ですか。",
+      options: [
+        "自由度が大きいから",
+        "モデルの当てはまりと複雑さのバランスが良いから",
+        "サンプルサイズが大きいから",
+        "決定係数が大きいから"
+      ],
+      correct: 2,
+      explanation: "AICはモデルの当てはまりの良さとパラメータ数によるペナルティのバランスを評価します。小さいほど良いモデルです。"
+    },
+    {
+      id: 20,
+      question: "次の時系列データで自己相関が高い場合、回帰分析の仮定で何が問題になりますか。",
+      options: [
+        "多重共線性",
+        "誤差項の独立性",
+        "正規性",
+        "線形性"
+      ],
+      correct: 2,
+      explanation: "時系列データで自己相関が高いと、誤差項の独立性の仮定が崩れます。"
+    },
+    {
+      id: 21,
+      question: "χ²適合度検定で、観測度数が期待度数に完全に一致する場合、χ²統計量はいくつですか。",
+      options: ["0", "1", "自由度に等しい", "無限大"],
+      correct: 1,
+      explanation: "完全に一致する場合、χ² = Σ(O-E)²/E = 0 です。"
+    },
+    {
+      id: 22,
+      question: "ロジスティック回帰で、オッズ比が1の説明変数の係数βはいくつですか。",
+      options: ["-1", "0", "1", "e"],
+      correct: 2,
+      explanation: "オッズ比 = e^β = 1 のとき、β = ln(1) = 0 です。この変数は結果に影響しません。"
+    },
+    {
+      id: 23,
+      question: "検出力（power）を高める方法として適切でないものはどれですか。",
+      options: [
+        "サンプルサイズを大きくする",
+        "有意水準αを大きくする",
+        "効果量を大きくする",
+        "有意水準αを小さくする"
+      ],
+      correct: 4,
+      explanation: "有意水準αを小さくすると検出力は下がります。検出力を高めるにはα を大きくするか、n を増やすか、効果量を大きくします。"
+    },
+    {
+      id: 24,
+      question: "次の共分散行列で、変数XとYの相関係数を求めなさい。\n\n     X    Y\nX   9    6\nY   6    4",
+      options: ["0.5", "0.67", "0.75", "1.0"],
+      correct: 4,
+      explanation: "相関係数 = 共分散/(√分散X × √分散Y) = 6/(√9 × √4) = 6/6 = 1.0。完全な正の相関です。"
+    },
+    {
+      id: 25,
+      question: "主成分分析で、第1主成分が全分散の60%、第2主成分が30%を説明する場合、累積寄与率はいくつですか。",
+      options: ["30%", "60%", "90%", "100%"],
+      correct: 3,
+      explanation: "累積寄与率 = 60% + 30% = 90%です。"
+    },
+    {
+      id: 26,
+      question: "回帰分析で、標準化回帰係数（β）の絶対値が大きいほど、どういう意味ですか。",
+      options: [
+        "その変数の影響が大きい",
+        "その変数の測定単位が大きい",
+        "多重共線性がある",
+        "外れ値がある"
+      ],
+      correct: 1,
+      explanation: "標準化回帰係数は単位の影響を除いているため、絶対値が大きいほどその変数の影響力が大きいことを示します。"
+    },
+    {
+      id: 27,
+      question: "Cox比例ハザードモデルで、ハザード比が0.5の変数があります。これはどういう意味ですか。",
+      options: [
+        "リスクが2倍になる",
+        "リスクが半分になる",
+        "リスクが変わらない",
+        "生存時間が2倍になる"
+      ],
+      correct: 2,
+      explanation: "ハザード比0.5は、その変数が1単位増加するとイベント発生リスクが半分になることを意味します。"
+    },
+    {
+      id: 28,
+      question: "次の正規QQプロットで、点が直線から大きく外れている場合、何が示唆されますか。",
+      options: [
+        "データが正規分布に従っている",
+        "データが正規分布に従っていない",
+        "外れ値がない",
+        "分散が均一である"
+      ],
+      correct: 2,
+      explanation: "QQプロットで点が直線から外れる場合、データが正規分布に従っていないことを示唆します。"
+    },
+    {
+      id: 29,
+      question: "ブートストラップ法の目的として最も適切なものはどれですか。",
+      options: [
+        "サンプルサイズを増やす",
+        "推定量の標準誤差や信頼区間を求める",
+        "外れ値を除去する",
+        "多重共線性を解消する"
+      ],
+      correct: 2,
+      explanation: "ブートストラップ法はリサンプリングにより、推定量の標準誤差や信頼区間を経験的に求める方法です。"
+    },
+    {
+      id: 30,
+      question: "交差検証（クロスバリデーション）の主な目的は何ですか。",
+      options: [
+        "サンプルサイズを増やす",
+        "モデルの汎化性能を評価する",
+        "外れ値を検出する",
+        "変数選択を行う"
+      ],
+      correct: 2,
+      explanation: "交差検証は、モデルが未知のデータに対してどの程度うまく機能するか（汎化性能）を評価するための手法です。"
     }
   ];
 
@@ -142,7 +333,7 @@ export default function Exam1() {
   };
 
   const handleSubmit = () => {
-    if (Object.keys(answers).length < 10) {
+    if (Object.keys(answers).length < questions.length) {
       alert('すべての問題に回答してください。');
       return;
     }
@@ -153,36 +344,34 @@ export default function Exam1() {
   const resetExam = () => {
     setAnswers({});
     setShowResult(false);
-    setCurrentQuestion(1);
     window.scrollTo(0, 0);
   };
 
   if (showResult) {
     const score = calculateScore();
-    const percentage = (score / 10) * 100;
+    const percentage = (score / questions.length) * 100;
+    const passed = percentage >= 65;
 
     return (
-      <div className="min-h-screen bg-gray-100 p-4 md:p-8">
-        <div className="max-w-5xl mx-auto">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4 md:p-8">
+        <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
             <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-              📊 試験結果
+              📊 3級 模擬試験1 結果
             </h1>
             
             <div className="text-center mb-8">
-              <div className="inline-block bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-lg px-12 py-8 shadow-xl">
-                <p className="text-6xl font-bold mb-2">{score}/10</p>
-                <p className="text-2xl">正答率: {percentage}%</p>
-              </div>
-              
-              <div className="mt-6">
-                {percentage >= 65 ? (
-                  <p className="text-2xl text-green-600 font-bold">🎉 合格ライン達成！（65点以上）</p>
-                ) : percentage >= 50 ? (
-                  <p className="text-2xl text-yellow-600 font-bold">💪 もう少しです！</p>
-                ) : (
-                  <p className="text-2xl text-red-600 font-bold">📚 復習が必要です</p>
-                )}
+              <div className={`inline-block rounded-lg px-12 py-8 shadow-xl ${
+                passed 
+                  ? 'bg-gradient-to-br from-blue-500 to-blue-700' 
+                  : 'bg-gradient-to-br from-gray-500 to-gray-700'
+              } text-white`}>
+                <p className="text-6xl font-bold mb-2">{score}/30</p>
+                <p className="text-2xl mb-4">正答率: {percentage.toFixed(1)}%</p>
+                <p className="text-xl font-bold">
+                  {passed ? '🎉 合格！' : '📝 不合格'}
+                </p>
+                <p className="text-sm mt-2">合格ライン: 65%以上（20問以上）</p>
               </div>
             </div>
 
@@ -210,11 +399,11 @@ export default function Exam1() {
               
               return (
                 <div key={q.id} className={`bg-white rounded-lg shadow-lg p-6 border-l-4 ${
-                  isCorrect ? 'border-green-500' : 'border-red-500'
+                  isCorrect ? 'border-blue-500' : 'border-red-500'
                 }`}>
                   <div className="flex items-start gap-3 mb-4">
                     <span className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg ${
-                      isCorrect ? 'bg-green-500' : 'bg-red-500'
+                      isCorrect ? 'bg-blue-500' : 'bg-red-500'
                     }`}>
                       {isCorrect ? '○' : '×'}
                     </span>
@@ -223,34 +412,6 @@ export default function Exam1() {
                         問題{index + 1}
                       </h3>
                       <p className="text-gray-700 whitespace-pre-line mb-3">{q.question}</p>
-                      
-                      {q.type === 'histogram' && q.data && (
-                        <div className="bg-gray-50 rounded-lg p-4 mb-3">
-                          <ResponsiveContainer width="100%" height={200}>
-                            <BarChart data={q.data}>
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis dataKey="range" label={{ value: '点数', position: 'insideBottom', offset: -5 }} />
-                              <YAxis label={{ value: '度数（人）', angle: -90, position: 'insideLeft' }} />
-                              <Tooltip />
-                              <Bar dataKey="frequency" fill="#3b82f6" />
-                            </BarChart>
-                          </ResponsiveContainer>
-                        </div>
-                      )}
-                      
-                      {q.type === 'scatter' && q.data && (
-                        <div className="bg-gray-50 rounded-lg p-4 mb-3">
-                          <ResponsiveContainer width="100%" height={200}>
-                            <ScatterChart>
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis dataKey="x" type="number" domain={[80, 95]} label={{ value: q.xLabel, position: 'insideBottom', offset: -5 }} />
-                              <YAxis dataKey="y" domain={[80, 95]} label={{ value: q.yLabel, angle: -90, position: 'insideLeft' }} />
-                              <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-                              <Scatter data={q.data} fill="#3b82f6" />
-                            </ScatterChart>
-                          </ResponsiveContainer>
-                        </div>
-                      )}
                     </div>
                   </div>
                   
@@ -262,7 +423,7 @@ export default function Exam1() {
                       </p>
                     </div>
                     
-                    <div className="bg-green-50 border border-green-200 p-3 rounded-lg">
+                    <div className="bg-indigo-50 border border-indigo-200 p-3 rounded-lg">
                       <p className="text-sm text-gray-600 mb-1">正解</p>
                       <p className="font-semibold text-gray-800">
                         {q.correct}. {q.options[q.correct - 1]}
@@ -283,15 +444,13 @@ export default function Exam1() {
     );
   }
 
-  const currentQ = questions[currentQuestion - 1];
-
   return (
-    <div className="min-h-screen bg-gray-100 p-4 md:p-8">
-      <div className="max-w-5xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4 md:p-8">
+      <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-3xl font-bold text-gray-800">
-              📊 統計検定3級 模擬試験1
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+              📝 3級 - 模擬試験1（中級）
             </h1>
             <Link
               to="/"
@@ -300,159 +459,73 @@ export default function Exam1() {
               ← トップに戻る
             </Link>
           </div>
-          <div className="flex justify-between items-center text-sm text-gray-600">
-            <span>⏱️ 目安時間: 20分（本試験は60分・30問）</span>
-            <span>全10問・選択式</span>
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+            <p className="text-gray-700">
+              <strong>制限時間:</strong> 90分 | <strong>問題数:</strong> 30問 | <strong>合格ライン:</strong> 65%以上（20問以上）
+            </p>
+            <p className="text-gray-700 mt-2">
+              <strong>難易度:</strong> ⭐⭐⭐☆☆ 中級レベル
+            </p>
           </div>
+          <p className="text-gray-600">推測統計・回帰分析・検定の基礎を総合的に問う試験です。</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div className="flex justify-between items-center mb-3">
-            <span className="text-sm font-semibold text-gray-700">
-              進捗: {Object.keys(answers).length}/10問回答済み
-            </span>
-            <span className="text-sm text-gray-600">
-              {Math.round((Object.keys(answers).length / 10) * 100)}%
-            </span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-3">
-            <div 
-              className="bg-blue-600 h-3 rounded-full transition-all duration-300"
-              style={{ width: `${(Object.keys(answers).length / 10) * 100}%` }}
-            ></div>
-          </div>
-          
-          <div className="grid grid-cols-10 gap-2 mt-4">
-            {questions.map((q) => (
-              <button
-                key={q.id}
-                onClick={() => setCurrentQuestion(q.id)}
-                className={`aspect-square rounded-lg font-bold text-base transition-all ${
-                  currentQuestion === q.id
-                    ? 'bg-blue-600 text-white shadow-lg scale-110'
-                    : answers[q.id]
-                    ? 'bg-green-500 text-white'
-                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                }`}
-              >
-                {q.id}
-              </button>
-            ))}
-          </div>
+        <div className="space-y-6">
+          {questions.map((q, index) => (
+            <div key={q.id} className="bg-white rounded-lg shadow-lg p-6">
+              <div className="mb-4">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg text-base font-bold">
+                    問題 {index + 1}
+                  </span>
+                </div>
+                <h2 className="text-xl font-bold text-gray-800 whitespace-pre-line leading-relaxed mb-4">
+                  {q.question}
+                </h2>
+              </div>
+
+              <div className="space-y-3">
+                {q.options.map((option, optIndex) => {
+                  const optionNum = optIndex + 1;
+                  const isSelected = answers[q.id] === optionNum;
+                  
+                  return (
+                    <button
+                      key={optIndex}
+                      onClick={() => handleAnswer(q.id, optionNum)}
+                      className={`w-full text-left p-4 rounded-lg border-2 transition-all font-medium ${
+                        isSelected
+                          ? 'border-blue-600 bg-blue-50 shadow-md'
+                          : 'border-gray-300 bg-white hover:border-blue-400 hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <span className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold transition-all ${
+                          isSelected
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-gray-200 text-gray-700'
+                        }`}>
+                          {optionNum}
+                        </span>
+                        <span className="text-gray-800 leading-relaxed pt-1 whitespace-pre-line">{option}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-6">
-          <div className="mb-6">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg text-base font-bold">
-                問題 {currentQuestion}
-              </span>
-              <span className="text-gray-500 text-sm">/ 10</span>
-            </div>
-            <h2 className="text-xl font-bold text-gray-800 mb-4 whitespace-pre-line leading-relaxed">
-              {currentQ.question}
-            </h2>
-          </div>
-
-          {currentQ.type === 'histogram' && currentQ.data && (
-            <div className="bg-gray-50 rounded-lg p-6 mb-6 border border-gray-200">
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={currentQ.data}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="range" label={{ value: '点数', position: 'insideBottom', offset: -5 }} />
-                  <YAxis label={{ value: '度数（人）', angle: -90, position: 'insideLeft' }} />
-                  <Tooltip />
-                  <Bar dataKey="frequency" fill="#3b82f6" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          )}
-
-          {currentQ.type === 'scatter' && currentQ.data && (
-            <div className="bg-gray-50 rounded-lg p-6 mb-6 border border-gray-200">
-              <ResponsiveContainer width="100%" height={300}>
-                <ScatterChart>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis 
-                    dataKey="x" 
-                    type="number"
-                    domain={[80, 95]}
-                    label={{ value: currentQ.xLabel, position: 'insideBottom', offset: -5 }} 
-                  />
-                  <YAxis 
-                    dataKey="y"
-                    domain={[80, 95]}
-                    label={{ value: currentQ.yLabel, angle: -90, position: 'insideLeft' }} 
-                  />
-                  <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-                  <Scatter data={currentQ.data} fill="#3b82f6" />
-                </ScatterChart>
-              </ResponsiveContainer>
-            </div>
-          )}
-
-          <div className="space-y-3">
-            {currentQ.options.map((option, index) => {
-              const optionNum = index + 1;
-              const isSelected = answers[currentQ.id] === optionNum;
-              
-              return (
-                <button
-                  key={index}
-                  onClick={() => handleAnswer(currentQ.id, optionNum)}
-                  className={`w-full text-left p-4 rounded-lg border-2 transition-all font-medium ${
-                    isSelected
-                      ? 'border-blue-600 bg-blue-50 shadow-md'
-                      : 'border-gray-300 bg-white hover:border-blue-400 hover:bg-gray-50'
-                  }`}
-                >
-                  <div className="flex items-start gap-3">
-                    <span className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold transition-all ${
-                      isSelected
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-200 text-gray-700'
-                    }`}>
-                      {optionNum}
-                    </span>
-                    <span className="text-gray-800 leading-relaxed pt-1">{option}</span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="flex gap-4">
+        <div className="mt-6">
           <button
-            onClick={() => setCurrentQuestion(Math.max(1, currentQuestion - 1))}
-            disabled={currentQuestion === 1}
-            className={`flex-1 py-3 rounded-lg font-semibold transition-colors ${
-              currentQuestion === 1
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-gray-600 text-white hover:bg-gray-700'
-            }`}
+            onClick={handleSubmit}
+            className="w-full bg-indigo-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-indigo-700 transition-colors shadow-lg"
           >
-            ← 前の問題
+            ✓ 採点する
           </button>
-          
-          {currentQuestion < 10 ? (
-            <button
-              onClick={() => setCurrentQuestion(Math.min(10, currentQuestion + 1))}
-              className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-            >
-              次の問題 →
-            </button>
-          ) : (
-            <button
-              onClick={handleSubmit}
-              className="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
-            >
-              ✓ 採点する
-            </button>
-          )}
         </div>
       </div>
     </div>
   );
 }
-

@@ -4,11 +4,32 @@ export default function Home() {
   const grade3Exams = [
     {
       id: 'grade3-1',
-      title: '模擬試験1',
-      description: '基礎的な統計の概念や記述統計に関する10問の試験',
-      questions: 10,
-      time: 20,
+      title: '模擬試験1（中級）',
+      description: '推測統計・回帰分析・検定の基礎を総合的に問う30問の試験',
+      questions: 30,
+      time: 90,
       path: '/grade3/exam1',
+      difficulty: '⭐⭐⭐☆☆',
+      available: true
+    },
+    {
+      id: 'grade3-2',
+      title: '模擬試験2（難）',
+      description: '多変量解析・高度な検定・機械学習の基礎を含む30問の試験',
+      questions: 30,
+      time: 90,
+      path: '/grade3/exam2',
+      difficulty: '⭐⭐⭐⭐☆',
+      available: true
+    },
+    {
+      id: 'grade3-3',
+      title: '模擬試験3（超難）',
+      description: 'ベイズ統計・因果推論・機械学習・最先端手法を含む30問の試験',
+      questions: 30,
+      time: 90,
+      path: '/grade3/exam3',
+      difficulty: '⭐⭐⭐⭐⭐',
       available: true
     }
   ];
@@ -119,11 +140,32 @@ export default function Home() {
   const grade4Exams = [
     {
       id: 'grade4-1',
-      title: '模擬試験1',
-      description: '中学卒業レベルの統計知識を確認する基礎問題',
-      questions: 10,
-      time: 20,
+      title: '模擬試験1（中級）',
+      description: '代表値・散らばり・確率の応用問題を中心とした30問の試験',
+      questions: 30,
+      time: 60,
       path: '/grade4/exam1',
+      difficulty: '⭐⭐⭐☆☆',
+      available: true
+    },
+    {
+      id: 'grade4-2',
+      title: '模擬試験2（難）',
+      description: '応用的な統計計算と推測統計の理解を問う30問の試験',
+      questions: 30,
+      time: 60,
+      path: '/grade4/exam2',
+      difficulty: '⭐⭐⭐⭐☆',
+      available: true
+    },
+    {
+      id: 'grade4-3',
+      title: '模擬試験3（超難）',
+      description: '推測統計・多変量解析・高度な検定手法まで含む30問の試験',
+      questions: 30,
+      time: 60,
+      path: '/grade4/exam3',
+      difficulty: '⭐⭐⭐⭐⭐',
       available: true
     }
   ];
@@ -253,6 +295,7 @@ export default function Home() {
       <div className="flex gap-4 text-sm text-gray-500 mb-6">
         <span>📝 {exam.questions}問</span>
         <span>⏱️ 約{exam.time}分</span>
+        {'difficulty' in exam && <span>🔥 {exam.difficulty}</span>}
       </div>
       {exam.available ? (
         <Link

@@ -1,7 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Grade3Exam1 from './components/grade3/Exam1';
+import Grade3Exam2 from './components/grade3/Exam2';
+import Grade3Exam3 from './components/grade3/Exam3';
 import Grade4Exam1 from './components/grade4/Exam1';
+import Grade4Exam2 from './components/grade4/Exam2';
+import Grade4Exam3 from './components/grade4/Exam3';
 
 import Grade3Section1Set1 from './components/grade3/Section1_DescriptiveStats_1';
 import Grade3Section1Set2 from './components/grade3/Section1_DescriptiveStats_2';
@@ -89,7 +93,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/grade3/exam1" element={<Grade3Exam1 />} />
+        <Route path="/grade3/exam2" element={<Grade3Exam2 />} />
+        <Route path="/grade3/exam3" element={<Grade3Exam3 />} />
         <Route path="/grade4/exam1" element={<Grade4Exam1 />} />
+        <Route path="/grade4/exam2" element={<Grade4Exam2 />} />
+        <Route path="/grade4/exam3" element={<Grade4Exam3 />} />
         
         <Route path="/grade3/section1/set1" element={<Grade3Section1Set1 />} />
         <Route path="/grade3/section1/set2" element={<Grade3Section1Set2 />} />
