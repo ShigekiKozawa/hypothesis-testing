@@ -93,6 +93,26 @@ export default function Home() {
         { id: 2, path: '/grade3/section8/set2', questions: 10 },
         { id: 3, path: '/grade3/section8/set3', questions: 10 }
       ]
+    },
+    {
+      id: 'section9',
+      title: 'セクション9: 統計的検定の応用',
+      description: 'カイ二乗検定、ノンパラメトリック検定、生存時間解析',
+      sets: [
+        { id: 1, path: '/grade3/section9/set1', questions: 10 },
+        { id: 2, path: '/grade3/section9/set2', questions: 10 },
+        { id: 3, path: '/grade3/section9/set3', questions: 10 }
+      ]
+    },
+    {
+      id: 'section10',
+      title: 'セクション10: 応用トピック',
+      description: 'ベイズ統計、機械学習の基礎、モデル評価',
+      sets: [
+        { id: 1, path: '/grade3/section10/set1', questions: 10 },
+        { id: 2, path: '/grade3/section10/set2', questions: 10 },
+        { id: 3, path: '/grade3/section10/set3', questions: 10 }
+      ]
     }
   ];
 

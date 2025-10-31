@@ -35,6 +35,14 @@ import Grade3Section8Set1 from './components/grade3/Section8_Multivariate_1';
 import Grade3Section8Set2 from './components/grade3/Section8_Multivariate_2';
 import Grade3Section8Set3 from './components/grade3/Section8_Multivariate_3';
 
+import Grade3Section9Set1 from './components/grade3/Section9_AdvancedTesting_1';
+import Grade3Section9Set2 from './components/grade3/Section9_AdvancedTesting_2';
+import Grade3Section9Set3 from './components/grade3/Section9_AdvancedTesting_3';
+
+import Grade3Section10Set1 from './components/grade3/Section10_Applied_1';
+import Grade3Section10Set2 from './components/grade3/Section10_Applied_2';
+import Grade3Section10Set3 from './components/grade3/Section10_Applied_3';
+
 import Grade4Section1Set1 from './components/grade4/Section1_RepresentativeValues_1';
 import Grade4Section1Set2 from './components/grade4/Section1_RepresentativeValues_2';
 import Grade4Section1Set3 from './components/grade4/Section1_RepresentativeValues_3';
@@ -114,6 +122,14 @@ function App() {
         <Route path="/grade3/section8/set1" element={<Grade3Section8Set1 />} />
         <Route path="/grade3/section8/set2" element={<Grade3Section8Set2 />} />
         <Route path="/grade3/section8/set3" element={<Grade3Section8Set3 />} />
+        
+        <Route path="/grade3/section9/set1" element={<Grade3Section9Set1 />} />
+        <Route path="/grade3/section9/set2" element={<Grade3Section9Set2 />} />
+        <Route path="/grade3/section9/set3" element={<Grade3Section9Set3 />} />
+        
+        <Route path="/grade3/section10/set1" element={<Grade3Section10Set1 />} />
+        <Route path="/grade3/section10/set2" element={<Grade3Section10Set2 />} />
+        <Route path="/grade3/section10/set3" element={<Grade3Section10Set3 />} />
         
         <Route path="/grade4/section1/set1" element={<Grade4Section1Set1 />} />
         <Route path="/grade4/section1/set2" element={<Grade4Section1Set2 />} />
