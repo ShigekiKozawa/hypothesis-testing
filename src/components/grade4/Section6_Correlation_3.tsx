@@ -242,63 +242,123 @@ export default function Grade4Section6Set3() {
           </div>
         </div>
 
-        <div className="space-y-6">
-          {questions.map((q, index) => (
-            <div key={q.id} className="bg-white rounded-lg shadow-lg p-6">
-              <div className="mb-4">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="inline-block bg-green-600 text-white px-4 py-2 rounded-lg text-base font-bold">
-                    問題 {index + 1}
-                  </span>
-                </div>
-                <h2 className="text-xl font-bold text-gray-800 whitespace-pre-line leading-relaxed mb-4">
-                  {q.question}
-                </h2>
-              </div>
-
-              <div className="space-y-3">
-                {q.options.map((option, optIndex) => {
-                  const optionNum = optIndex + 1;
-                  const isSelected = answers[q.id] === optionNum;
-                  
-                  return (
-                    <button
-                      key={optIndex}
-                      onClick={() => handleAnswer(q.id, optionNum)}
-                      className={`w-full text-left p-4 rounded-lg border-2 transition-all font-medium ${
-                        isSelected
-                          ? 'border-green-600 bg-green-50 shadow-md'
-                          : 'border-gray-300 bg-white hover:border-green-400 hover:bg-gray-50'
-                      }`}
-                    >
-                      <div className="flex items-start gap-3">
-                        <span className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold transition-all ${
-                          isSelected
-                            ? 'bg-green-600 text-white'
-                            : 'bg-gray-200 text-gray-700'
-                        }`}>
-                          {optionNum}
-                        </span>
-                        <span className="text-gray-800 leading-relaxed pt-1">{option}</span>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+          <div className="flex items-center justify-between mb-6">
+            <div className="text-lg font-bold text-gray-700">
+              問題 {currentQuestionIndex + 1} / {questions.length}
             </div>
-          ))}
+            <div className="text-sm text-gray-500">
+              回答済み: {Object.keys(answers).length} / {questions.length}
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <div
+                className="bg-green-600 h-2 rounded-full transition-all duration-300"
+                style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
+              ></div>
+            </div>
+          </div>
+
+          {(() => {
+            const q = questions[currentQuestionIndex];
+            return (
+              <div>
+                <div className="mb-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="inline-block bg-green-600 text-white px-4 py-2 rounded-lg text-base font-bold">
+                      問題 {currentQuestionIndex + 1}
+                    </span>
+                    {answers[q.id] && (
+                      <span className="text-green-600 font-semibold">✓ 回答済み</span>
+                    )}
+                  </div>
+                  <h2 className="text-xl font-bold text-gray-800 whitespace-pre-line leading-relaxed mb-6">
+                    {q.question}
+                  </h2>
+                </div>
+
+                <div className="space-y-3 mb-8">
+                  {q.options.map((option, optIndex) => {
+                    const optionNum = optIndex + 1;
+                    const isSelected = answers[q.id] === optionNum;
+                    
+                    return (
+                      <button
+                        key={optIndex}
+                        onClick={() => handleAnswer(q.id, optionNum)}
+                        className={`w-full text-left p-4 rounded-lg border-2 transition-all font-medium ${
+                          isSelected
+                            ? 'border-green-600 bg-green-50 shadow-md'
+                            : 'border-gray-300 bg-white hover:border-green-400 hover:bg-gray-50'
+                        }`}
+                      >
+                        <div className="flex items-start gap-3">
+                          <span className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold transition-all ${
+                            isSelected
+                              ? 'bg-green-600 text-white'
+                              : 'bg-gray-200 text-gray-700'
+                          }`}>
+                            {optionNum}
+                          </span>
+                          <span className="text-gray-800 leading-relaxed pt-1 whitespace-pre-line">{option}</span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })()}
         </div>
 
-        <div className="mt-6">
+        <div className="flex gap-4 mb-6">
           <button
-            onClick={handleSubmit}
-            className="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg"
+            onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
+            disabled={currentQuestionIndex === 0}
+            className="flex-1 bg-gray-500 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            ✓ 採点する
+            ← 前の問題
           </button>
+          {currentQuestionIndex < questions.length - 1 ? (
+            <button
+              onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
+              className="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+            >
+              次の問題 →
+            </button>
+          ) : (
+            <button
+              onClick={handleSubmit}
+              className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            >
+              ✓ 採点する
+            </button>
+          )}
+        </div>
+
+        <div className="bg-white rounded-lg shadow-lg p-4">
+          <h3 className="text-sm font-bold text-gray-700 mb-3">問題ナビゲーション</h3>
+          <div className="grid grid-cols-10 gap-2">
+            {questions.map((q, index) => (
+              <button
+                key={q.id}
+                onClick={() => setCurrentQuestionIndex(index)}
+                className={`aspect-square rounded-lg font-bold text-sm transition-all ${
+                  currentQuestionIndex === index
+                    ? 'bg-green-600 text-white ring-2 ring-green-400'
+                    : answers[q.id]
+                    ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 }
-
