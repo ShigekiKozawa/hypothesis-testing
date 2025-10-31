@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { saveExamRecord, getBestScore } from '../../utils/localStorage';
 
 export default function Grade3Section1Set1() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showResult, setShowResult] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [bestScore, setBestScore] = useState<number | null>(null);
 
   const questions = [
     {
@@ -109,6 +111,13 @@ export default function Grade3Section1Set1() {
     }
   ];
 
+  useEffect(() => {
+    const best = getBestScore('grade3-section1_descriptivestats_1');
+    if (best) {
+      setBestScore(best.percentage);
+    }
+  }, []);
+
   const handleAnswer = (questionId: number, answer: number) => {
     setAnswers(prev => ({...prev, [questionId]: answer}));
   };
@@ -128,6 +137,25 @@ export default function Grade3Section1Set1() {
       alert('すべての問題に回答してください。');
       return;
     }
+    
+    const score = calculateScore();
+    const percentage = (score / questions.length) * 100;
+    
+    saveExamRecord({
+      examId: 'grade3-section1_descriptivestats_1',
+      examTitle: '3級 Section1_DescriptiveStats_1',
+      grade: '3級',
+      score,
+      totalQuestions: questions.length,
+      percentage,
+      passed: percentage >= 60
+    });
+    
+    const best = getBestScore('grade3-section1_descriptivestats_1');
+    if (best) {
+      setBestScore(best.percentage);
+    }
+    
     setShowResult(true);
     window.scrollTo(0, 0);
   };

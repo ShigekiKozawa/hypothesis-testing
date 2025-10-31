@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { saveExamRecord, getBestScore } from '../../utils/localStorage';
 
 export default function Grade4Section6Set3() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showResult, setShowResult] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [bestScore, setBestScore] = useState<number | null>(null);
 
   const questions = [
     {
@@ -104,6 +106,13 @@ export default function Grade4Section6Set3() {
     }
   ];
 
+  useEffect(() => {
+    const best = getBestScore('grade4-section6_correlation_3');
+    if (best) {
+      setBestScore(best.percentage);
+    }
+  }, []);
+
   const handleAnswer = (questionId: number, answer: number) => {
     setAnswers(prev => ({...prev, [questionId]: answer}));
   };
@@ -123,6 +132,25 @@ export default function Grade4Section6Set3() {
       alert('すべての問題に回答してください。');
       return;
     }
+    
+    const score = calculateScore();
+    const percentage = (score / questions.length) * 100;
+    
+    saveExamRecord({
+      examId: 'grade4-section6_correlation_3',
+      examTitle: '4級 Section6_Correlation_3',
+      grade: '4級',
+      score,
+      totalQuestions: questions.length,
+      percentage,
+      passed: percentage >= 60
+    });
+    
+    const best = getBestScore('grade4-section6_correlation_3');
+    if (best) {
+      setBestScore(best.percentage);
+    }
+    
     setShowResult(true);
     window.scrollTo(0, 0);
   };

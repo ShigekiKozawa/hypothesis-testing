@@ -297,6 +297,22 @@ export default function Home() {
     }
   };
 
+  const getSectionBestScore = (path: string): number | null => {
+    const match = path.match(/\/(grade\d)\/section(\d+)\/set(\d+)/);
+    if (!match) return null;
+    
+    const [, grade, section, set] = match;
+    const records = getExamRecords();
+    
+    const matchingRecords = records.filter(r => 
+      r.examId.startsWith(`${grade}-section${section}_`) && 
+      r.examId.endsWith(`_${set}`)
+    );
+    
+    if (matchingRecords.length === 0) return null;
+    return Math.max(...matchingRecords.map(r => r.percentage));
+  };
+
   const ExamCard = ({ exam }: { exam: typeof grade3Exams[0] }) => {
     const bestScoreRecord = getBestScore(exam.id);
     const bestScore = bestScoreRecord ? bestScoreRecord.percentage : null;
@@ -390,16 +406,24 @@ export default function Home() {
                   <h4 className="text-lg font-bold text-gray-800 mb-2">{section.title}</h4>
                   <p className="text-sm text-gray-600 mb-4">{section.description}</p>
                   <div className="grid grid-cols-3 gap-3">
-                    {section.sets.map((set) => (
-                      <Link
-                        key={set.id}
-                        to={set.path}
-                        className="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-lg text-center hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg"
-                      >
-                        <div className="font-bold text-lg mb-1">セット{set.id}</div>
-                        <div className="text-xs opacity-90">{set.questions}問</div>
-                      </Link>
-                    ))}
+                    {section.sets.map((set) => {
+                      const bestScore = getSectionBestScore(set.path);
+                      return (
+                        <Link
+                          key={set.id}
+                          to={set.path}
+                          className="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-lg text-center hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg"
+                        >
+                          <div className="font-bold text-lg mb-1">セット{set.id}</div>
+                          <div className="text-xs opacity-90">{set.questions}問</div>
+                          {bestScore !== null && (
+                            <div className="text-xs mt-2 bg-yellow-400 text-gray-900 rounded px-2 py-1 font-bold">
+                              🏆 {bestScore.toFixed(0)}%
+                            </div>
+                          )}
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               ))}
@@ -432,16 +456,24 @@ export default function Home() {
                   <h4 className="text-lg font-bold text-gray-800 mb-2">{section.title}</h4>
                   <p className="text-sm text-gray-600 mb-4">{section.description}</p>
                   <div className="grid grid-cols-3 gap-3">
-                    {section.sets.map((set) => (
-                      <Link
-                        key={set.id}
-                        to={set.path}
-                        className="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-lg text-center hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg"
-                      >
-                        <div className="font-bold text-lg mb-1">セット{set.id}</div>
-                        <div className="text-xs opacity-90">{set.questions}問</div>
-                      </Link>
-                    ))}
+                    {section.sets.map((set) => {
+                      const bestScore = getSectionBestScore(set.path);
+                      return (
+                        <Link
+                          key={set.id}
+                          to={set.path}
+                          className="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-lg text-center hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg"
+                        >
+                          <div className="font-bold text-lg mb-1">セット{set.id}</div>
+                          <div className="text-xs opacity-90">{set.questions}問</div>
+                          {bestScore !== null && (
+                            <div className="text-xs mt-2 bg-yellow-400 text-gray-900 rounded px-2 py-1 font-bold">
+                              🏆 {bestScore.toFixed(0)}%
+                            </div>
+                          )}
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               ))}

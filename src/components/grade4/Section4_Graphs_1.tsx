@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { saveExamRecord, getBestScore } from '../../utils/localStorage';
 import { BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function Grade4Section4Set1() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showResult, setShowResult] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [bestScore, setBestScore] = useState<number | null>(null);
 
   const barData1 = [
     { subject: '国語', score: 75 },
@@ -162,6 +164,13 @@ export default function Grade4Section4Set1() {
     }
   ];
 
+  useEffect(() => {
+    const best = getBestScore('grade4-section4_graphs_1');
+    if (best) {
+      setBestScore(best.percentage);
+    }
+  }, []);
+
   const handleAnswer = (questionId: number, answer: number) => {
     setAnswers(prev => ({...prev, [questionId]: answer}));
   };
@@ -181,6 +190,25 @@ export default function Grade4Section4Set1() {
       alert('すべての問題に回答してください。');
       return;
     }
+    
+    const score = calculateScore();
+    const percentage = (score / questions.length) * 100;
+    
+    saveExamRecord({
+      examId: 'grade4-section4_graphs_1',
+      examTitle: '4級 Section4_Graphs_1',
+      grade: '4級',
+      score,
+      totalQuestions: questions.length,
+      percentage,
+      passed: percentage >= 60
+    });
+    
+    const best = getBestScore('grade4-section4_graphs_1');
+    if (best) {
+      setBestScore(best.percentage);
+    }
+    
     setShowResult(true);
     window.scrollTo(0, 0);
   };

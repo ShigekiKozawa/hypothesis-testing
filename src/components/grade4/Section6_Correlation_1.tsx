@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { saveExamRecord, getBestScore } from '../../utils/localStorage';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function Grade4Section6Set1() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showResult, setShowResult] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [bestScore, setBestScore] = useState<number | null>(null);
 
   const positiveCorrelationData = [
     { x: 1, y: 2 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 4, y: 5 }, { x: 5, y: 6 }
@@ -154,6 +156,13 @@ export default function Grade4Section6Set1() {
     }
   ];
 
+  useEffect(() => {
+    const best = getBestScore('grade4-section6_correlation_1');
+    if (best) {
+      setBestScore(best.percentage);
+    }
+  }, []);
+
   const handleAnswer = (questionId: number, answer: number) => {
     setAnswers(prev => ({...prev, [questionId]: answer}));
   };
@@ -173,6 +182,25 @@ export default function Grade4Section6Set1() {
       alert('すべての問題に回答してください。');
       return;
     }
+    
+    const score = calculateScore();
+    const percentage = (score / questions.length) * 100;
+    
+    saveExamRecord({
+      examId: 'grade4-section6_correlation_1',
+      examTitle: '4級 Section6_Correlation_1',
+      grade: '4級',
+      score,
+      totalQuestions: questions.length,
+      percentage,
+      passed: percentage >= 60
+    });
+    
+    const best = getBestScore('grade4-section6_correlation_1');
+    if (best) {
+      setBestScore(best.percentage);
+    }
+    
     setShowResult(true);
     window.scrollTo(0, 0);
   };
