@@ -13,6 +13,19 @@ export default function Home() {
     }
   ];
 
+  const grade3Sections = [
+    {
+      id: 'section1',
+      title: 'セクション1: 記述統計の基礎',
+      description: '平均値、分散、標準偏差、相関係数',
+      sets: [
+        { id: 1, path: '/grade3/section1/set1', questions: 10 },
+        { id: 2, path: '/grade3/section1/set2', questions: 10 },
+        { id: 3, path: '/grade3/section1/set3', questions: 10 }
+      ]
+    }
+  ];
+
   const grade4Exams = [
     {
       id: 'grade4-1',
@@ -190,11 +203,36 @@ export default function Home() {
               </div>
               <h2 className="text-2xl font-bold text-gray-800">統計検定3級</h2>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+            
+            <h3 className="text-xl font-bold text-gray-800 mb-4">📝 模擬試験（総合問題）</h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
               {grade3Exams.map((exam) => (
                 <ExamCard key={exam.id} exam={exam} />
               ))}
             </div>
+
+            <h3 className="text-xl font-bold text-gray-800 mb-4">📚 セクション別問題</h3>
+            <div className="space-y-4 mb-4">
+              {grade3Sections.map((section) => (
+                <div key={section.id} className="bg-white rounded-lg border-2 border-blue-200 p-5">
+                  <h4 className="text-lg font-bold text-gray-800 mb-2">{section.title}</h4>
+                  <p className="text-sm text-gray-600 mb-4">{section.description}</p>
+                  <div className="grid grid-cols-3 gap-3">
+                    {section.sets.map((set) => (
+                      <Link
+                        key={set.id}
+                        to={set.path}
+                        className="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-4 rounded-lg text-center hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg"
+                      >
+                        <div className="font-bold text-lg mb-1">セット{set.id}</div>
+                        <div className="text-xs opacity-90">{set.questions}問</div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-gray-700">
               <strong>本試験:</strong> 60分・30問 | <strong>合格ライン:</strong> 65点以上
             </div>
