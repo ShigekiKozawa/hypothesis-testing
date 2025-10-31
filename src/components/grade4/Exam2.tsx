@@ -335,12 +335,12 @@ export default function Grade4Exam2() {
                   ? 'bg-gradient-to-br from-orange-500 to-orange-700' 
                   : 'bg-gradient-to-br from-gray-500 to-gray-700'
               } text-white`}>
-                <p className="text-6xl font-bold mb-2">{score}/30</p>
-                <p className="text-2xl mb-4">正答率: {percentage.toFixed(1)}%</p>
+                <p className="text-6xl font-bold mb-2">{Math.round(percentage)}点</p>
+                <p className="text-2xl mb-4">({score}/30問正解)</p>
                 <p className="text-xl font-bold">
                   {passed ? '🎉 合格！' : '📝 不合格'}
                 </p>
-                <p className="text-sm mt-2">合格ライン: 60%以上（18問以上）</p>
+                <p className="text-sm mt-2">合格ライン: 60点以上</p>
               </div>
               {bestScore !== null && (
                 <div className="mt-4 text-center">

@@ -348,7 +348,8 @@ export default function Home() {
         {bestScoreRecord !== null && (
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
             <p className="text-sm text-gray-700">
-              <strong>🏆 最高スコア:</strong> <span className="text-lg font-bold text-yellow-600">{bestScoreRecord.score}/{bestScoreRecord.totalQuestions}</span>
+              <strong>🏆 最高スコア:</strong> <span className="text-lg font-bold text-yellow-600">{Math.round(bestScoreRecord.percentage)}点</span>
+              <span className="text-xs text-gray-600 ml-2">({bestScoreRecord.score}/{bestScoreRecord.totalQuestions})</span>
             </p>
           </div>
         )}
