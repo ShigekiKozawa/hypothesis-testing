@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getExamRecords, clearAllRecords, type ExamRecord } from '../utils/localStorage';
+import { getExamRecords, clearAllRecords, getBestScore, type ExamRecord } from '../utils/localStorage';
 
 export default function Home() {
   const [examRecords, setExamRecords] = useState<ExamRecord[]>([]);
@@ -277,7 +277,17 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    setExamRecords(getExamRecords());
+    const loadRecords = () => {
+      setExamRecords(getExamRecords());
+    };
+    
+    loadRecords();
+    
+    window.addEventListener('focus', loadRecords);
+    
+    return () => {
+      window.removeEventListener('focus', loadRecords);
+    };
   }, []);
 
   const handleClearRecords = () => {
@@ -287,14 +297,9 @@ export default function Home() {
     }
   };
 
-  const getBestScoreForExam = (examId: string): number | null => {
-    const records = examRecords.filter(r => r.examId === examId);
-    if (records.length === 0) return null;
-    return Math.max(...records.map(r => r.percentage));
-  };
-
   const ExamCard = ({ exam }: { exam: typeof grade3Exams[0] }) => {
-    const bestScore = getBestScoreForExam(exam.id);
+    const bestScoreRecord = getBestScore(exam.id);
+    const bestScore = bestScoreRecord ? bestScoreRecord.percentage : null;
     
     return (
       <div
