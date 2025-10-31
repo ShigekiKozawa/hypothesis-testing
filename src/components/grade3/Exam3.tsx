@@ -6,6 +6,7 @@ export default function Grade3Exam3() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showResult, setShowResult] = useState(false);
   const [bestScore, setBestScore] = useState<number | null>(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   const questions = [
     {
