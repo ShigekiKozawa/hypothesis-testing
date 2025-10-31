@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { getExamRecords, clearAllRecords, type ExamRecord } from '../utils/localStorage';
 
 export default function Home() {
+  const [examRecords, setExamRecords] = useState<ExamRecord[]>([]);
   const grade3Exams = [
     {
       id: 'grade3-1',
@@ -315,6 +318,17 @@ export default function Home() {
     </div>
   );
 
+  useEffect(() => {
+    setExamRecords(getExamRecords());
+  }, []);
+
+  const handleClearRecords = () => {
+    if (window.confirm('すべての受験履歴を削除しますか？この操作は取り消せません。')) {
+      clearAllRecords();
+      setExamRecords([]);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
@@ -413,15 +427,86 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-6">
+          <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-8">
             <h3 className="text-lg font-bold text-gray-800 mb-3">📌 利用について</h3>
             <ul className="space-y-2 text-gray-700">
               <li>• 各試験は何度でも受験できます</li>
               <li>• すべての問題に回答後、採点と解説を確認できます</li>
               <li>• 3級と4級で難易度と合格ラインが異なります</li>
               <li>• 問題は随時追加予定です</li>
+              <li>• <strong>受験履歴はブラウザのローカルストレージに保存されます</strong>（ブラウザのキャッシュをクリアすると削除されます）</li>
             </ul>
           </div>
+
+          {examRecords.length > 0 && (
+            <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-2xl font-bold text-gray-800">📊 受験履歴</h3>
+                <button
+                  onClick={handleClearRecords}
+                  className="text-sm text-red-600 hover:text-red-800 font-semibold"
+                >
+                  履歴を削除
+                </button>
+              </div>
+              
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4 text-sm text-gray-700">
+                <strong>💾 データ保存について:</strong> 受験履歴はブラウザのローカルストレージに保存されます。ブラウザのキャッシュクリアやプライベートモードでは保存されません。データは最大100件まで保存され、それ以上は古いものから自動削除されます。
+              </div>
+
+              <div className="space-y-3 max-h-96 overflow-y-auto">
+                {examRecords.map((record, index) => (
+                  <div
+                    key={index}
+                    className={`border-2 rounded-lg p-4 ${
+                      record.passed
+                        ? 'border-green-200 bg-green-50'
+                        : 'border-gray-200 bg-gray-50'
+                    }`}
+                  >
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className={`px-2 py-1 rounded text-xs font-bold ${
+                            record.grade === '3級'
+                              ? 'bg-blue-600 text-white'
+                              : 'bg-green-600 text-white'
+                          }`}>
+                            {record.grade}
+                          </span>
+                          <span className="font-bold text-gray-800">{record.examTitle}</span>
+                        </div>
+                        <div className="text-sm text-gray-600">
+                          {new Date(record.date).toLocaleString('ja-JP', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className={`text-2xl font-bold ${
+                          record.passed ? 'text-green-600' : 'text-gray-600'
+                        }`}>
+                          {record.score}/{record.totalQuestions}
+                        </div>
+                        <div className={`text-sm font-semibold ${
+                          record.passed ? 'text-green-600' : 'text-gray-600'
+                        }`}>
+                          {record.percentage.toFixed(1)}%
+                        </div>
+                        <div className="text-xs mt-1">
+                          {record.passed ? '✅ 合格' : '❌ 不合格'}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

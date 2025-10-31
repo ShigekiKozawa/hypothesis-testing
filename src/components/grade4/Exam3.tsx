@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { saveExamRecord, getBestScore } from '../../utils/localStorage';
 
 export default function Grade4Exam3() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showResult, setShowResult] = useState(false);
+  const [bestScore, setBestScore] = useState<number | null>(null);
 
   const questions = [
     {
@@ -282,11 +284,37 @@ export default function Grade4Exam3() {
     return correct;
   };
 
+  useEffect(() => {
+    const best = getBestScore('grade4-exam3');
+    if (best) {
+      setBestScore(best.percentage);
+    }
+  }, []);
+
   const handleSubmit = () => {
     if (Object.keys(answers).length < questions.length) {
       alert('すべての問題に回答してください。');
       return;
     }
+    
+    const score = calculateScore();
+    const percentage = (score / questions.length) * 100;
+    
+    saveExamRecord({
+      examId: 'grade4-exam3',
+      examTitle: '4級 模擬試験3（超難）',
+      grade: '4級',
+      score,
+      totalQuestions: questions.length,
+      percentage,
+      passed: percentage >= 60
+    });
+    
+    const best = getBestScore('grade4-exam3');
+    if (best) {
+      setBestScore(best.percentage);
+    }
+    
     setShowResult(true);
     window.scrollTo(0, 0);
   };
@@ -323,6 +351,13 @@ export default function Grade4Exam3() {
                 </p>
                 <p className="text-sm mt-2">合格ライン: 60%以上（18問以上）</p>
               </div>
+              {bestScore !== null && (
+                <div className="mt-4 text-center">
+                  <p className="text-gray-600">
+                    あなたのベストスコア: <span className="font-bold text-purple-600">{bestScore.toFixed(1)}%</span>
+                  </p>
+                </div>
+              )}
             </div>
 
             <div className="flex gap-4">
