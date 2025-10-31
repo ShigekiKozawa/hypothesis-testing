@@ -297,7 +297,7 @@ export default function Home() {
     }
   };
 
-  const getSectionBestScore = (path: string): number | null => {
+  const getSectionBestScore = (path: string): { score: number; total: number } | null => {
     const match = path.match(/\/(grade\d)\/section(\d+)\/set(\d+)/);
     if (!match) return null;
     
@@ -310,15 +310,16 @@ export default function Home() {
     );
     
     if (matchingRecords.length === 0) return null;
-    return Math.max(...matchingRecords.map(r => r.percentage));
+    
+    const bestRecord = matchingRecords.reduce((best, current) => 
+      current.percentage > best.percentage ? current : best
+    );
+    
+    return { score: bestRecord.score, total: bestRecord.totalQuestions };
   };
 
   const ExamCard = ({ exam }: { exam: typeof grade3Exams[0] }) => {
     const bestScoreRecord = getBestScore(exam.id);
-    const bestScore = bestScoreRecord ? bestScoreRecord.percentage : null;
-    
-    // デバッグ用ログ
-    console.log(`[ExamCard] exam.id: ${exam.id}, bestScoreRecord:`, bestScoreRecord, 'bestScore:', bestScore);
     
     return (
       <div
@@ -344,10 +345,10 @@ export default function Home() {
           <span>⏱️ 約{exam.time}分</span>
           {'difficulty' in exam && <span>🔥 {exam.difficulty}</span>}
         </div>
-        {bestScore !== null && (
+        {bestScoreRecord !== null && (
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
             <p className="text-sm text-gray-700">
-              <strong>🏆 最高スコア:</strong> <span className="text-lg font-bold text-yellow-600">{bestScore.toFixed(1)}%</span>
+              <strong>🏆 最高スコア:</strong> <span className="text-lg font-bold text-yellow-600">{bestScoreRecord.score}/{bestScoreRecord.totalQuestions}</span>
             </p>
           </div>
         )}
@@ -418,7 +419,7 @@ export default function Home() {
                           <div className="text-xs opacity-90">{set.questions}問</div>
                           {bestScore !== null && (
                             <div className="text-xs mt-2 bg-yellow-400 text-gray-900 rounded px-2 py-1 font-bold">
-                              🏆 {bestScore.toFixed(0)}%
+                              🏆 {bestScore.score}/{bestScore.total}
                             </div>
                           )}
                         </Link>
@@ -468,7 +469,7 @@ export default function Home() {
                           <div className="text-xs opacity-90">{set.questions}問</div>
                           {bestScore !== null && (
                             <div className="text-xs mt-2 bg-yellow-400 text-gray-900 rounded px-2 py-1 font-bold">
-                              🏆 {bestScore.toFixed(0)}%
+                              🏆 {bestScore.score}/{bestScore.total}
                             </div>
                           )}
                         </Link>
