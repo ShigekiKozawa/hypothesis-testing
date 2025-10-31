@@ -276,6 +276,23 @@ export default function Home() {
     }
   ];
 
+  useEffect(() => {
+    setExamRecords(getExamRecords());
+  }, []);
+
+  const handleClearRecords = () => {
+    if (window.confirm('すべての受験履歴を削除しますか？この操作は取り消せません。')) {
+      clearAllRecords();
+      setExamRecords([]);
+    }
+  };
+
+  const getBestScoreForExam = (examId: string): number | null => {
+    const records = examRecords.filter(r => r.examId === examId);
+    if (records.length === 0) return null;
+    return Math.max(...records.map(r => r.percentage));
+  };
+
   const ExamCard = ({ exam }: { exam: typeof grade3Exams[0] }) => {
     const bestScore = getBestScoreForExam(exam.id);
     
@@ -327,23 +344,6 @@ export default function Home() {
         )}
       </div>
     );
-  };
-
-  useEffect(() => {
-    setExamRecords(getExamRecords());
-  }, []);
-
-  const handleClearRecords = () => {
-    if (window.confirm('すべての受験履歴を削除しますか？この操作は取り消せません。')) {
-      clearAllRecords();
-      setExamRecords([]);
-    }
-  };
-
-  const getBestScoreForExam = (examId: string): number | null => {
-    const records = examRecords.filter(r => r.examId === examId);
-    if (records.length === 0) return null;
-    return Math.max(...records.map(r => r.percentage));
   };
 
   return (
