@@ -276,47 +276,58 @@ export default function Home() {
     }
   ];
 
-  const ExamCard = ({ exam }: { exam: typeof grade3Exams[0] }) => (
-    <div
-      className={`bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg p-6 border-2 transition-all ${
-        exam.available
-          ? 'border-blue-200 hover:shadow-xl hover:scale-105'
-          : 'border-gray-200 opacity-60'
-      }`}
-    >
-      <div className="flex justify-between items-start mb-4">
-        <h3 className="text-xl font-bold text-gray-800">
-          {exam.title}
-        </h3>
-        {exam.available && (
-          <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">
-            利用可能
-          </span>
+  const ExamCard = ({ exam }: { exam: typeof grade3Exams[0] }) => {
+    const bestScore = getBestScoreForExam(exam.id);
+    
+    return (
+      <div
+        className={`bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg p-6 border-2 transition-all ${
+          exam.available
+            ? 'border-blue-200 hover:shadow-xl hover:scale-105'
+            : 'border-gray-200 opacity-60'
+        }`}
+      >
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="text-xl font-bold text-gray-800">
+            {exam.title}
+          </h3>
+          {exam.available && (
+            <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+              利用可能
+            </span>
+          )}
+        </div>
+        <p className="text-gray-600 mb-4">{exam.description}</p>
+        <div className="flex gap-4 text-sm text-gray-500 mb-4">
+          <span>📝 {exam.questions}問</span>
+          <span>⏱️ 約{exam.time}分</span>
+          {'difficulty' in exam && <span>🔥 {exam.difficulty}</span>}
+        </div>
+        {bestScore !== null && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
+            <p className="text-sm text-gray-700">
+              <strong>🏆 最高スコア:</strong> <span className="text-lg font-bold text-yellow-600">{bestScore.toFixed(1)}%</span>
+            </p>
+          </div>
+        )}
+        {exam.available ? (
+          <Link
+            to={exam.path}
+            className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          >
+            試験を開始
+          </Link>
+        ) : (
+          <button
+            disabled
+            className="w-full bg-gray-300 text-gray-500 py-3 rounded-lg font-semibold cursor-not-allowed"
+          >
+            準備中
+          </button>
         )}
       </div>
-      <p className="text-gray-600 mb-4">{exam.description}</p>
-      <div className="flex gap-4 text-sm text-gray-500 mb-6">
-        <span>📝 {exam.questions}問</span>
-        <span>⏱️ 約{exam.time}分</span>
-        {'difficulty' in exam && <span>🔥 {exam.difficulty}</span>}
-      </div>
-      {exam.available ? (
-        <Link
-          to={exam.path}
-          className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-        >
-          試験を開始
-        </Link>
-      ) : (
-        <button
-          disabled
-          className="w-full bg-gray-300 text-gray-500 py-3 rounded-lg font-semibold cursor-not-allowed"
-        >
-          準備中
-        </button>
-      )}
-    </div>
-  );
+    );
+  };
 
   useEffect(() => {
     setExamRecords(getExamRecords());
@@ -327,6 +338,12 @@ export default function Home() {
       clearAllRecords();
       setExamRecords([]);
     }
+  };
+
+  const getBestScoreForExam = (examId: string): number | null => {
+    const records = examRecords.filter(r => r.examId === examId);
+    if (records.length === 0) return null;
+    return Math.max(...records.map(r => r.percentage));
   };
 
   return (
