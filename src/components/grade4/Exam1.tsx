@@ -291,18 +291,16 @@ export default function Grade4Exam1() {
     const score = calculateScore();
     const percentage = (score / questions.length) * 100;
     
-    const recordData = {
+    console.log('[Grade4Exam1] Saving record');
+    saveExamRecord({
       examId: 'grade4-exam1',
       examTitle: '4級 模擬試験1（中級）',
-      grade: '4級',
+      grade: '4級' as '4級',
       score,
       totalQuestions: questions.length,
       percentage,
       passed: percentage >= 60
-    };
-    
-    console.log('[Grade4Exam1] Saving record:', recordData);
-    saveExamRecord(recordData);
+    });
     
     const best = getBestScore('grade4-exam1');
     console.log('[Grade4Exam1] Best score after save:', best);

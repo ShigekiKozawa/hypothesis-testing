@@ -164,7 +164,7 @@ export default function Grade3Section5Set1() {
     saveExamRecord({
       examId: 'grade3-section5_anova_1',
       examTitle: '3級 Section5_ANOVA_1',
-      grade: '3級',
+      grade: '3級' as '3級',
       score,
       totalQuestions: questions.length,
       percentage,

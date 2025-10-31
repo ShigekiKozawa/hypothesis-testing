@@ -159,7 +159,7 @@ export default function Grade4Section8Set3() {
     saveExamRecord({
       examId: 'grade4-section8_histogram_3',
       examTitle: '4級 Section8_Histogram_3',
-      grade: '4級',
+      grade: '4級' as '4級',
       score,
       totalQuestions: questions.length,
       percentage,

@@ -129,7 +129,7 @@ export default function Grade4Section6Set2() {
     saveExamRecord({
       examId: 'grade4-section6_correlation_2',
       examTitle: '4級 Section6_Correlation_2',
-      grade: '4級',
+      grade: '4級' as '4級',
       score,
       totalQuestions: questions.length,
       percentage,

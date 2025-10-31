@@ -114,7 +114,7 @@ export default function Grade4Section5Set3() {
     saveExamRecord({
       examId: 'grade4-section5_probability_3',
       examTitle: '4級 Section5_Probability_3',
-      grade: '4級',
+      grade: '4級' as '4級',
       score,
       totalQuestions: questions.length,
       percentage,

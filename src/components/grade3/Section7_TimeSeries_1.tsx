@@ -164,7 +164,7 @@ export default function Grade3Section7Set1() {
     saveExamRecord({
       examId: 'grade3-section7_timeseries_1',
       examTitle: '3級 Section7_TimeSeries_1',
-      grade: '3級',
+      grade: '3級' as '3級',
       score,
       totalQuestions: questions.length,
       percentage,

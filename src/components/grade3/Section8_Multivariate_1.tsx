@@ -164,7 +164,7 @@ export default function Grade3Section8Set1() {
     saveExamRecord({
       examId: 'grade3-section8_multivariate_1',
       examTitle: '3級 Section8_Multivariate_1',
-      grade: '3級',
+      grade: '3級' as '3級',
       score,
       totalQuestions: questions.length,
       percentage,
