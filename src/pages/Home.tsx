@@ -6,7 +6,7 @@ export default function Home() {
   const [examRecords, setExamRecords] = useState<ExamRecord[]>([]);
   const grade3Exams = [
     {
-      id: 'grade3-1',
+      id: 'grade3-exam1',
       title: '模擬試験1（中級）',
       description: '推測統計・回帰分析・検定の基礎を総合的に問う30問の試験',
       questions: 30,
@@ -16,7 +16,7 @@ export default function Home() {
       available: true
     },
     {
-      id: 'grade3-2',
+      id: 'grade3-exam2',
       title: '模擬試験2（難）',
       description: '多変量解析・高度な検定・機械学習の基礎を含む30問の試験',
       questions: 30,
@@ -26,7 +26,7 @@ export default function Home() {
       available: true
     },
     {
-      id: 'grade3-3',
+      id: 'grade3-exam3',
       title: '模擬試験3（超難）',
       description: 'ベイズ統計・因果推論・機械学習・最先端手法を含む30問の試験',
       questions: 30,
@@ -142,7 +142,7 @@ export default function Home() {
 
   const grade4Exams = [
     {
-      id: 'grade4-1',
+      id: 'grade4-exam1',
       title: '模擬試験1（中級）',
       description: '代表値・散らばり・確率の応用問題を中心とした30問の試験',
       questions: 30,
@@ -152,7 +152,7 @@ export default function Home() {
       available: true
     },
     {
-      id: 'grade4-2',
+      id: 'grade4-exam2',
       title: '模擬試験2（難）',
       description: '応用的な統計計算と推測統計の理解を問う30問の試験',
       questions: 30,
@@ -162,7 +162,7 @@ export default function Home() {
       available: true
     },
     {
-      id: 'grade4-3',
+      id: 'grade4-exam3',
       title: '模擬試験3（超難）',
       description: '推測統計・多変量解析・高度な検定手法まで含む30問の試験',
       questions: 30,
