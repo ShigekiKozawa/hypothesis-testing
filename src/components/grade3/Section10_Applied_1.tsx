@@ -364,7 +364,6 @@ export default function Grade3Section10Set1() {
           </div>
           <p className="text-gray-600 mb-2">標本分布の基礎</p>
           <div className="flex gap-2 text-sm text-gray-500">
-            <span className="bg-purple-100 px-3 py-1 rounded-full">セット1/3</span>
             <span>全10問</span>
           </div>
         </div>

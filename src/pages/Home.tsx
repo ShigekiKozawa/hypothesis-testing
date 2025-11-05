@@ -356,6 +356,7 @@ export default function Home() {
         {exam.available ? (
           <Link
             to={exam.path}
+            onClick={() => window.scrollTo(0, 0)}
             className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
             試験を開始
@@ -411,12 +412,13 @@ export default function Home() {
                     {section.sets.map((set) => {
                       const bestScore = getSectionBestScore(set.path);
                       return (
-                        <Link
-                          key={set.id}
-                          to={set.path}
-                          className="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-lg text-center hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg"
-                        >
-                          <div className="font-bold text-lg mb-1">セット{set.id}</div>
+                      <Link
+                        key={set.id}
+                        to={set.path}
+                        onClick={() => window.scrollTo(0, 0)}
+                        className="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-lg text-center hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg"
+                      >
+                          <div className="font-bold text-lg mb-1">{set.id}/3</div>
                           <div className="text-xs opacity-90">{set.questions}問</div>
                           {bestScore !== null && (
                             <div className="text-xs mt-2 bg-yellow-400 text-gray-900 rounded px-2 py-1 font-bold">
@@ -461,12 +463,13 @@ export default function Home() {
                     {section.sets.map((set) => {
                       const bestScore = getSectionBestScore(set.path);
                       return (
-                        <Link
-                          key={set.id}
-                          to={set.path}
-                          className="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-lg text-center hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg"
-                        >
-                          <div className="font-bold text-lg mb-1">セット{set.id}</div>
+                      <Link
+                        key={set.id}
+                        to={set.path}
+                        onClick={() => window.scrollTo(0, 0)}
+                        className="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-lg text-center hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg"
+                      >
+                          <div className="font-bold text-lg mb-1">{set.id}/3</div>
                           <div className="text-xs opacity-90">{set.questions}問</div>
                           {bestScore !== null && (
                             <div className="text-xs mt-2 bg-yellow-400 text-gray-900 rounded px-2 py-1 font-bold">

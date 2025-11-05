@@ -292,7 +292,6 @@ export default function Grade3Section3Set2() {
           </div>
           <p className="text-gray-600 mb-2">分散、標準偏差、変動係数の応用を学びましょう</p>
           <div className="flex gap-2 text-sm text-gray-500">
-            <span className="bg-purple-100 px-3 py-1 rounded-full">セット2/3</span>
             <span>全10問</span>
           </div>
         </div>

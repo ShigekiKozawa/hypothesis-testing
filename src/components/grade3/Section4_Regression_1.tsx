@@ -359,7 +359,6 @@ export default function Grade3Section4Set1() {
           </div>
           <p className="text-gray-600 mb-2">箱ひげ図とヒストグラムの基本的な読み取りを学びましょう</p>
           <div className="flex gap-2 text-sm text-gray-500">
-            <span className="bg-purple-100 px-3 py-1 rounded-full">セット1/3</span>
             <span>全10問</span>
           </div>
         </div>

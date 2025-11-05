@@ -292,7 +292,6 @@ export default function Grade3Section3Set1() {
           </div>
           <p className="text-gray-600 mb-2">範囲、四分位範囲、標準偏差、変動係数を学びましょう</p>
           <div className="flex gap-2 text-sm text-gray-500">
-            <span className="bg-purple-100 px-3 py-1 rounded-full">セット1/3</span>
             <span>全10問</span>
           </div>
         </div>

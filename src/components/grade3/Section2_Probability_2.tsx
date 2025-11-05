@@ -282,7 +282,6 @@ export default function Grade3Section2Set2() {
           </div>
           <p className="text-gray-600 mb-2">度数分布表と幹葉図を使った代表値の推定を学びましょう</p>
           <div className="flex gap-2 text-sm text-gray-500">
-            <span className="bg-purple-100 px-3 py-1 rounded-full">セット2/3</span>
             <span>全10問</span>
           </div>
         </div>

@@ -310,7 +310,6 @@ export default function Grade4Section4Set3() {
           </div>
           <p className="text-gray-600 mb-2">目的に応じて適切なグラフを選択し、複数のグラフを比較する力を養います</p>
           <div className="flex gap-2 text-sm text-gray-500">
-            <span className="bg-green-100 px-3 py-1 rounded-full">セット3/3</span>
             <span>全10問</span>
           </div>
         </div>

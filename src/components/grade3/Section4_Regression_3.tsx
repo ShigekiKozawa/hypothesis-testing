@@ -349,7 +349,6 @@ export default function Grade3Section4Set3() {
           </div>
           <p className="text-gray-600 mb-2">箱ひげ図とヒストグラムの総合問題を解きましょう</p>
           <div className="flex gap-2 text-sm text-gray-500">
-            <span className="bg-purple-100 px-3 py-1 rounded-full">セット3/3</span>
             <span>全10問</span>
           </div>
         </div>

@@ -297,7 +297,6 @@ export default function Grade4Section10Set1() {
           </div>
           <p className="text-gray-600 mb-2">調査を計画する際の注意点と手順を学びます</p>
           <div className="flex gap-2 text-sm text-gray-500">
-            <span className="bg-green-100 px-3 py-1 rounded-full">セット1/3</span>
             <span>全10問</span>
           </div>
         </div>
