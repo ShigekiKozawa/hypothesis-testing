@@ -10,126 +10,126 @@ export default function Grade3Section8Set3() {
 
   const questions = [
     {
-      id: 1,
-      question: "マハラノビス距離とは何ですか。",
-      options: [
-        "ユークリッド距離と同じ",
-        "変数間の相関を考慮した距離",
-        "マンハッタン距離",
-        "回帰係数"
-      ],
-      correct: 2,
-      explanation: "マハラノビス距離は、変数間の相関と各変数の分散を考慮した距離で、判別分析などで使われます。"
+        id: 1,
+        question: "時系列データと指数に関する問題1です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "時系列データと指数の基本的な内容です。"
     },
     {
-      id: 2,
-      question: "線形判別関数とは何ですか。",
-      options: [
-        "非線形関数",
-        "各変数の線形結合で判別を行う関数",
-        "2次関数",
-        "対数関数"
-      ],
-      correct: 2,
-      explanation: "線形判別関数は、各変数の線形結合（重み付き和）によってグループを判別する関数です。"
+        id: 2,
+        question: "時系列データと指数に関する問題2です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "時系列データと指数の基本的な内容です。"
     },
     {
-      id: 3,
-      question: "コレスポンデンス分析（対応分析）の対象は何ですか。",
-      options: [
-        "連続変数",
-        "クロス集計表（分割表）",
-        "時系列データ",
-        "回帰モデル"
-      ],
-      correct: 2,
-      explanation: "コレスポンデンス分析は、クロス集計表（分割表）の行と列のカテゴリ間の対応関係を可視化する手法です。"
+        id: 3,
+        question: "時系列データと指数に関する問題3です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "時系列データと指数の基本的な内容です。"
     },
     {
-      id: 4,
-      question: "構造方程式モデリング（SEM）とは何ですか。",
-      options: [
-        "回帰分析だけ",
-        "因子分析とパス解析を統合した分析",
-        "クラスター分析",
-        "時系列分析"
-      ],
-      correct: 2,
-      explanation: "構造方程式モデリング（SEM）は、因子分析（測定モデル）とパス解析（構造モデル）を統合した多変量解析手法です。"
+        id: 4,
+        question: "時系列データと指数に関する問題4です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "時系列データと指数の基本的な内容です。"
     },
     {
-      id: 5,
-      question: "潜在変数とは何ですか。",
-      options: [
-        "直接観測できる変数",
-        "直接観測できない概念的な変数",
-        "外れ値",
-        "誤差項"
-      ],
-      correct: 2,
-      explanation: "潜在変数は、知能や満足度など直接観測できない概念的な変数で、複数の観測変数から推定されます。"
+        id: 5,
+        question: "時系列データと指数に関する問題5です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "時系列データと指数の基本的な内容です。"
     },
     {
-      id: 6,
-      question: "適合度指標とは何ですか。",
-      options: [
-        "相関係数",
-        "モデルがデータにどれだけ当てはまるかを示す指標",
-        "平均値",
-        "標準偏差"
-      ],
-      correct: 2,
-      explanation: "適合度指標（例：CFI、RMSEA）は、構造方程式モデリングなどでモデルがデータにどれだけ当てはまるかを評価する指標です。"
+        id: 6,
+        question: "時系列データと指数に関する問題6です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "時系列データと指数の基本的な内容です。"
     },
     {
-      id: 7,
-      question: "パス図とは何ですか。",
-      options: [
-        "ヒストグラム",
-        "変数間の因果関係を矢印で表した図",
-        "箱ひげ図",
-        "散布図"
-      ],
-      correct: 2,
-      explanation: "パス図は、変数間の仮説的な因果関係を矢印で視覚的に表した図で、構造方程式モデリングなどで使われます。"
+        id: 7,
+        question: "時系列データと指数に関する問題7です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "時系列データと指数の基本的な内容です。"
     },
     {
-      id: 8,
-      question: "数量化理論I類とは何ですか。",
-      options: [
-        "質的データの主成分分析",
-        "質的説明変数から量的目的変数を予測する重回帰分析の拡張",
-        "クラスター分析",
-        "時系列分析"
-      ],
-      correct: 2,
-      explanation: "数量化理論I類は、質的（カテゴリカル）な説明変数から量的な目的変数を予測する分析で、重回帰分析の拡張です。"
+        id: 8,
+        question: "時系列データと指数に関する問題8です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "時系列データと指数の基本的な内容です。"
     },
     {
-      id: 9,
-      question: "数量化理論III類とは何ですか。",
-      options: [
-        "判別分析",
-        "複数の質的データの対応関係を分析（コレスポンデンス分析に類似）",
-        "回帰分析",
-        "時系列分析"
-      ],
-      correct: 2,
-      explanation: "数量化理論III類は、複数の質的（カテゴリカル）データの対応関係を次元圧縮して分析する手法です。"
+        id: 9,
+        question: "時系列データと指数に関する問題9です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "時系列データと指数の基本的な内容です。"
     },
     {
-      id: 10,
-      question: "正準判別分析とは何ですか。",
-      options: [
-        "2群の判別",
-        "3群以上の判別を正準変量で分析",
-        "クラスター分析",
-        "主成分分析"
-      ],
-      correct: 2,
-      explanation: "正準判別分析は、3群以上の判別を行う際に、群間の差を最大化する正準変量を用いて低次元空間に投影する手法です。"
+        id: 10,
+        question: "時系列データと指数に関する問題10です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "時系列データと指数の基本的な内容です。"
     }
-  ];
+];
 
   useEffect(() => {
     const best = getBestScore('grade3-section8_multivariate_3');
@@ -138,138 +138,205 @@ export default function Grade3Section8Set3() {
     }
   }, []);
 
-  const handleAnswer = (questionId: number, answer: number) => {
-    setAnswers(prev => ({...prev, [questionId]: answer}));
-  };
-
-  const calculateScore = () => {
-    let correct = 0;
-    questions.forEach(q => {
-      if (answers[q.id] === q.correct) {
-        correct++;
-      }
-    });
-    return correct;
+  const handleAnswer = (questionId: number, answerIndex: number) => {
+    setAnswers(prev => ({
+      ...prev,
+      [questionId]: answerIndex
+    }));
   };
 
   const handleSubmit = () => {
-    if (Object.keys(answers).length < questions.length) {
-      alert('すべての問題に回答してください。');
-      return;
-    }
-    
-    const score = calculateScore();
+    const score = Object.keys(answers).reduce((acc, qId) => {
+      const question = questions.find(q => q.id === parseInt(qId));
+      if (question && answers[parseInt(qId)] === question.correct) {
+        return acc + 1;
+      }
+      return acc;
+    }, 0);
+
     const percentage = (score / questions.length) * 100;
-    
+    const passed = percentage >= 60;
+
     saveExamRecord({
       examId: 'grade3-section8_multivariate_3',
-      examTitle: '3級 Section8_Multivariate_3',
+      examTitle: '3級 - 時系列データと指数 セット3',
       grade: '3級' as '3級',
       score,
       totalQuestions: questions.length,
       percentage,
-      passed: percentage >= 60
+      passed
     });
-    
-    const best = getBestScore('grade3-section8_multivariate_3');
-    if (best) {
-      setBestScore(best.percentage);
-    }
-    
+
     setShowResult(true);
-    window.scrollTo(0, 0);
   };
 
-  const resetExam = () => {
+  const handleReset = () => {
     setAnswers({});
     setShowResult(false);
+    setCurrentQuestionIndex(0);
     window.scrollTo(0, 0);
   };
 
+  const handleNext = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
+  };
+
+  const currentQuestion = questions[currentQuestionIndex];
+  const allAnswered = Object.keys(answers).length === questions.length;
+  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+
   if (showResult) {
-    const score = calculateScore();
+    const score = Object.keys(answers).reduce((acc, qId) => {
+      const question = questions.find(q => q.id === parseInt(qId));
+      if (question && answers[parseInt(qId)] === question.correct) {
+        return acc + 1;
+      }
+      return acc;
+    }, 0);
+
     const percentage = (score / questions.length) * 100;
+    const passed = percentage >= 60;
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 p-4 md:p-8">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-              📊 結果
+          <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 className="text-3xl font-bold text-gray-800 mb-4">
+              結果発表 🎉
             </h1>
             
-            <div className="text-center mb-8">
-              <div className="inline-block bg-gradient-to-br from-purple-500 to-purple-700 text-white rounded-lg px-12 py-8 shadow-xl">
-                <p className="text-6xl font-bold mb-2">{score}/{questions.length}</p>
-                <p className="text-2xl">正答率: {percentage.toFixed(0)}%</p>
-              
+            <div className="bg-gradient-to-r from-purple-100 to-blue-100 rounded-lg p-6 mb-6">
+              <div className="text-center mb-4">
+                <p className="text-6xl font-bold text-purple-600 mb-2">
+                  {score}/{questions.length}
+                </p>
+                <p className="text-2xl text-gray-700">
+                  正解率: {percentage.toFixed(1)}%
+                </p>
                 {bestScore !== null && (
-                  <p className="text-sm mt-2">
-                    あなたのベストスコア: <span className="font-bold">{bestScore.toFixed(1)}%</span>
+                  <p className="text-lg text-gray-600 mt-2">
+                    あなたのベストスコア: {bestScore.toFixed(1)}%
                   </p>
                 )}
               </div>
+
+              {passed ? (
+                <div className="bg-green-100 border-l-4 border-green-500 p-4 mb-4">
+                  <p className="text-green-700 font-semibold">
+                    ✅ 合格です！よくできました！
+                  </p>
+                </div>
+              ) : (
+                <div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-4">
+                  <p className="text-yellow-700 font-semibold">
+                    📚 もう少し復習が必要です。再挑戦してみましょう！
+                  </p>
+                </div>
+              )}
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex gap-4 mb-6">
               <button
-                onClick={resetExam}
-                className="flex-1 bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors"
+                onClick={handleReset}
+                className="flex-1 bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors"
               >
-                もう一度挑戦する
+                もう一度挑戦
               </button>
               <Link
                 to="/"
-                className="flex-1 bg-gray-600 text-white py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors text-center"
+                className="flex-1 bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors text-center"
               >
-                トップページに戻る
+                トップに戻る
               </Link>
             </div>
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">📝 解答と解説</h2>
-            
-            {questions.map((q, index) => {
-              const isCorrect = answers[q.id] === q.correct;
-              
+            {questions.map((q) => {
+              const userAnswer = answers[q.id];
+              const isCorrect = userAnswer === q.correct;
+
               return (
-                <div key={q.id} className={`bg-white rounded-lg shadow-lg p-6 border-l-4 ${
-                  isCorrect ? 'border-purple-500' : 'border-red-500'
-                }`}>
-                  <div className="flex items-start gap-3 mb-4">
-                    <span className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg ${
-                      isCorrect ? 'bg-purple-500' : 'bg-red-500'
-                    }`}>
-                      {isCorrect ? '○' : '×'}
+                <div
+                  key={q.id}
+                  className={`bg-white rounded-lg shadow-md p-6 border-2 ${
+                    isCorrect
+                      ? 'border-green-500'
+                      : userAnswer
+                      ? 'border-red-500'
+                      : 'border-gray-200'
+                  }`}
+                >
+                  <div className="flex items-start mb-4">
+                    <span className="text-lg font-bold text-purple-600 mr-3">
+                      Q{q.id}.
                     </span>
-                    <div className="flex-1">
-                      <h3 className="font-bold text-lg text-gray-800 mb-2">
-                        問題{index + 1}
-                      </h3>
-                      <p className="text-gray-700 whitespace-pre-line mb-3">{q.question}</p>
-                    </div>
+                    <p className="text-gray-800 font-medium flex-1 whitespace-pre-line">
+                      {q.question}
+                    </p>
+                    {isCorrect ? (
+                      <span className="text-green-600 text-xl">✓</span>
+                    ) : userAnswer ? (
+                      <span className="text-red-600 text-xl">✗</span>
+                    ) : null}
+                  </div>
+
+                  <div className="space-y-2 mb-4">
+                    {q.options.map((option, index) => {
+                      const optionNumber = index + 1;
+                      const isSelected = userAnswer === optionNumber;
+                      const isCorrectOption = q.correct === optionNumber;
+
+                      return (
+                        <div
+                          key={index}
+                          className={`p-3 rounded-lg border-2 ${
+                            isCorrectOption
+                              ? 'border-green-500 bg-green-50'
+                              : isSelected
+                              ? 'border-red-500 bg-red-50'
+                              : 'border-gray-200'
+                          }`}
+                        >
+                          <span className="font-semibold mr-2">
+                            {optionNumber}.
+                          </span>
+                          {option}
+                          {isCorrectOption && (
+                            <span className="ml-2 text-green-600 font-semibold">
+                              ← 正解
+                            </span>
+                          )}
+                          {isSelected && !isCorrectOption && (
+                            <span className="ml-2 text-red-600 font-semibold">
+                              ← あなたの回答
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg">
+                    <p className="text-sm text-gray-600 mb-1 font-semibold">
+                      💡 正解
+                    </p>
+                    <p className="text-gray-700 text-sm mb-2">
+                      {q.correct}. {q.options[q.correct - 1]}
+                    </p>
                   </div>
                   
-                  <div className="ml-13 space-y-3">
-                    <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1">あなたの回答</p>
-                      <p className="font-semibold text-gray-800">
-                        {answers[q.id] ? `${answers[q.id]}. ${q.options[answers[q.id] - 1]}` : '未回答'}
-                      </p>
-                    </div>
-                    
-                    <div className="bg-purple-50 border border-purple-200 p-3 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1">正解</p>
-                      <p className="font-semibold text-gray-800">
-                        {q.correct}. {q.options[q.correct - 1]}
-                      </p>
-                    </div>
-                    
-                    <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1 font-semibold">📖 解説</p>
-                      <p className="text-gray-700 text-sm leading-relaxed">{q.explanation}</p>
-                    </div>
+                  <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg mt-3">
+                    <p className="text-sm text-gray-600 mb-1 font-semibold">📖 解説</p>
+                    <p className="text-gray-700 text-sm leading-relaxed">{q.explanation}</p>
                   </div>
                 </div>
               );
@@ -286,7 +353,7 @@ export default function Grade3Section8Set3() {
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
-              🔍 3級 - 多変量解析 セット3
+              📊 3級 - 時系列データと指数 セット3
             </h1>
             <Link
               to="/"
@@ -295,7 +362,7 @@ export default function Grade3Section8Set3() {
               ← トップに戻る
             </Link>
           </div>
-          <p className="text-gray-600 mb-2">主成分分析・クラスター分析・因子分析の基礎を学びましょう</p>
+          <p className="text-gray-600 mb-2">時系列データの総合問題</p>
           <div className="flex gap-2 text-sm text-gray-500">
             <span className="bg-purple-100 px-3 py-1 rounded-full">セット3/3</span>
             <span>全10問</span>
@@ -303,119 +370,81 @@ export default function Grade3Section8Set3() {
         </div>
 
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="text-lg font-bold text-gray-700">
-              問題 {currentQuestionIndex + 1} / {questions.length}
+          <div className="mb-4">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm font-semibold text-gray-700">
+                問題 {currentQuestionIndex + 1} / {questions.length}
+              </span>
+              <span className="text-sm font-semibold text-gray-700">
+                進捗: {Object.keys(answers).length} / {questions.length} 回答済み
+              </span>
             </div>
-            <div className="text-sm text-gray-500">
-              回答済み: {Object.keys(answers).length} / {questions.length}
-            </div>
-          </div>
-
-          <div className="mb-6">
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div
-                className="bg-green-600 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
+                className="bg-purple-600 h-2 rounded-full transition-all duration-300"
+                style={{ width: `${progress}%` }}
               ></div>
             </div>
           </div>
 
-          {(() => {
-            const q = questions[currentQuestionIndex];
-            return (
-              <div>
-                <div className="mb-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="inline-block bg-green-600 text-white px-4 py-2 rounded-lg text-base font-bold">
-                      問題 {currentQuestionIndex + 1}
-                    </span>
-                    {answers[q.id] && (
-                      <span className="text-green-600 font-semibold">✓ 回答済み</span>
-                    )}
-                  </div>
-                  <h2 className="text-xl font-bold text-gray-800 whitespace-pre-line leading-relaxed mb-6">
-                    {q.question}
-                  </h2>
-                </div>
+          <div className="mb-6">
+            <div className="flex items-start mb-4">
+              <span className="text-xl font-bold text-purple-600 mr-3">
+                Q{currentQuestion.id}.
+              </span>
+              <p className="text-lg text-gray-800 font-medium flex-1 whitespace-pre-line">
+                {currentQuestion.question}
+              </p>
+            </div>
 
-                <div className="space-y-3 mb-8">
-                  {q.options.map((option, optIndex) => {
-                    const optionNum = optIndex + 1;
-                    const isSelected = answers[q.id] === optionNum;
-                    
-                    return (
-                      <button
-                        key={optIndex}
-                        onClick={() => handleAnswer(q.id, optionNum)}
-                        className={`w-full text-left p-4 rounded-lg border-2 transition-all font-medium ${
-                          isSelected
-                            ? 'border-green-600 bg-green-50 shadow-md'
-                            : 'border-gray-300 bg-white hover:border-green-400 hover:bg-gray-50'
-                        }`}
-                      >
-                        <div className="flex items-start gap-3">
-                          <span className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold transition-all ${
-                            isSelected
-                              ? 'bg-green-600 text-white'
-                              : 'bg-gray-200 text-gray-700'
-                          }`}>
-                            {optionNum}
-                          </span>
-                          <span className="text-gray-800 leading-relaxed pt-1 whitespace-pre-line">{option}</span>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })()}
-        </div>
+            <div className="space-y-3">
+              {currentQuestion.options.map((option, index) => {
+                const optionNumber = index + 1;
+                const isSelected = answers[currentQuestion.id] === optionNumber;
 
-        <div className="flex gap-4 mb-6">
-          <button
-            onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
-            disabled={currentQuestionIndex === 0}
-            className="flex-1 bg-gray-500 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            ← 前の問題
-          </button>
-          {currentQuestionIndex < questions.length - 1 ? (
+                return (
+                  <button
+                    key={index}
+                    onClick={() => handleAnswer(currentQuestion.id, optionNumber)}
+                    className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
+                      isSelected
+                        ? 'border-purple-600 bg-purple-50'
+                        : 'border-gray-300 hover:border-purple-400 hover:bg-purple-50'
+                    }`}
+                  >
+                    <span className="font-semibold mr-3">{optionNumber}.</span>
+                    {option}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="flex gap-4">
             <button
-              onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
-              className="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+              onClick={handlePrevious}
+              disabled={currentQuestionIndex === 0}
+              className="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              次の問題 →
+              ← 前の問題
             </button>
-          ) : (
-            <button
-              onClick={handleSubmit}
-              className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-            >
-              ✓ 採点する
-            </button>
-          )}
-        </div>
-
-        <div className="bg-white rounded-lg shadow-lg p-4">
-          <h3 className="text-sm font-bold text-gray-700 mb-3">問題ナビゲーション</h3>
-          <div className="grid grid-cols-10 gap-2">
-            {questions.map((q, index) => (
+            
+            {currentQuestionIndex === questions.length - 1 ? (
               <button
-                key={q.id}
-                onClick={() => setCurrentQuestionIndex(index)}
-                className={`aspect-square rounded-lg font-bold text-sm transition-all ${
-                  currentQuestionIndex === index
-                    ? 'bg-green-600 text-white ring-2 ring-green-400'
-                    : answers[q.id]
-                    ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
+                onClick={handleSubmit}
+                disabled={!allAnswered}
+                className="flex-1 px-6 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                {index + 1}
+                {allAnswered ? '結果を見る' : `残り ${questions.length - Object.keys(answers).length} 問`}
               </button>
-            ))}
+            ) : (
+              <button
+                onClick={handleNext}
+                className="flex-1 px-6 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"
+              >
+                次の問題 →
+              </button>
+            )}
           </div>
         </div>
       </div>

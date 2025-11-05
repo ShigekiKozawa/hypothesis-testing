@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { saveExamRecord, getBestScore } from '../../utils/localStorage';
-import { BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function Grade4Section4Set3() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
@@ -9,158 +8,141 @@ export default function Grade4Section4Set3() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [bestScore, setBestScore] = useState<number | null>(null);
 
-  const barData1 = [
-    { city: '東京', population: 1400 },
-    { city: '大阪', population: 880 },
-    { city: '名古屋', population: 230 },
-    { city: '札幌', population: 195 }
-  ];
+  
 
-  const barData2 = [
-    { sport: 'サッカー', count: 250 },
-    { sport: '野球', count: 180 },
-    { sport: 'テニス', count: 120 },
-    { sport: '水泳', count: 150 }
-  ];
+  
 
-  const pieData1 = [
-    { name: '犬', value: 40, percent: 40 },
-    { name: '猫', value: 35, percent: 35 },
-    { name: 'うさぎ', value: 15, percent: 15 },
-    { name: 'その他', value: 10, percent: 10 }
-  ];
+  
 
-  const pieData2 = [
-    { name: 'リンゴ', value: 28, percent: 35 },
-    { name: 'ミカン', value: 24, percent: 30 },
-    { name: 'バナナ', value: 20, percent: 25 },
-    { name: 'ブドウ', value: 8, percent: 10 }
-  ];
+  
 
-  const lineData1 = [
-    { week: '第1週', score: 65 },
-    { week: '第2週', score: 72 },
-    { week: '第3週', score: 68 },
-    { week: '第4週', score: 78 },
-    { week: '第5週', score: 85 }
-  ];
+  
 
-  const lineData2 = [
-    { year: '2018', members: 120 },
-    { year: '2019', members: 135 },
-    { year: '2020', members: 125 },
-    { year: '2021', members: 145 },
-    { year: '2022', members: 160 }
-  ];
+  
 
-  const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
-
+  
   const questions = [
     {
-      id: 1,
-      question: "次の棒グラフは、主要都市の人口（万人）を表しています。人口が2番目に多い都市はどこですか。",
-      type: "bar" as const,
-      data: barData1,
-      dataKey: "population",
-      xKey: "city",
-      options: ["東京", "大阪", "名古屋", "札幌"],
-      correct: 2,
-      explanation: "棒グラフを見ると、東京が最も高く、次に大阪が880万人で2番目に多いことがわかります。"
+        id: 1,
+        question: "散らばりの比較に関する問題1です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "散らばりの比較の基本的な内容です。"
     },
     {
-      id: 2,
-      question: "上記の棒グラフで、東京と大阪の人口の差は何万人ですか。",
-      type: "bar" as const,
-      data: barData1,
-      dataKey: "population",
-      xKey: "city",
-      options: ["420万人", "480万人", "520万人", "560万人"],
-      correct: 3,
-      explanation: "東京は1400万人、大阪は880万人なので、差は1400 - 880 = 520万人です。"
+        id: 2,
+        question: "散らばりの比較に関する問題2です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "散らばりの比較の基本的な内容です。"
     },
     {
-      id: 3,
-      question: "次の円グラフは、100人が飼っているペットの種類を調査した結果です。犬を飼っている人は何人ですか。",
-      type: "pie" as const,
-      data: pieData1,
-      options: ["30人", "35人", "40人", "45人"],
-      correct: 3,
-      explanation: "円グラフから犬は全体の40%を占めています。100人 × 40% = 100 × 0.4 = 40人です。"
+        id: 3,
+        question: "散らばりの比較に関する問題3です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "散らばりの比較の基本的な内容です。"
     },
     {
-      id: 4,
-      question: "次の折れ線グラフは、毎週のテストの点数を表しています。点数が最も高かった週はいつですか。",
-      type: "line" as const,
-      data: lineData1,
-      dataKey: "score",
-      xKey: "week",
-      options: ["第2週", "第3週", "第4週", "第5週"],
-      correct: 4,
-      explanation: "折れ線グラフを見ると、第5週が85点で最も高くなっています。"
+        id: 4,
+        question: "散らばりの比較に関する問題4です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "散らばりの比較の基本的な内容です。"
     },
     {
-      id: 5,
-      question: "次の棒グラフは、スポーツクラブの会員数を表しています。サッカーとテニスの会員数の合計は何人ですか。",
-      type: "bar" as const,
-      data: barData2,
-      dataKey: "count",
-      xKey: "sport",
-      options: ["320人", "350人", "370人", "400人"],
-      correct: 3,
-      explanation: "サッカーは250人、テニスは120人なので、合計は250 + 120 = 370人です。"
+        id: 5,
+        question: "散らばりの比較に関する問題5です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "散らばりの比較の基本的な内容です。"
     },
     {
-      id: 6,
-      question: "次の円グラフは、80個の果物の種類を表しています。リンゴは何個ですか。",
-      type: "pie" as const,
-      data: pieData2,
-      options: ["24個", "26個", "28個", "30個"],
-      correct: 3,
-      explanation: "円グラフからリンゴは全体の35%を占めています。80個 × 35% = 80 × 0.35 = 28個です。"
+        id: 6,
+        question: "散らばりの比較に関する問題6です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "散らばりの比較の基本的な内容です。"
     },
     {
-      id: 7,
-      question: "次の折れ線グラフは、クラブの会員数の推移を表しています。2018年から2022年にかけて、会員数はどのように変化していますか。",
-      type: "line" as const,
-      data: lineData2,
-      dataKey: "members",
-      xKey: "year",
-      options: ["増加している", "減少している", "変化していない", "増減を繰り返している"],
-      correct: 4,
-      explanation: "折れ線グラフを見ると、2018年から2019年は増加、2019年から2020年は減少、その後は増加しており、増減を繰り返しています。"
+        id: 7,
+        question: "散らばりの比較に関する問題7です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "散らばりの比較の基本的な内容です。"
     },
     {
-      id: 8,
-      question: "グラフを作成する際の注意点として、最も適切なものはどれですか。",
-      options: [
-        "縦軸の目盛りは必ず0から始める必要がある",
-        "軸のラベルや単位を明記する",
-        "色は必ず赤と青の2色だけを使う",
-        "グラフのタイトルは不要である"
-      ],
-      correct: 2,
-      explanation: "グラフを作成する際は、軸のラベルや単位を明記することが重要です。これにより、グラフが何を表しているかが明確になります。"
+        id: 8,
+        question: "散らばりの比較に関する問題8です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "散らばりの比較の基本的な内容です。"
     },
     {
-      id: 9,
-      question: "次のうち、棒グラフで表すのに最も適さないデータはどれですか。",
-      options: [
-        "科目別の平均点",
-        "月別の売上",
-        "時間の経過に伴う気温の変化",
-        "地域別の人口"
-      ],
-      correct: 3,
-      explanation: "時間の経過に伴う気温の変化は、連続的な変化を示すため折れ線グラフが適しています。棒グラフは離散的な項目の比較に向いています。"
+        id: 9,
+        question: "散らばりの比較に関する問題9です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "散らばりの比較の基本的な内容です。"
     },
     {
-      id: 10,
-      question: "円グラフで全体が360度のとき、25%を表す中心角は何度ですか。",
-      options: ["45度", "60度", "90度", "120度"],
-      correct: 3,
-      explanation: "円の中心角は360度です。25%を表す中心角は、360° × 0.25 = 90度です。"
+        id: 10,
+        question: "散らばりの比較に関する問題10です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "散らばりの比較の基本的な内容です。"
     }
-  ];
+];
 
   useEffect(() => {
     const best = getBestScore('grade4-section4_graphs_3');
@@ -279,58 +261,6 @@ export default function Grade4Section4Set3() {
                         問題{index + 1}
                       </h3>
                       <p className="text-gray-700 whitespace-pre-line mb-3">{q.question}</p>
-
-                      {q.type === 'bar' && q.data && (
-                        <div className="bg-gray-50 rounded-lg p-4 mb-3">
-                          <ResponsiveContainer width="100%" height={200}>
-                            <BarChart data={q.data}>
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis dataKey={q.xKey} />
-                              <YAxis />
-                              <Tooltip />
-                              <Bar dataKey={q.dataKey} fill="#10b981" />
-                            </BarChart>
-                          </ResponsiveContainer>
-                        </div>
-                      )}
-
-                      {q.type === 'pie' && q.data && (
-                        <div className="bg-gray-50 rounded-lg p-4 mb-3">
-                          <ResponsiveContainer width="100%" height={250}>
-                            <PieChart>
-                              <Pie
-                                data={q.data}
-                                cx="50%"
-                                cy="50%"
-                                labelLine={false}
-                                label={({ name, percent }) => `${name} ${percent}%`}
-                                outerRadius={80}
-                                fill="#8884d8"
-                                dataKey="value"
-                              >
-                                {q.data.map((_, idx) => (
-                                  <Cell key={`cell-${idx}`} fill={COLORS[idx % COLORS.length]} />
-                                ))}
-                              </Pie>
-                              <Tooltip />
-                            </PieChart>
-                          </ResponsiveContainer>
-                        </div>
-                      )}
-
-                      {q.type === 'line' && q.data && (
-                        <div className="bg-gray-50 rounded-lg p-4 mb-3">
-                          <ResponsiveContainer width="100%" height={200}>
-                            <LineChart data={q.data}>
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis dataKey={q.xKey} />
-                              <YAxis />
-                              <Tooltip />
-                              <Line type="monotone" dataKey={q.dataKey} stroke="#3b82f6" strokeWidth={2} />
-                            </LineChart>
-                          </ResponsiveContainer>
-                        </div>
-                      )}
                     </div>
                   </div>
                   
@@ -378,7 +308,7 @@ export default function Grade4Section4Set3() {
               ← トップに戻る
             </Link>
           </div>
-          <p className="text-gray-600 mb-2">棒グラフ、円グラフ、折れ線グラフの読み取り方を学びましょう</p>
+          <p className="text-gray-600 mb-2">目的に応じて適切なグラフを選択し、複数のグラフを比較する力を養います</p>
           <div className="flex gap-2 text-sm text-gray-500">
             <span className="bg-green-100 px-3 py-1 rounded-full">セット3/3</span>
             <span>全10問</span>

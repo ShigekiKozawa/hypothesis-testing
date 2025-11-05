@@ -40,8 +40,8 @@ export default function Home() {
   const grade3Sections = [
     {
       id: 'section1',
-      title: 'セクション1: 記述統計の基礎',
-      description: '平均値、分散、標準偏差、相関係数',
+      title: 'セクション1: データの種類と基本グラフ',
+      description: '量的変数・質的変数、棒グラフ・円グラフ・折れ線グラフ',
       sets: [
         { id: 1, path: '/grade3/section1/set1', questions: 10 },
         { id: 2, path: '/grade3/section1/set2', questions: 10 },
@@ -50,8 +50,8 @@ export default function Home() {
     },
     {
       id: 'section2',
-      title: 'セクション2: 確率分布',
-      description: '離散型・連続型確率分布、正規分布、二項分布',
+      title: 'セクション2: 記述統計量の基礎',
+      description: '平均値・中央値・最頻値、偏差値の計算',
       sets: [
         { id: 1, path: '/grade3/section2/set1', questions: 10 },
         { id: 2, path: '/grade3/section2/set2', questions: 10 },
@@ -60,8 +60,8 @@ export default function Home() {
     },
     {
       id: 'section3',
-      title: 'セクション3: 推測統計の基礎',
-      description: '点推定、区間推定、仮説検定の基本',
+      title: 'セクション3: 散らばりの指標',
+      description: '範囲・四分位範囲・標準偏差・変動係数',
       sets: [
         { id: 1, path: '/grade3/section3/set1', questions: 10 },
         { id: 2, path: '/grade3/section3/set2', questions: 10 },
@@ -70,8 +70,8 @@ export default function Home() {
     },
     {
       id: 'section4',
-      title: 'セクション4: 回帰分析',
-      description: '単回帰・重回帰分析、最小二乗法、決定係数',
+      title: 'セクション4: 箱ひげ図とヒストグラム',
+      description: '5数要約、度数分布表、グラフの読み取り',
       sets: [
         { id: 1, path: '/grade3/section4/set1', questions: 10 },
         { id: 2, path: '/grade3/section4/set2', questions: 10 },
@@ -80,8 +80,8 @@ export default function Home() {
     },
     {
       id: 'section5',
-      title: 'セクション5: 実験計画法・分散分析',
-      description: '一元配置・二元配置分散分析、実験計画法',
+      title: 'セクション5: 散布図と相関',
+      description: '散布図の読み取り、相関係数、相関と因果',
       sets: [
         { id: 1, path: '/grade3/section5/set1', questions: 10 },
         { id: 2, path: '/grade3/section5/set2', questions: 10 },
@@ -90,8 +90,8 @@ export default function Home() {
     },
     {
       id: 'section6',
-      title: 'セクション6: データ収集・調査法',
-      description: '標本抽出法、調査デザイン、バイアス',
+      title: 'セクション6: クロス集計表',
+      description: 'クロス集計表の読み取り、割合計算、条件付き確率',
       sets: [
         { id: 1, path: '/grade3/section6/set1', questions: 10 },
         { id: 2, path: '/grade3/section6/set2', questions: 10 },
@@ -100,8 +100,8 @@ export default function Home() {
     },
     {
       id: 'section7',
-      title: 'セクション7: 時系列分析',
-      description: 'トレンド、季節変動、ARIMA、自己相関',
+      title: 'セクション7: 確率の基礎',
+      description: '確率の計算、条件付き確率、期待値',
       sets: [
         { id: 1, path: '/grade3/section7/set1', questions: 10 },
         { id: 2, path: '/grade3/section7/set2', questions: 10 },
@@ -110,8 +110,8 @@ export default function Home() {
     },
     {
       id: 'section8',
-      title: 'セクション8: 多変量解析',
-      description: '主成分分析、因子分析、クラスター分析',
+      title: 'セクション8: 時系列データと指数',
+      description: '時系列グラフ、変化率、指数の計算',
       sets: [
         { id: 1, path: '/grade3/section8/set1', questions: 10 },
         { id: 2, path: '/grade3/section8/set2', questions: 10 },
@@ -120,8 +120,8 @@ export default function Home() {
     },
     {
       id: 'section9',
-      title: 'セクション9: 統計的検定の応用',
-      description: 'カイ二乗検定、ノンパラメトリック検定、生存時間解析',
+      title: 'セクション9: 標本調査と実験計画',
+      description: '標本抽出法、実験デザイン、バイアス',
       sets: [
         { id: 1, path: '/grade3/section9/set1', questions: 10 },
         { id: 2, path: '/grade3/section9/set2', questions: 10 },
@@ -130,8 +130,8 @@ export default function Home() {
     },
     {
       id: 'section10',
-      title: 'セクション10: 応用トピック',
-      description: 'ベイズ統計、機械学習の基礎、モデル評価',
+      title: 'セクション10: 推測統計の入口',
+      description: '標本分布、信頼区間、仮説検定の基礎',
       sets: [
         { id: 1, path: '/grade3/section10/set1', questions: 10 },
         { id: 2, path: '/grade3/section10/set2', questions: 10 },
@@ -176,8 +176,8 @@ export default function Home() {
   const grade4Sections = [
     {
       id: 'section1',
-      title: 'セクション1: データの代表値',
-      description: '平均値、中央値、最頻値の理解',
+      title: 'セクション1: データの種類とグラフ',
+      description: '量的・質的データの識別、グラフの選択',
       sets: [
         { id: 1, path: '/grade4/section1/set1', questions: 10 },
         { id: 2, path: '/grade4/section1/set2', questions: 10 },
@@ -186,8 +186,8 @@ export default function Home() {
     },
     {
       id: 'section2',
-      title: 'セクション2: データの散らばり',
-      description: '範囲、四分位範囲の理解',
+      title: 'セクション2: 度数分布表と代表値',
+      description: '度数分布表、平均値・中央値・最頻値',
       sets: [
         { id: 1, path: '/grade4/section2/set1', questions: 10 },
         { id: 2, path: '/grade4/section2/set2', questions: 10 },
@@ -196,8 +196,8 @@ export default function Home() {
     },
     {
       id: 'section3',
-      title: 'セクション3: 度数分布表',
-      description: '度数分布表の読み取りと作成',
+      title: 'セクション3: 度数分布表の応用',
+      description: '累積度数、相対度数、階級値',
       sets: [
         { id: 1, path: '/grade4/section3/set1', questions: 10 },
         { id: 2, path: '/grade4/section3/set2', questions: 10 },
@@ -206,8 +206,8 @@ export default function Home() {
     },
     {
       id: 'section4',
-      title: 'セクション4: グラフの読み取り',
-      description: '棒グラフ、円グラフ、折れ線グラフの理解',
+      title: 'セクション4: グラフの読解',
+      description: '棒グラフ、円グラフ、折れ線グラフ、ヒストグラム',
       sets: [
         { id: 1, path: '/grade4/section4/set1', questions: 10 },
         { id: 2, path: '/grade4/section4/set2', questions: 10 },
@@ -216,8 +216,8 @@ export default function Home() {
     },
     {
       id: 'section5',
-      title: 'セクション5: 確率の基礎',
-      description: '確率の基本的な考え方',
+      title: 'セクション5: 確率',
+      description: '確率の基本計算、場合の数、独立事象',
       sets: [
         { id: 1, path: '/grade4/section5/set1', questions: 10 },
         { id: 2, path: '/grade4/section5/set2', questions: 10 },
@@ -226,8 +226,8 @@ export default function Home() {
     },
     {
       id: 'section6',
-      title: 'セクション6: 相関と散布図',
-      description: '2つの変数の関係性の理解',
+      title: 'セクション6: 散布図と相関',
+      description: '散布図の読み取り、相関の理解',
       sets: [
         { id: 1, path: '/grade4/section6/set1', questions: 10 },
         { id: 2, path: '/grade4/section6/set2', questions: 10 },
@@ -237,7 +237,7 @@ export default function Home() {
     {
       id: 'section7',
       title: 'セクション7: 箱ひげ図',
-      description: '四分位数と箱ひげ図の読み方',
+      description: '5数要約、四分位範囲、箱ひげ図の読解',
       sets: [
         { id: 1, path: '/grade4/section7/set1', questions: 10 },
         { id: 2, path: '/grade4/section7/set2', questions: 10 },
@@ -247,7 +247,7 @@ export default function Home() {
     {
       id: 'section8',
       title: 'セクション8: ヒストグラム',
-      description: 'ヒストグラムとデータ分布',
+      description: 'ヒストグラムの読解、分布の形状',
       sets: [
         { id: 1, path: '/grade4/section8/set1', questions: 10 },
         { id: 2, path: '/grade4/section8/set2', questions: 10 },
@@ -256,8 +256,8 @@ export default function Home() {
     },
     {
       id: 'section9',
-      title: 'セクション9: 標本と母集団',
-      description: '標本調査と全数調査の理解',
+      title: 'セクション9: 標本調査',
+      description: '母集団と標本、無作為抽出、バイアス',
       sets: [
         { id: 1, path: '/grade4/section9/set1', questions: 10 },
         { id: 2, path: '/grade4/section9/set2', questions: 10 },
@@ -266,8 +266,8 @@ export default function Home() {
     },
     {
       id: 'section10',
-      title: 'セクション10: データの収集方法',
-      description: '様々なデータ収集方法',
+      title: 'セクション10: データ収集と調査計画',
+      description: 'アンケート設計、調査の計画、データ整理',
       sets: [
         { id: 1, path: '/grade4/section10/set1', questions: 10 },
         { id: 2, path: '/grade4/section10/set2', questions: 10 },

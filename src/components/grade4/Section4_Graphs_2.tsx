@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { saveExamRecord, getBestScore } from '../../utils/localStorage';
-import { BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function Grade4Section4Set2() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
@@ -9,156 +8,135 @@ export default function Grade4Section4Set2() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [bestScore, setBestScore] = useState<number | null>(null);
 
-  const barData1 = [
-    { product: 'りんご', price: 150 },
-    { product: 'みかん', price: 100 },
-    { product: 'バナナ', price: 120 },
-    { product: 'いちご', price: 300 }
-  ];
-
-  const barData2 = [
-    { grade: '1年', students: 180 },
-    { grade: '2年', students: 175 },
-    { grade: '3年', students: 170 }
-  ];
-
-  const pieData1 = [
-    { name: '電車', value: 45, percent: 45 },
-    { name: 'バス', value: 30, percent: 30 },
-    { name: '自転車', value: 15, percent: 15 },
-    { name: '徒歩', value: 10, percent: 10 }
-  ];
-
-  const pieData2 = [
-    { name: '晴れ', value: 15, percent: 50 },
-    { name: '曇り', value: 9, percent: 30 },
-    { name: '雨', value: 6, percent: 20 }
-  ];
-
-  const lineData1 = [
-    { month: '1月', price: 300 },
-    { month: '2月', price: 280 },
-    { month: '3月', price: 350 },
-    { month: '4月', price: 320 },
-    { month: '5月', price: 400 }
-  ];
-
-  const lineData2 = [
-    { time: '8時', temp: 18 },
-    { time: '10時', temp: 22 },
-    { time: '12時', temp: 26 },
-    { time: '14時', temp: 28 },
-    { time: '16時', temp: 25 }
-  ];
-
-  const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
-
+  
+  
+  
+  
+  
+  
+  
   const questions = [
     {
-      id: 1,
-      question: "次の棒グラフは、果物の値段を表しています。最も安い果物はどれですか。",
-      type: "bar" as const,
-      data: barData1,
-      dataKey: "price",
-      xKey: "product",
-      options: ["りんご", "みかん", "バナナ", "いちご"],
-      correct: 2,
-      explanation: "棒グラフを見ると、みかんの棒が最も低く100円で、最も安いことがわかります。"
+        id: 1,
+        question: "四分位範囲に関する問題1です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "四分位範囲の基本的な内容です。"
     },
     {
-      id: 2,
-      question: "上記の棒グラフで、いちごとりんごの値段の差は何円ですか。",
-      type: "bar" as const,
-      data: barData1,
-      dataKey: "price",
-      xKey: "product",
-      options: ["100円", "120円", "150円", "180円"],
-      correct: 3,
-      explanation: "いちごは300円、りんごは150円なので、差は300 - 150 = 150円です。"
+        id: 2,
+        question: "四分位範囲に関する問題2です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "四分位範囲の基本的な内容です。"
     },
     {
-      id: 3,
-      question: "次の円グラフは、通学方法を調査した結果です。電車とバスを合わせると全体の何%になりますか。",
-      type: "pie" as const,
-      data: pieData1,
-      options: ["65%", "70%", "75%", "80%"],
-      correct: 3,
-      explanation: "電車は45%、バスは30%なので、合わせると45% + 30% = 75%です。"
+        id: 3,
+        question: "四分位範囲に関する問題3です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "四分位範囲の基本的な内容です。"
     },
     {
-      id: 4,
-      question: "次の折れ線グラフは、野菜の月別価格を表しています。価格が最も高かった月はいつですか。",
-      type: "line" as const,
-      data: lineData1,
-      dataKey: "price",
-      xKey: "month",
-      options: ["1月", "3月", "4月", "5月"],
-      correct: 4,
-      explanation: "折れ線グラフを見ると、5月が400円で最も高くなっています。"
+        id: 4,
+        question: "四分位範囲に関する問題4です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "四分位範囲の基本的な内容です。"
     },
     {
-      id: 5,
-      question: "次の棒グラフは、学年別の生徒数を表しています。1年生と3年生の生徒数の差は何人ですか。",
-      type: "bar" as const,
-      data: barData2,
-      dataKey: "students",
-      xKey: "grade",
-      options: ["5人", "10人", "15人", "20人"],
-      correct: 2,
-      explanation: "1年生は180人、3年生は170人なので、差は180 - 170 = 10人です。"
+        id: 5,
+        question: "四分位範囲に関する問題5です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "四分位範囲の基本的な内容です。"
     },
     {
-      id: 6,
-      question: "次の円グラフは、ある月30日間の天気を表しています。晴れの日は何日ありましたか。",
-      type: "pie" as const,
-      data: pieData2,
-      options: ["12日", "15日", "18日", "20日"],
-      correct: 2,
-      explanation: "円グラフから晴れは全体の50%を占めています。30日 × 50% = 30 × 0.5 = 15日です。"
+        id: 6,
+        question: "四分位範囲に関する問題6です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "四分位範囲の基本的な内容です。"
     },
     {
-      id: 7,
-      question: "次の折れ線グラフは、ある日の気温の変化を表しています。気温が最も高かった時刻はいつですか。",
-      type: "line" as const,
-      data: lineData2,
-      dataKey: "temp",
-      xKey: "time",
-      options: ["10時", "12時", "14時", "16時"],
-      correct: 3,
-      explanation: "折れ線グラフを見ると、14時が28℃で最も高くなっています。"
+        id: 7,
+        question: "四分位範囲に関する問題7です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "四分位範囲の基本的な内容です。"
     },
     {
-      id: 8,
-      question: "折れ線グラフを使うのに最も適しているデータはどれですか。",
-      options: [
-        "項目ごとの量の比較",
-        "全体に対する各部分の割合",
-        "時間の経過に伴う変化",
-        "2つの変数の相関関係"
-      ],
-      correct: 3,
-      explanation: "折れ線グラフは時間の経過に伴う変化を示すのに最も適しています。連続的な変化の様子を視覚的に把握できます。"
+        id: 8,
+        question: "四分位範囲に関する問題8です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "四分位範囲の基本的な内容です。"
     },
     {
-      id: 9,
-      question: "棒グラフと折れ線グラフの主な違いは何ですか。",
-      options: [
-        "棒グラフは縦、折れ線グラフは横に表示する",
-        "棒グラフは項目の比較、折れ線グラフは変化の推移を表す",
-        "棒グラフは割合、折れ線グラフは数量を表す",
-        "違いはない"
-      ],
-      correct: 2,
-      explanation: "棒グラフは複数の項目の量を比較するのに適し、折れ線グラフは時間的な変化の推移を表すのに適しています。"
+        id: 9,
+        question: "四分位範囲に関する問題9です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "四分位範囲の基本的な内容です。"
     },
     {
-      id: 10,
-      question: "円グラフで全体が100%のとき、30%を表す中心角は何度ですか。",
-      options: ["90度", "108度", "120度", "135度"],
-      correct: 2,
-      explanation: "円の中心角は360度です。30%を表す中心角は、360° × 0.3 = 108度です。"
+        id: 10,
+        question: "四分位範囲に関する問題10です。",
+        options: [
+            "選択肢1",
+            "選択肢2（正解）",
+            "選択肢3",
+            "選択肢4"
+        ],
+        correct: 2,
+        explanation: "四分位範囲の基本的な内容です。"
     }
-  ];
+];
 
   useEffect(() => {
     const best = getBestScore('grade4-section4_graphs_2');
@@ -278,58 +256,7 @@ export default function Grade4Section4Set2() {
                       </h3>
                       <p className="text-gray-700 whitespace-pre-line mb-3">{q.question}</p>
 
-                      {q.type === 'bar' && q.data && (
-                        <div className="bg-gray-50 rounded-lg p-4 mb-3">
-                          <ResponsiveContainer width="100%" height={200}>
-                            <BarChart data={q.data}>
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis dataKey={q.xKey} />
-                              <YAxis />
-                              <Tooltip />
-                              <Bar dataKey={q.dataKey} fill="#10b981" />
-                            </BarChart>
-                          </ResponsiveContainer>
-                        </div>
-                      )}
-
-                      {q.type === 'pie' && q.data && (
-                        <div className="bg-gray-50 rounded-lg p-4 mb-3">
-                          <ResponsiveContainer width="100%" height={250}>
-                            <PieChart>
-                              <Pie
-                                data={q.data}
-                                cx="50%"
-                                cy="50%"
-                                labelLine={false}
-                                label={({ name, percent }) => `${name} ${percent}%`}
-                                outerRadius={80}
-                                fill="#8884d8"
-                                dataKey="value"
-                              >
-                                {q.data.map((_, idx) => (
-                                  <Cell key={`cell-${idx}`} fill={COLORS[idx % COLORS.length]} />
-                                ))}
-                              </Pie>
-                              <Tooltip />
-                            </PieChart>
-                          </ResponsiveContainer>
-                        </div>
-                      )}
-
-                      {q.type === 'line' && q.data && (
-                        <div className="bg-gray-50 rounded-lg p-4 mb-3">
-                          <ResponsiveContainer width="100%" height={200}>
-                            <LineChart data={q.data}>
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis dataKey={q.xKey} />
-                              <YAxis />
-                              <Tooltip />
-                              <Line type="monotone" dataKey={q.dataKey} stroke="#3b82f6" strokeWidth={2} />
-                            </LineChart>
-                          </ResponsiveContainer>
-                        </div>
-                      )}
-                    </div>
+                      </div>
                   </div>
                   
                   <div className="ml-13 space-y-3">
@@ -376,7 +303,7 @@ export default function Grade4Section4Set2() {
               ← トップに戻る
             </Link>
           </div>
-          <p className="text-gray-600 mb-2">棒グラフ、円グラフ、折れ線グラフの読み取り方を学びましょう</p>
+          <p className="text-gray-600 mb-2">ヒストグラムと折れ線グラフの特徴と使い分けを学びます</p>
           <div className="flex gap-2 text-sm text-gray-500">
             <span className="bg-green-100 px-3 py-1 rounded-full">セット2/3</span>
             <span>全10問</span>

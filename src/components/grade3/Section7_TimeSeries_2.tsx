@@ -10,126 +10,126 @@ export default function Grade3Section7Set2() {
 
   const questions = [
     {
-      id: 1,
-      question: "ARIMAモデルとは何ですか。",
-      options: [
-        "ARモデルだけ",
-        "AR、差分、MAを組み合わせたモデル",
-        "季節変動だけのモデル",
-        "回帰分析のモデル"
-      ],
-      correct: 2,
-      explanation: "ARIMAモデルは、自己回帰(AR)、差分(I:Integrated)、移動平均(MA)を組み合わせた時系列予測モデルです。"
+        id: 1,
+        question: "赤玉5個、白玉3個の袋から2個同時に取り出すとき、2個とも赤玉である確率はいくらですか。",
+        options: [
+            "5/14",
+            "10/28",
+            "5/8",
+            "15/56"
+        ],
+        correct: 1,
+        explanation: "組み合わせで計算します。2個とも赤玉は5C2=10通り、全体は8C2=28通りなので、10/28=5/14です。"
     },
     {
-      id: 2,
-      question: "差分をとる目的は何ですか。",
-      options: [
-        "データを増やす",
-        "非定常データを定常データに変換する",
-        "外れ値を増やす",
-        "分散を大きくする"
-      ],
-      correct: 2,
-      explanation: "差分をとることで、トレンドを除去し、非定常な時系列データを定常な時系列に変換できます。"
+        id: 2,
+        question: "条件付き確率P(B|A)の意味として正しいものはどれですか。",
+        options: [
+            "AとBが同時に起こる確率",
+            "Aが起こった条件下でBが起こる確率",
+            "Bが起こった条件下でAが起こる確率",
+            "AまたはBが起こる確率"
+        ],
+        correct: 2,
+        explanation: "P(B|A)は「Aが起こったという条件のもとでBが起こる確率」を表します。"
     },
     {
-      id: 3,
-      question: "SARIMAモデルとは何ですか。",
-      options: [
-        "ARIMAと同じ",
-        "季節性を考慮したARIMAモデル",
-        "MAモデルだけ",
-        "回帰モデル"
-      ],
-      correct: 2,
-      explanation: "SARIMAモデルは、季節変動（Seasonal）を考慮したARIMAモデルです。"
+        id: 3,
+        question: "2つの事象が独立であるとき、P(B|A)はいくらですか。",
+        options: [
+            "P(A)",
+            "P(B)",
+            "P(A)×P(B)",
+            "1"
+        ],
+        correct: 2,
+        explanation: "2つの事象が独立の場合、P(B|A)=P(B)となります。Aの発生がBの確率に影響しません。"
     },
     {
-      id: 4,
-      question: "単位根検定（ADF検定）の目的は何ですか。",
-      options: [
-        "季節性の検定",
-        "定常性の検定",
-        "正規性の検定",
-        "独立性の検定"
-      ],
-      correct: 2,
-      explanation: "単位根検定（ADF検定など）は、時系列データが定常かどうかを検定する方法です。"
+        id: 4,
+        question: "サイコロを2回振って、少なくとも1回は6が出る確率はいくらですか。",
+        options: [
+            "1/6",
+            "11/36",
+            "1/3",
+            "5/36"
+        ],
+        correct: 2,
+        explanation: "余事象を使います。2回とも6以外の確率は(5/6)×(5/6)=25/36。よって1-25/36=11/36です。"
     },
     {
-      id: 5,
-      question: "ACF（自己相関関数）とは何ですか。",
-      options: [
-        "偏自己相関",
-        "異なるラグにおける自己相関の値",
-        "回帰係数",
-        "決定係数"
-      ],
-      correct: 2,
-      explanation: "ACF（自己相関関数）は、異なるラグ（時間差）における自己相関係数を表す関数です。"
+        id: 5,
+        question: "10本のくじの中に当たりが2本あります。2本引いて（非復元）、2本とも当たる確率はいくらですか。",
+        options: [
+            "1/45",
+            "2/45",
+            "1/25",
+            "4/100"
+        ],
+        correct: 1,
+        explanation: "1本目が当たる確率は2/10、2本目も当たる確率は1/9（非復元）。(2/10)×(1/9)=2/90=1/45です。"
     },
     {
-      id: 6,
-      question: "PACF（偏自己相関関数）とは何ですか。",
-      options: [
-        "通常の自己相関",
-        "間のラグの影響を除いた自己相関",
-        "移動平均",
-        "トレンド"
-      ],
-      correct: 2,
-      explanation: "PACF（偏自己相関関数）は、間のラグの影響を取り除いた、特定のラグにおける自己相関を表します。"
+        id: 6,
+        question: "ベイズの定理を使う場面として適切なものはどれですか。",
+        options: [
+            "事前確率から事後確率を求める",
+            "平均値を計算する",
+            "分散を求める",
+            "回帰分析を行う"
+        ],
+        correct: 1,
+        explanation: "ベイズの定理は、事前確率と尤度から事後確率を計算するために使います。"
     },
     {
-      id: 7,
-      question: "ホワイトノイズとは何ですか。",
-      options: [
-        "トレンドのあるデータ",
-        "平均0、一定の分散で独立な確率変数の系列",
-        "季節変動のあるデータ",
-        "自己相関の強いデータ"
-      ],
-      correct: 2,
-      explanation: "ホワイトノイズは、平均0、一定の分散で、時点間に相関のない（独立な）純粋なランダム変動です。"
+        id: 7,
+        question: "コインを3回投げて、ちょうど2回表が出る確率はいくらですか。",
+        options: [
+            "1/8",
+            "3/8",
+            "1/2",
+            "5/8"
+        ],
+        correct: 2,
+        explanation: "表が2回、裏が1回出る組み合わせは3C2=3通り。各パターンの確率は(1/2)³=1/8。よって3×(1/8)=3/8です。"
     },
     {
-      id: 8,
-      question: "VARモデル（ベクトル自己回帰モデル）とは何ですか。",
-      options: [
-        "1つの時系列のみ扱う",
-        "複数の時系列を同時に扱う多変量モデル",
-        "季節変動のみ扱う",
-        "トレンドのみ扱う"
-      ],
-      correct: 2,
-      explanation: "VARモデルは、複数の時系列変数を同時に扱い、変数間の動的な関係を分析する多変量時系列モデルです。"
+        id: 8,
+        question: "確率の乗法定理で、P(AかつB)を正しく表した式はどれですか。",
+        options: [
+            "P(A)×P(B|A)",
+            "P(A)+P(B)",
+            "P(A)×P(B)のみ",
+            "P(A)-P(B)"
+        ],
+        correct: 1,
+        explanation: "一般に、P(AかつB)=P(A)×P(B|A)です。独立の場合はP(B|A)=P(B)となり、P(A)×P(B)になります。"
     },
     {
-      id: 9,
-      question: "Granger因果性検定とは何ですか。",
-      options: [
-        "相関係数の検定",
-        "ある時系列が別の時系列の予測に役立つかを検定",
-        "正規性の検定",
-        "等分散性の検定"
-      ],
-      correct: 2,
-      explanation: "Granger因果性検定は、ある時系列変数が別の時系列変数を予測するのに統計的に有用かどうかを検定します。"
+        id: 9,
+        question: "排反な事象とはどういう意味ですか。",
+        options: [
+            "必ず同時に起こる",
+            "絶対に同時には起こらない",
+            "確率が等しい",
+            "独立である"
+        ],
+        correct: 2,
+        explanation: "排反な事象とは、同時には起こらない事象のことです。例えば、サイコロで「1が出る」と「2が出る」は排反です。"
     },
     {
-      id: 10,
-      question: "共和分とは何ですか。",
-      options: [
-        "すべての変数が定常",
-        "非定常な変数の線形結合が定常になる関係",
-        "すべての変数が非定常",
-        "変数間に相関がない"
-      ],
-      correct: 2,
-      explanation: "共和分は、個々の時系列は非定常でも、それらの線形結合が定常になる長期的な均衡関係です。"
+        id: 10,
+        question: "確率が0の事象について正しい記述を選んでください。",
+        options: [
+            "絶対に起こらない事象",
+            "起こりにくい事象",
+            "起こりやすい事象",
+            "必ず起こる事象"
+        ],
+        correct: 1,
+        explanation: "確率が0の事象は、理論上絶対に起こらない事象です。逆に確率が1の事象は必ず起こります。"
     }
-  ];
+];
 
   useEffect(() => {
     const best = getBestScore('grade3-section7_timeseries_2');
@@ -138,138 +138,205 @@ export default function Grade3Section7Set2() {
     }
   }, []);
 
-  const handleAnswer = (questionId: number, answer: number) => {
-    setAnswers(prev => ({...prev, [questionId]: answer}));
-  };
-
-  const calculateScore = () => {
-    let correct = 0;
-    questions.forEach(q => {
-      if (answers[q.id] === q.correct) {
-        correct++;
-      }
-    });
-    return correct;
+  const handleAnswer = (questionId: number, answerIndex: number) => {
+    setAnswers(prev => ({
+      ...prev,
+      [questionId]: answerIndex
+    }));
   };
 
   const handleSubmit = () => {
-    if (Object.keys(answers).length < questions.length) {
-      alert('すべての問題に回答してください。');
-      return;
-    }
-    
-    const score = calculateScore();
+    const score = Object.keys(answers).reduce((acc, qId) => {
+      const question = questions.find(q => q.id === parseInt(qId));
+      if (question && answers[parseInt(qId)] === question.correct) {
+        return acc + 1;
+      }
+      return acc;
+    }, 0);
+
     const percentage = (score / questions.length) * 100;
-    
+    const passed = percentage >= 60;
+
     saveExamRecord({
       examId: 'grade3-section7_timeseries_2',
-      examTitle: '3級 Section7_TimeSeries_2',
+      examTitle: '3級 - 確率の基礎 セット2',
       grade: '3級' as '3級',
       score,
       totalQuestions: questions.length,
       percentage,
-      passed: percentage >= 60
+      passed
     });
-    
-    const best = getBestScore('grade3-section7_timeseries_2');
-    if (best) {
-      setBestScore(best.percentage);
-    }
-    
+
     setShowResult(true);
-    window.scrollTo(0, 0);
   };
 
-  const resetExam = () => {
+  const handleReset = () => {
     setAnswers({});
     setShowResult(false);
+    setCurrentQuestionIndex(0);
     window.scrollTo(0, 0);
   };
 
+  const handleNext = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
+  };
+
+  const currentQuestion = questions[currentQuestionIndex];
+  const allAnswered = Object.keys(answers).length === questions.length;
+  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+
   if (showResult) {
-    const score = calculateScore();
+    const score = Object.keys(answers).reduce((acc, qId) => {
+      const question = questions.find(q => q.id === parseInt(qId));
+      if (question && answers[parseInt(qId)] === question.correct) {
+        return acc + 1;
+      }
+      return acc;
+    }, 0);
+
     const percentage = (score / questions.length) * 100;
+    const passed = percentage >= 60;
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 p-4 md:p-8">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-              📊 結果
+          <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 className="text-3xl font-bold text-gray-800 mb-4">
+              結果発表 🎉
             </h1>
             
-            <div className="text-center mb-8">
-              <div className="inline-block bg-gradient-to-br from-purple-500 to-purple-700 text-white rounded-lg px-12 py-8 shadow-xl">
-                <p className="text-6xl font-bold mb-2">{score}/{questions.length}</p>
-                <p className="text-2xl">正答率: {percentage.toFixed(0)}%</p>
-              
+            <div className="bg-gradient-to-r from-purple-100 to-blue-100 rounded-lg p-6 mb-6">
+              <div className="text-center mb-4">
+                <p className="text-6xl font-bold text-purple-600 mb-2">
+                  {score}/{questions.length}
+                </p>
+                <p className="text-2xl text-gray-700">
+                  正解率: {percentage.toFixed(1)}%
+                </p>
                 {bestScore !== null && (
-                  <p className="text-sm mt-2">
-                    あなたのベストスコア: <span className="font-bold">{bestScore.toFixed(1)}%</span>
+                  <p className="text-lg text-gray-600 mt-2">
+                    あなたのベストスコア: {bestScore.toFixed(1)}%
                   </p>
                 )}
               </div>
+
+              {passed ? (
+                <div className="bg-green-100 border-l-4 border-green-500 p-4 mb-4">
+                  <p className="text-green-700 font-semibold">
+                    ✅ 合格です！よくできました！
+                  </p>
+                </div>
+              ) : (
+                <div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-4">
+                  <p className="text-yellow-700 font-semibold">
+                    📚 もう少し復習が必要です。再挑戦してみましょう！
+                  </p>
+                </div>
+              )}
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex gap-4 mb-6">
               <button
-                onClick={resetExam}
-                className="flex-1 bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors"
+                onClick={handleReset}
+                className="flex-1 bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors"
               >
-                もう一度挑戦する
+                もう一度挑戦
               </button>
               <Link
                 to="/"
-                className="flex-1 bg-gray-600 text-white py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors text-center"
+                className="flex-1 bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors text-center"
               >
-                トップページに戻る
+                トップに戻る
               </Link>
             </div>
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">📝 解答と解説</h2>
-            
-            {questions.map((q, index) => {
-              const isCorrect = answers[q.id] === q.correct;
-              
+            {questions.map((q) => {
+              const userAnswer = answers[q.id];
+              const isCorrect = userAnswer === q.correct;
+
               return (
-                <div key={q.id} className={`bg-white rounded-lg shadow-lg p-6 border-l-4 ${
-                  isCorrect ? 'border-purple-500' : 'border-red-500'
-                }`}>
-                  <div className="flex items-start gap-3 mb-4">
-                    <span className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg ${
-                      isCorrect ? 'bg-purple-500' : 'bg-red-500'
-                    }`}>
-                      {isCorrect ? '○' : '×'}
+                <div
+                  key={q.id}
+                  className={`bg-white rounded-lg shadow-md p-6 border-2 ${
+                    isCorrect
+                      ? 'border-green-500'
+                      : userAnswer
+                      ? 'border-red-500'
+                      : 'border-gray-200'
+                  }`}
+                >
+                  <div className="flex items-start mb-4">
+                    <span className="text-lg font-bold text-purple-600 mr-3">
+                      Q{q.id}.
                     </span>
-                    <div className="flex-1">
-                      <h3 className="font-bold text-lg text-gray-800 mb-2">
-                        問題{index + 1}
-                      </h3>
-                      <p className="text-gray-700 whitespace-pre-line mb-3">{q.question}</p>
-                    </div>
+                    <p className="text-gray-800 font-medium flex-1 whitespace-pre-line">
+                      {q.question}
+                    </p>
+                    {isCorrect ? (
+                      <span className="text-green-600 text-xl">✓</span>
+                    ) : userAnswer ? (
+                      <span className="text-red-600 text-xl">✗</span>
+                    ) : null}
+                  </div>
+
+                  <div className="space-y-2 mb-4">
+                    {q.options.map((option, index) => {
+                      const optionNumber = index + 1;
+                      const isSelected = userAnswer === optionNumber;
+                      const isCorrectOption = q.correct === optionNumber;
+
+                      return (
+                        <div
+                          key={index}
+                          className={`p-3 rounded-lg border-2 ${
+                            isCorrectOption
+                              ? 'border-green-500 bg-green-50'
+                              : isSelected
+                              ? 'border-red-500 bg-red-50'
+                              : 'border-gray-200'
+                          }`}
+                        >
+                          <span className="font-semibold mr-2">
+                            {optionNumber}.
+                          </span>
+                          {option}
+                          {isCorrectOption && (
+                            <span className="ml-2 text-green-600 font-semibold">
+                              ← 正解
+                            </span>
+                          )}
+                          {isSelected && !isCorrectOption && (
+                            <span className="ml-2 text-red-600 font-semibold">
+                              ← あなたの回答
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg">
+                    <p className="text-sm text-gray-600 mb-1 font-semibold">
+                      💡 正解
+                    </p>
+                    <p className="text-gray-700 text-sm mb-2">
+                      {q.correct}. {q.options[q.correct - 1]}
+                    </p>
                   </div>
                   
-                  <div className="ml-13 space-y-3">
-                    <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1">あなたの回答</p>
-                      <p className="font-semibold text-gray-800">
-                        {answers[q.id] ? `${answers[q.id]}. ${q.options[answers[q.id] - 1]}` : '未回答'}
-                      </p>
-                    </div>
-                    
-                    <div className="bg-purple-50 border border-purple-200 p-3 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1">正解</p>
-                      <p className="font-semibold text-gray-800">
-                        {q.correct}. {q.options[q.correct - 1]}
-                      </p>
-                    </div>
-                    
-                    <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1 font-semibold">📖 解説</p>
-                      <p className="text-gray-700 text-sm leading-relaxed">{q.explanation}</p>
-                    </div>
+                  <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg mt-3">
+                    <p className="text-sm text-gray-600 mb-1 font-semibold">📖 解説</p>
+                    <p className="text-gray-700 text-sm leading-relaxed">{q.explanation}</p>
                   </div>
                 </div>
               );
@@ -286,7 +353,7 @@ export default function Grade3Section7Set2() {
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
-              📈 3級 - 時系列分析 セット2
+              📊 3級 - 確率の基礎 セット2
             </h1>
             <Link
               to="/"
@@ -295,7 +362,7 @@ export default function Grade3Section7Set2() {
               ← トップに戻る
             </Link>
           </div>
-          <p className="text-gray-600 mb-2">時系列データの基礎と予測手法を学びましょう</p>
+          <p className="text-gray-600 mb-2">条件付き確率と独立性を学びましょう</p>
           <div className="flex gap-2 text-sm text-gray-500">
             <span className="bg-purple-100 px-3 py-1 rounded-full">セット2/3</span>
             <span>全10問</span>
@@ -303,119 +370,81 @@ export default function Grade3Section7Set2() {
         </div>
 
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="text-lg font-bold text-gray-700">
-              問題 {currentQuestionIndex + 1} / {questions.length}
+          <div className="mb-4">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm font-semibold text-gray-700">
+                問題 {currentQuestionIndex + 1} / {questions.length}
+              </span>
+              <span className="text-sm font-semibold text-gray-700">
+                進捗: {Object.keys(answers).length} / {questions.length} 回答済み
+              </span>
             </div>
-            <div className="text-sm text-gray-500">
-              回答済み: {Object.keys(answers).length} / {questions.length}
-            </div>
-          </div>
-
-          <div className="mb-6">
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div
-                className="bg-green-600 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
+                className="bg-purple-600 h-2 rounded-full transition-all duration-300"
+                style={{ width: `${progress}%` }}
               ></div>
             </div>
           </div>
 
-          {(() => {
-            const q = questions[currentQuestionIndex];
-            return (
-              <div>
-                <div className="mb-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="inline-block bg-green-600 text-white px-4 py-2 rounded-lg text-base font-bold">
-                      問題 {currentQuestionIndex + 1}
-                    </span>
-                    {answers[q.id] && (
-                      <span className="text-green-600 font-semibold">✓ 回答済み</span>
-                    )}
-                  </div>
-                  <h2 className="text-xl font-bold text-gray-800 whitespace-pre-line leading-relaxed mb-6">
-                    {q.question}
-                  </h2>
-                </div>
+          <div className="mb-6">
+            <div className="flex items-start mb-4">
+              <span className="text-xl font-bold text-purple-600 mr-3">
+                Q{currentQuestion.id}.
+              </span>
+              <p className="text-lg text-gray-800 font-medium flex-1 whitespace-pre-line">
+                {currentQuestion.question}
+              </p>
+            </div>
 
-                <div className="space-y-3 mb-8">
-                  {q.options.map((option, optIndex) => {
-                    const optionNum = optIndex + 1;
-                    const isSelected = answers[q.id] === optionNum;
-                    
-                    return (
-                      <button
-                        key={optIndex}
-                        onClick={() => handleAnswer(q.id, optionNum)}
-                        className={`w-full text-left p-4 rounded-lg border-2 transition-all font-medium ${
-                          isSelected
-                            ? 'border-green-600 bg-green-50 shadow-md'
-                            : 'border-gray-300 bg-white hover:border-green-400 hover:bg-gray-50'
-                        }`}
-                      >
-                        <div className="flex items-start gap-3">
-                          <span className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold transition-all ${
-                            isSelected
-                              ? 'bg-green-600 text-white'
-                              : 'bg-gray-200 text-gray-700'
-                          }`}>
-                            {optionNum}
-                          </span>
-                          <span className="text-gray-800 leading-relaxed pt-1 whitespace-pre-line">{option}</span>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })()}
-        </div>
+            <div className="space-y-3">
+              {currentQuestion.options.map((option, index) => {
+                const optionNumber = index + 1;
+                const isSelected = answers[currentQuestion.id] === optionNumber;
 
-        <div className="flex gap-4 mb-6">
-          <button
-            onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
-            disabled={currentQuestionIndex === 0}
-            className="flex-1 bg-gray-500 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            ← 前の問題
-          </button>
-          {currentQuestionIndex < questions.length - 1 ? (
+                return (
+                  <button
+                    key={index}
+                    onClick={() => handleAnswer(currentQuestion.id, optionNumber)}
+                    className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
+                      isSelected
+                        ? 'border-purple-600 bg-purple-50'
+                        : 'border-gray-300 hover:border-purple-400 hover:bg-purple-50'
+                    }`}
+                  >
+                    <span className="font-semibold mr-3">{optionNumber}.</span>
+                    {option}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="flex gap-4">
             <button
-              onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
-              className="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+              onClick={handlePrevious}
+              disabled={currentQuestionIndex === 0}
+              className="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              次の問題 →
+              ← 前の問題
             </button>
-          ) : (
-            <button
-              onClick={handleSubmit}
-              className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-            >
-              ✓ 採点する
-            </button>
-          )}
-        </div>
-
-        <div className="bg-white rounded-lg shadow-lg p-4">
-          <h3 className="text-sm font-bold text-gray-700 mb-3">問題ナビゲーション</h3>
-          <div className="grid grid-cols-10 gap-2">
-            {questions.map((q, index) => (
+            
+            {currentQuestionIndex === questions.length - 1 ? (
               <button
-                key={q.id}
-                onClick={() => setCurrentQuestionIndex(index)}
-                className={`aspect-square rounded-lg font-bold text-sm transition-all ${
-                  currentQuestionIndex === index
-                    ? 'bg-green-600 text-white ring-2 ring-green-400'
-                    : answers[q.id]
-                    ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
+                onClick={handleSubmit}
+                disabled={!allAnswered}
+                className="flex-1 px-6 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                {index + 1}
+                {allAnswered ? '結果を見る' : `残り ${questions.length - Object.keys(answers).length} 問`}
               </button>
-            ))}
+            ) : (
+              <button
+                onClick={handleNext}
+                className="flex-1 px-6 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"
+              >
+                次の問題 →
+              </button>
+            )}
           </div>
         </div>
       </div>
