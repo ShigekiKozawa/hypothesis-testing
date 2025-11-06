@@ -362,7 +362,7 @@ export default function Grade3Section8Set1() {
               ← トップに戻る
             </Link>
           </div>
-          <p className="text-gray-600 mb-2">時系列グラフの読み取り</p>
+          <p className="text-gray-600 mb-2">折れ線グラフから時系列データの変化を読み取ります</p>
           <div className="flex gap-2 text-sm text-gray-500">
             <span>全10問</span>
           </div>

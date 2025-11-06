@@ -362,7 +362,7 @@ export default function Grade3Section9Set3() {
               ← トップに戻る
             </Link>
           </div>
-          <p className="text-gray-600 mb-2">実験計画法</p>
+          <p className="text-gray-600 mb-2">実験計画の考え方と対照実験の重要性を学びます</p>
           <div className="flex gap-2 text-sm text-gray-500">
             <span>全10問</span>
           </div>

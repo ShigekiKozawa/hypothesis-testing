@@ -295,7 +295,7 @@ export default function Grade4Section3Set1() {
               ← トップに戻る
             </Link>
           </div>
-          <p className="text-gray-600 mb-2">度数分布表の読み取りと基本的な計算を学びます</p>
+          <p className="text-gray-600 mb-2">ヒストグラムから度数や階級を正しく読み取ります</p>
           <div className="flex gap-2 text-sm text-gray-500">
             <span>全10問</span>
           </div>

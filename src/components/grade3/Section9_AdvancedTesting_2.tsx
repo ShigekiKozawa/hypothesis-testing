@@ -362,7 +362,7 @@ export default function Grade3Section9Set2() {
               ← トップに戻る
             </Link>
           </div>
-          <p className="text-gray-600 mb-2">抽出方法</p>
+          <p className="text-gray-600 mb-2">無作為抽出の重要性と具体的な方法を学びます</p>
           <div className="flex gap-2 text-sm text-gray-500">
             <span>全10問</span>
           </div>

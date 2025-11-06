@@ -362,7 +362,7 @@ export default function Grade3Section10Set1() {
               ← トップに戻る
             </Link>
           </div>
-          <p className="text-gray-600 mb-2">標本分布の基礎</p>
+          <p className="text-gray-600 mb-2">標本平均の分布と中心極限定理の基礎を理解します</p>
           <div className="flex gap-2 text-sm text-gray-500">
             <span>全10問</span>
           </div>

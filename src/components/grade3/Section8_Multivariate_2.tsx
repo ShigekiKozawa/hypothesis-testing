@@ -362,7 +362,7 @@ export default function Grade3Section8Set2() {
               ← トップに戻る
             </Link>
           </div>
-          <p className="text-gray-600 mb-2">変化率と指数</p>
+          <p className="text-gray-600 mb-2">前年比や対前年増減率の計算方法と解釈を学びます</p>
           <div className="flex gap-2 text-sm text-gray-500">
             <span>全10問</span>
           </div>

@@ -362,7 +362,7 @@ export default function Grade3Section8Set3() {
               ← トップに戻る
             </Link>
           </div>
-          <p className="text-gray-600 mb-2">時系列データの総合問題</p>
+          <p className="text-gray-600 mb-2">指数（インデックス）の意味と基準年の考え方を学びます</p>
           <div className="flex gap-2 text-sm text-gray-500">
             <span>全10問</span>
           </div>

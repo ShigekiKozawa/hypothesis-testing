@@ -295,7 +295,7 @@ export default function Grade4Section3Set3() {
               ← トップに戻る
             </Link>
           </div>
-          <p className="text-gray-600 mb-2">度数分布表から様々な情報を読み取り、活用する方法を学びます</p>
+          <p className="text-gray-600 mb-2">円グラフと棒グラフの使い分けと読み取りを学びます</p>
           <div className="flex gap-2 text-sm text-gray-500">
             <span>全10問</span>
           </div>

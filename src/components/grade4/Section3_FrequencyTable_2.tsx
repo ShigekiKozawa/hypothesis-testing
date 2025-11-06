@@ -295,7 +295,7 @@ export default function Grade4Section3Set2() {
               ← トップに戻る
             </Link>
           </div>
-          <p className="text-gray-600 mb-2">累積度数と累積相対度数の計算と活用を学びます</p>
+          <p className="text-gray-600 mb-2">箱ひげ図から5数要約とデータの特徴を読み取ります</p>
           <div className="flex gap-2 text-sm text-gray-500">
             <span>全10問</span>
           </div>

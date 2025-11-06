@@ -362,7 +362,7 @@ export default function Grade3Section10Set3() {
               ← トップに戻る
             </Link>
           </div>
-          <p className="text-gray-600 mb-2">仮説検定の基礎</p>
+          <p className="text-gray-600 mb-2">仮説検定の基本的な考え方と用語を理解します</p>
           <div className="flex gap-2 text-sm text-gray-500">
             <span>全10問</span>
           </div>
