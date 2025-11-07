@@ -425,12 +425,7 @@ export default function Home() {
           </div>
 
           <div className="mb-10 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl p-6">
-            <div className="flex items-center mb-4">
-              <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-lg font-bold text-lg mr-3">
-                🤖 NEW
-              </div>
-              <h2 className="text-2xl font-bold text-gray-800">AI問題生成 - 練習モード</h2>
-            </div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">🤖 AI問題生成 - 練習モード</h2>
             <p className="text-gray-700 mb-4">
               AIが自動で問題を生成します。セクションを選択して、何度でも新しい問題に挑戦できます。<br/>
               <span className="text-sm text-gray-600">※ 結果は記録されません。純粋な練習用です。</span>
