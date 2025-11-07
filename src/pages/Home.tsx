@@ -369,7 +369,6 @@ export default function Home() {
         <div className="flex gap-4 text-sm text-gray-500 mb-4">
           <span>📝 {exam.questions}問</span>
           <span>⏱️ 約{exam.time}分</span>
-          {'difficulty' in exam && <span>🔥 {exam.difficulty}</span>}
         </div>
         {bestScoreRecord !== null && (
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">

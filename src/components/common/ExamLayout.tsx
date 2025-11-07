@@ -4,14 +4,18 @@ import { Question } from '../../hooks/useExam';
 
 interface ExamLayoutProps {
   title: string;
-  backLink: string;
+  backLink?: string;
+  onBack?: () => void;
   bestScore: number | null;
   children: ReactNode;
 }
 
-export function ExamLayout({ title, backLink, bestScore, children }: ExamLayoutProps) {
+export function ExamLayout({ title, backLink, onBack, bestScore, children }: ExamLayoutProps) {
   const handleBackClick = () => {
     window.scrollTo(0, 0);
+    if (onBack) {
+      onBack();
+    }
   };
 
   return (
@@ -31,13 +35,22 @@ export function ExamLayout({ title, backLink, bestScore, children }: ExamLayoutP
           {children}
         </div>
         <div className="text-center">
-          <Link
-            to={backLink}
-            onClick={handleBackClick}
-            className="inline-block bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-lg transition duration-200"
-          >
-            ← 戻る
-          </Link>
+          {onBack ? (
+            <button
+              onClick={handleBackClick}
+              className="inline-block bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-lg transition duration-200"
+            >
+              ← 戻る
+            </button>
+          ) : (
+            <Link
+              to={backLink || '/'}
+              onClick={handleBackClick}
+              className="inline-block bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-lg transition duration-200"
+            >
+              ← 戻る
+            </Link>
+          )}
         </div>
       </div>
     </div>

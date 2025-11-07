@@ -438,7 +438,7 @@ export default function PracticeMode({ grade, type, section, sectionDescription,
   return (
     <ExamLayout
       title={`🤖 AI問題 - ${grade} ${type === 'exam' ? '模擬試験' : section}`}
-      backLink="/"
+      onBack={onBack}
       bestScore={null}
     >
       <div className="mb-6">
