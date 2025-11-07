@@ -415,9 +415,12 @@ export default function Home() {
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 mb-8">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-              📊 統計検定 模擬試験
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-2">
+              🚀 Toppa!
             </h1>
+            <p className="text-xl text-gray-700 mb-4 font-semibold">
+              統計検定 模擬試験
+            </p>
             <p className="text-lg text-gray-600">
               統計検定の試験対策用の模擬試験です。<br />
               実際の試験に近い形式で学習できます。
