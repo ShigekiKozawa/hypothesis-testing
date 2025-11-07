@@ -12,8 +12,34 @@
 
 ## 開発環境のセットアップ
 
+### 1. 依存関係のインストール
+
 ```bash
 npm install
+```
+
+### 2. 環境変数の設定
+
+`.env.local` ファイルを作成し、Gemini API キーを設定してください：
+
+```bash
+cp .env.example .env.local
+```
+
+`.env.local` を編集：
+
+```
+VITE_GEMINI_API_KEY=your_api_key_here
+```
+
+**APIキーの取得方法：**
+1. [Google AI Studio](https://aistudio.google.com/) にアクセス
+2. 「Get API key」から新しいAPIキーを作成
+3. 開発用には `localhost` からの使用を許可する制限付きキーを作成することを推奨
+
+### 3. 開発サーバーの起動
+
+```bash
 npm run dev
 ```
 
@@ -27,9 +53,21 @@ npm run build
 
 ## GitHub Pagesへのデプロイ
 
-```bash
-npm run deploy
-```
+### GitHub Secrets の設定（初回のみ）
+
+1. GitHubリポジトリの Settings → Secrets and variables → Actions
+2. 「New repository secret」をクリック
+3. 以下を設定：
+   - **Name**: `VITE_GEMINI_API_KEY`
+   - **Value**: 本番用のAPIキー（GitHub Pages用に制限されたキー）
+
+### デプロイ
+
+`main` ブランチにプッシュすると、GitHub Actionsが自動的にビルド・デプロイします。
+
+**注意**: 本番用APIキーには必ず以下の制限を設定してください：
+- HTTPリファラー制限: `https://yourusername.github.io/*`
+- API制限: Generative Language API のみ
 
 ## 技術スタック
 

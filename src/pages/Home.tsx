@@ -1,9 +1,17 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getExamRecords, clearAllRecords, getBestScore, type ExamRecord } from '../utils/localStorage';
+import PracticeMode from '../components/PracticeMode';
 
 export default function Home() {
   const [examRecords, setExamRecords] = useState<ExamRecord[]>([]);
+  const [showPracticeMode, setShowPracticeMode] = useState(false);
+  const [selectedPractice, setSelectedPractice] = useState<{
+    grade: '3級' | '4級';
+    type: 'section' | 'exam';
+    section?: string;
+    sectionDescription?: string;
+  } | null>(null);
   const grade3Exams = [
     {
       id: 'grade3-exam1',
@@ -291,9 +299,11 @@ export default function Home() {
   }, []);
 
   const handleClearRecords = () => {
-    if (window.confirm('すべての受験履歴を削除しますか？この操作は取り消せません。')) {
+    if (window.confirm('すべての受験履歴とベストスコアを削除しますか？\n\nこの操作は取り消せません。')) {
       clearAllRecords();
       setExamRecords([]);
+      alert('すべてのデータが削除されました。ページを再読み込みします。');
+      window.location.reload();
     }
   };
 
@@ -316,6 +326,28 @@ export default function Home() {
     );
     
     return { score: bestRecord.score, total: bestRecord.totalQuestions };
+  };
+
+  const handleStartPractice = (
+    grade: '3級' | '4級', 
+    type: 'section' | 'exam',
+    section?: string, 
+    description?: string
+  ) => {
+    setSelectedPractice({
+      grade,
+      type,
+      section,
+      sectionDescription: description,
+    });
+    setShowPracticeMode(true);
+    window.scrollTo(0, 0);
+  };
+
+  const handleBackFromPractice = () => {
+    setShowPracticeMode(false);
+    setSelectedPractice(null);
+    window.scrollTo(0, 0);
   };
 
   const ExamCard = ({ exam }: { exam: typeof grade3Exams[0] }) => {
@@ -373,6 +405,18 @@ export default function Home() {
     );
   };
 
+  if (showPracticeMode && selectedPractice) {
+    return (
+      <PracticeMode
+        grade={selectedPractice.grade}
+        type={selectedPractice.type}
+        section={selectedPractice.section}
+        sectionDescription={selectedPractice.sectionDescription}
+        onBack={handleBackFromPractice}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
@@ -385,6 +429,73 @@ export default function Home() {
               統計検定の試験対策用の模擬試験です。<br />
               実際の試験に近い形式で学習できます。
             </p>
+          </div>
+
+          <div className="mb-10 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl p-6">
+            <div className="flex items-center mb-4">
+              <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-lg font-bold text-lg mr-3">
+                🤖 NEW
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800">AI問題生成 - 練習モード</h2>
+            </div>
+            <p className="text-gray-700 mb-4">
+              AIが自動で問題を生成します。セクションを選択して、何度でも新しい問題に挑戦できます。<br/>
+              <span className="text-sm text-gray-600">※ 結果は記録されません。純粋な練習用です。</span>
+            </p>
+            
+            <div className="grid md:grid-cols-2 gap-4 mb-4">
+              <div className="bg-white rounded-lg p-4 border border-purple-200">
+                <h3 className="font-bold text-lg mb-3 text-blue-700">📘 3級のセクション</h3>
+                <div className="space-y-2">
+                  {grade3Sections.map((section) => (
+                    <button
+                      key={section.id}
+                      onClick={() => handleStartPractice('3級', 'section', section.title, section.description)}
+                      className="w-full text-left px-3 py-2 bg-blue-50 hover:bg-blue-100 rounded border border-blue-200 transition-colors text-sm"
+                    >
+                      <div className="font-semibold text-blue-900">{section.title}</div>
+                      <div className="text-xs text-gray-600">{section.description}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-lg p-4 border border-purple-200">
+                <h3 className="font-bold text-lg mb-3 text-green-700">📗 4級のセクション</h3>
+                <div className="space-y-2">
+                  {grade4Sections.map((section) => (
+                    <button
+                      key={section.id}
+                      onClick={() => handleStartPractice('4級', 'section', section.title, section.description)}
+                      className="w-full text-left px-3 py-2 bg-green-50 hover:bg-green-100 rounded border border-green-200 transition-colors text-sm"
+                    >
+                      <div className="font-semibold text-green-900">{section.title}</div>
+                      <div className="text-xs text-gray-600">{section.description}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            <div className="border-t-2 border-purple-300 pt-4">
+              <h3 className="font-bold text-lg mb-3 text-purple-700">🎯 模擬試験（全範囲）</h3>
+              <div className="grid md:grid-cols-2 gap-3">
+                <button
+                  onClick={() => handleStartPractice('3級', 'exam')}
+                  className="w-full px-6 py-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-lg font-bold transition-all shadow-md hover:shadow-lg"
+                >
+                  <div className="text-lg">📘 3級 模擬試験</div>
+                  <div className="text-xs opacity-90 mt-1">全セクションからバランスよく出題</div>
+                </button>
+                <button
+                  onClick={() => handleStartPractice('4級', 'exam')}
+                  className="w-full px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-lg font-bold transition-all shadow-md hover:shadow-lg"
+                >
+                  <div className="text-lg">📗 4級 模擬試験</div>
+                  <div className="text-xs opacity-90 mt-1">全セクションからバランスよく出題</div>
+                </button>
+              </div>
+            </div>
           </div>
 
           <div className="mb-10">
@@ -491,13 +602,24 @@ export default function Home() {
 
           <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-8">
             <h3 className="text-lg font-bold text-gray-800 mb-3">📌 利用について</h3>
-            <ul className="space-y-2 text-gray-700">
+            <ul className="space-y-2 text-gray-700 mb-4">
               <li>• 各試験は何度でも受験できます</li>
               <li>• すべての問題に回答後、採点と解説を確認できます</li>
               <li>• 3級と4級で難易度と合格ラインが異なります</li>
               <li>• 問題は随時追加予定です</li>
               <li>• <strong>受験履歴はブラウザのローカルストレージに保存されます</strong>（ブラウザのキャッシュをクリアすると削除されます）</li>
             </ul>
+            <div className="border-t border-indigo-300 pt-4">
+              <button
+                onClick={handleClearRecords}
+                className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center gap-2"
+              >
+                🗑️ すべてのデータを初期化
+              </button>
+              <p className="text-xs text-gray-600 mt-2 text-center">
+                受験履歴とベストスコアがすべて削除されます
+              </p>
+            </div>
           </div>
 
           {examRecords.length > 0 && (

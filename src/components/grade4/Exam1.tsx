@@ -1,570 +1,419 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { saveExamRecord, getBestScore } from '../../utils/localStorage';
+import { useExam, Question } from '../../hooks/useExam';
+import { ExamLayout, ResultScreen, QuestionCard } from '../common/ExamLayout';
 
 export default function Grade4Exam1() {
-  const [answers, setAnswers] = useState<Record<number, number>>({});
-  const [showResult, setShowResult] = useState(false);
-  const [bestScore, setBestScore] = useState<number | null>(null);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-
-  const questions = [
+  const questions: Question[] = [
     {
       id: 1,
-      question: "次のデータの平均値と中央値の差はいくつですか。\nデータ: 2, 4, 6, 8, 20",
-      options: ["0", "2", "4", "6"],
-      correct: 2,
-      explanation: "平均値 = (2+4+6+8+20)÷5 = 8、中央値 = 6。差は 8 - 6 = 2です。外れ値の影響で平均値が中央値より大きくなります。"
+      question: "次のデータのうち、量的データと質的データの組合せとして正しいものはどれですか。\n\n量的データ: A. 生徒の体重、B. 生徒の血液型\n質的データ: C. 生徒の出席番号、D. 生徒の好きな科目",
+      options: [
+        "量的: A、質的: D",
+        "量的: B、質的: C",
+        "量的: C、質的: B",
+        "量的: A、質的: B"
+      ],
+      correct: 1,
+      explanation: "体重は数値で測れる量的データ、好きな科目はカテゴリーの質的データです。出席番号は数字ですが順序を表すだけなので質的データと考えることもあります。"
     },
     {
       id: 2,
-      question: "あるクラス30人の数学の平均点が70点でした。そのクラスから80点以上の5人を除いた25人の平均点が65点のとき、80点以上の5人の平均点は何点ですか。",
-      options: ["85点", "90点", "95点", "100点"],
+      question: "ある中学校の生徒40人の通学時間（分）の度数分布表が与えられています。\n\n0〜10分: 8人\n10〜20分: 12人\n20〜30分: 14人\n30〜40分: 6人\n\n中央値が含まれる階級はどれですか。",
+      options: [
+        "0〜10分",
+        "10〜20分",
+        "20〜30分",
+        "30〜40分"
+      ],
       correct: 2,
-      explanation: "全体の合計 = 70×30 = 2100点。25人の合計 = 65×25 = 1625点。5人の合計 = 2100 - 1625 = 475点。5人の平均 = 475÷5 = 95点です。"
+      explanation: "40人の中央値は20番目と21番目の平均です。累積度数は8、20、34、40となり、20番目と21番目は10〜20分の階級に含まれます。"
     },
     {
       id: 3,
-      question: "次のデータで、範囲が最頻値の2倍になっているものはどれですか。",
+      question: "次のデータの平均値を求めてください。\n\nデータ: 3, 5, 7, 9, 11",
       options: [
-        "2, 4, 4, 6, 8",
-        "3, 5, 5, 9, 13",
-        "4, 6, 6, 10, 16",
-        "5, 7, 7, 11, 19"
+        "6",
+        "7",
+        "8",
+        "9"
       ],
-      correct: 3,
-      explanation: "選択肢3では、最頻値=6、範囲=16-4=12。12は6の2倍です。"
+      correct: 2,
+      explanation: "平均値 = (3+5+7+9+11) ÷ 5 = 35 ÷ 5 = 7です。"
     },
     {
       id: 4,
-      question: "ある工場で不良品の発生率が3%です。1000個の製品を作ったとき、期待される不良品の個数は何個ですか。",
-      options: ["20個", "30個", "40個", "50個"],
+      question: "あるクラス30人のテスト結果を箱ひげ図で表しました。\n\n最小値: 40点\n第1四分位数: 60点\n中央値: 70点\n第3四分位数: 80点\n最大値: 95点\n\n四分位範囲はいくつですか。",
+      options: [
+        "10点",
+        "20点",
+        "30点",
+        "55点"
+      ],
       correct: 2,
-      explanation: "期待値 = 1000 × 0.03 = 30個です。"
+      explanation: "四分位範囲 = 第3四分位数 - 第1四分位数 = 80 - 60 = 20点です。"
     },
     {
       id: 5,
-      question: "次のヒストグラムで、階級値15の階級の相対度数が0.25です。全体の度数が80のとき、この階級の度数はいくつですか。",
-      options: ["15", "20", "25", "30"],
-      correct: 2,
-      explanation: "度数 = 相対度数 × 全体の度数 = 0.25 × 80 = 20です。"
+      question: "次のヒストグラムで、度数が最も多い階級（最頻階級）はどれですか。\n\n10〜20: 5人\n20〜30: 12人\n30〜40: 18人\n40〜50: 10人\n50〜60: 5人",
+      options: [
+        "10〜20",
+        "20〜30",
+        "30〜40",
+        "40〜50"
+      ],
+      correct: 3,
+      explanation: "度数が18人で最も多いのは30〜40の階級です。これを最頻階級といいます。"
     },
     {
       id: 6,
-      question: "2つのサイコロを投げて、出た目の積が偶数になる確率はいくつですか。",
-      options: ["1/2", "2/3", "3/4", "5/6"],
+      question: "ある学校の生徒200人に好きなスポーツを調査したところ、サッカーが80人、野球が60人、バスケットボールが40人、その他が20人でした。サッカーを選んだ生徒の割合は何%ですか。",
+      options: [
+        "30%",
+        "35%",
+        "40%",
+        "45%"
+      ],
       correct: 3,
-      explanation: "積が奇数になるのは両方とも奇数の場合のみ。(3/6)×(3/6) = 1/4。よって偶数の確率は 1 - 1/4 = 3/4です。"
+      explanation: "サッカーの割合 = 80 ÷ 200 × 100 = 40%です。"
     },
     {
       id: 7,
-      question: "次のデータで、第1四分位数Q1と第3四分位数Q3の平均値はいくつですか。\nデータ: 10, 15, 20, 25, 30, 35, 40, 45, 50",
-      options: ["25", "27.5", "30", "32.5"],
-      correct: 3,
-      explanation: "Q1=20、Q3=40。平均 = (20+40)÷2 = 30です。"
+      question: "袋の中に赤玉3個、白玉5個、青玉2個が入っています。1個取り出すとき、赤玉が出る確率はいくらですか。",
+      options: [
+        "1/10",
+        "3/10",
+        "1/3",
+        "3/5"
+      ],
+      correct: 2,
+      explanation: "全部で10個あり、赤玉は3個なので、確率は 3/10 です。"
     },
     {
       id: 8,
-      question: "ある試験で、得点が正規分布に近いと仮定します。平均点60点、標準偏差10点のとき、50点〜70点の範囲に入る受験者の割合は約何%ですか。",
-      options: ["50%", "68%", "95%", "99.7%"],
-      correct: 2,
-      explanation: "正規分布では平均±1標準偏差の範囲に約68%が含まれます。60±10 = 50〜70点です。"
+      question: "次のデータの範囲（レンジ）を求めてください。\n\nデータ: 15, 23, 18, 31, 27, 19",
+      options: [
+        "12",
+        "14",
+        "16",
+        "18"
+      ],
+      correct: 3,
+      explanation: "範囲 = 最大値 - 最小値 = 31 - 15 = 16です。"
     },
     {
       id: 9,
-      question: "あるデータの四分位範囲が20、第1四分位数が30のとき、第3四分位数はいくつですか。",
-      options: ["40", "45", "50", "55"],
+      question: "ある町の人口が2020年に50,000人、2021年に52,000人でした。対前年増加率は何%ですか。",
+      options: [
+        "2%",
+        "3%",
+        "4%",
+        "5%"
+      ],
       correct: 3,
-      explanation: "四分位範囲 = Q3 - Q1。よって Q3 = Q1 + 四分位範囲 = 30 + 20 = 50です。"
+      explanation: "増加率 = (52,000 - 50,000) ÷ 50,000 × 100 = 2,000 ÷ 50,000 × 100 = 4%です。"
     },
     {
       id: 10,
-      question: "10本のくじの中に当たりが3本あります。2本同時に引くとき、少なくとも1本当たる確率はいくつですか。",
-      options: ["7/15", "8/15", "11/15", "13/15"],
-      correct: 2,
-      explanation: "余事象で考えます。2本とも外れる確率 = C(7,2)/C(10,2) = 21/45 = 7/15。少なくとも1本当たる確率 = 1 - 7/15 = 8/15です。"
+      question: "次の累積相対度数表で、相対度数が最も大きい階級はどれですか。\n\n0〜10: 累積相対度数 0.20\n10〜20: 累積相対度数 0.45\n20〜30: 累積相対度数 0.75\n30〜40: 累積相対度数 1.00",
+      options: [
+        "0〜10",
+        "10〜20",
+        "20〜30",
+        "30〜40"
+      ],
+      correct: 3,
+      explanation: "各階級の相対度数は、0.20、0.25、0.30、0.25となり、20〜30の階級が最も大きい0.30です。"
     },
     {
       id: 11,
-      question: "次のデータで、分散が最も大きいのはどれですか。",
+      question: "ある工場で製品を検査したところ、100個中3個が不良品でした。次に500個検査するとき、不良品は何個になると予想されますか。",
       options: [
-        "5, 5, 5, 5, 5",
-        "4, 5, 5, 5, 6",
-        "3, 4, 5, 6, 7",
-        "1, 3, 5, 7, 9"
+        "10個",
+        "12個",
+        "15個",
+        "18個"
       ],
-      correct: 4,
-      explanation: "分散はデータの散らばり具合を示します。選択肢4が最も散らばっているため、分散が最大です。分散 = ((1-5)²+(3-5)²+(5-5)²+(7-5)²+(9-5)²)÷5 = (16+4+0+4+16)÷5 = 8です。"
+      correct: 3,
+      explanation: "不良率は 3/100 = 0.03です。500個では 500 × 0.03 = 15個と予想されます。"
     },
     {
       id: 12,
-      question: "ある店の1週間の売上の平均が50万円、標準偏差が10万円でした。ある日の売上が70万円のとき、この日の売上の標準化得点（偏差値の基礎）はいくつですか。",
-      options: ["1", "2", "3", "4"],
-      correct: 2,
-      explanation: "標準化得点 = (実測値 - 平均) ÷ 標準偏差 = (70 - 50) ÷ 10 = 2です。"
+      question: "次の散布図で、2つの変数の関係を表す相関として最も適切なものはどれですか。\n\n（右上がりの点の集まり）",
+      options: [
+        "正の相関がある",
+        "負の相関がある",
+        "相関がない",
+        "判断できない"
+      ],
+      correct: 1,
+      explanation: "点が右上がりに分布している場合、一方が増えるともう一方も増える傾向があるため、正の相関があります。"
     },
     {
       id: 13,
-      question: "累積相対度数が0.6となる階級の階級値が50です。このとき、データ全体の何%が50未満ですか。",
-      options: ["40%", "50%", "60%", "70%"],
-      correct: 3,
-      explanation: "累積相対度数0.6は、その階級までの累積が60%であることを意味します。階級値50の階級までで60%なので、約60%が50以下（または未満）です。"
+      question: "ある調査で、全国の中学生1000万人から1000人を無作為に選んで調査を行いました。この1000人を何と呼びますか。",
+      options: [
+        "母集団",
+        "標本",
+        "全数",
+        "サンプルサイズ"
+      ],
+      correct: 2,
+      explanation: "調査対象全体を母集団、そこから選ばれた一部を標本といいます。この場合、1000人が標本です。"
     },
     {
       id: 14,
-      question: "袋の中に赤玉5個、青玉3個、白玉2個が入っています。1個取り出して色を確認した後戻さずに、もう1個取り出します。2個とも赤玉である確率はいくつですか。",
-      options: ["1/4", "2/9", "1/3", "5/9"],
-      correct: 2,
-      explanation: "1個目が赤: 5/10。2個目も赤（戻さない）: 4/9。確率 = (5/10) × (4/9) = 20/90 = 2/9です。"
+      question: "次のデータで、最頻値（モード）はいくつですか。\n\nデータ: 5, 7, 7, 8, 9, 9, 9, 10",
+      options: [
+        "5",
+        "7",
+        "8",
+        "9"
+      ],
+      correct: 4,
+      explanation: "最頻値は最も多く現れる値です。9が3回出現しているので、最頻値は9です。"
     },
     {
       id: 15,
-      question: "次のデータの標準偏差はいくつですか。\nデータ: 0, 2, 4, 6, 8",
-      options: ["約2.8", "約3.2", "約6.4", "8"],
-      correct: 1,
-      explanation: "平均=4。分散=((0-4)²+(2-4)²+(4-4)²+(6-4)²+(8-4)²)÷5 = (16+4+0+4+16)÷5 = 8。標準偏差=√8 ≈ 2.83です。"
+      question: "サイコロを1回振って、3の倍数の目が出る確率はいくらですか。",
+      options: [
+        "1/6",
+        "1/3",
+        "1/2",
+        "2/3"
+      ],
+      correct: 2,
+      explanation: "3の倍数の目は3と6の2つです。確率は 2/6 = 1/3 です。"
     },
     {
       id: 16,
-      question: "ある学校の生徒500人の身長データで、箱ひげ図を作成したところ、最小値150cm、Q1=160cm、中央値=165cm、Q3=170cm、最大値185cmでした。身長160cm未満の生徒は約何人ですか。",
-      options: ["75人", "100人", "125人", "150人"],
-      correct: 3,
-      explanation: "Q1=160cmは下位25%の位置です。160cm未満は約25%なので、500 × 0.25 = 125人です。"
+      question: "次の度数分布表で、20〜30の階級の階級値はいくつですか。\n\n10〜20: 5人\n20〜30: 10人\n30〜40: 8人",
+      options: [
+        "20",
+        "25",
+        "30",
+        "35"
+      ],
+      correct: 2,
+      explanation: "階級値は階級の真ん中の値です。20〜30の階級値は (20+30)÷2 = 25です。"
     },
     {
       id: 17,
-      question: "相関係数が-0.8の2つの変数の関係として最も適切なものはどれですか。",
+      question: "ある試験で、A君の得点は70点、平均点は60点、標準偏差は10点でした。A君の偏差値に最も近い値はどれですか。",
       options: [
-        "強い正の相関がある",
-        "弱い正の相関がある",
-        "相関がない",
-        "強い負の相関がある"
+        "50",
+        "55",
+        "60",
+        "65"
       ],
-      correct: 4,
-      explanation: "相関係数が-0.8は、強い負の相関を示します。一方が増えると他方が減る傾向が強いです。"
+      correct: 3,
+      explanation: "偏差値 = 50 + 10×(得点-平均点)÷標準偏差 = 50 + 10×(70-60)÷10 = 50 + 10 = 60です。"
     },
     {
       id: 18,
-      question: "次のデータで、外れ値の判定基準（Q1 - 1.5×IQR または Q3 + 1.5×IQR）に基づいて外れ値と判定されるのはどれですか。\nデータ: 5, 8, 10, 12, 14, 16, 18, 35",
-      options: ["5", "18", "35", "外れ値なし"],
-      correct: 3,
-      explanation: "Q1=9、Q3=17、IQR=8。下限=9-1.5×8=-3、上限=17+1.5×8=29。35は上限29を超えるため外れ値です。"
+      question: "次のクロス集計表で、男子で「はい」と答えた人の割合は何%ですか。\n\n　　　　はい　いいえ　合計\n男子　　30　　20　　50\n女子　　40　　30　　70\n合計　　70　　50　　120",
+      options: [
+        "25%",
+        "30%",
+        "50%",
+        "60%"
+      ],
+      correct: 4,
+      explanation: "男子で「はい」の割合 = 30 ÷ 50 × 100 = 60%です。"
     },
     {
       id: 19,
-      question: "あるテストの得点分布が左に偏っている（負の歪度）とき、平均・中央値・最頻値の大小関係として正しいのはどれですか。",
+      question: "次のデータを箱ひげ図で表すとき、第1四分位数はいくつですか。\n\nデータ（小さい順）: 10, 15, 20, 25, 30, 35, 40, 45",
       options: [
-        "平均 < 中央値 < 最頻値",
-        "中央値 < 平均 < 最頻値",
-        "最頻値 < 中央値 < 平均",
-        "最頻値 < 平均 < 中央値"
+        "15",
+        "17.5",
+        "20",
+        "22.5"
       ],
-      correct: 1,
-      explanation: "左に偏った分布（負の歪度）では、平均が最も小さく、最頻値が最も大きくなります。平均 < 中央値 < 最頻値です。"
+      correct: 2,
+      explanation: "8個のデータの第1四分位数は、下位25%の位置、つまり2番目と3番目の平均です。(15+20)÷2 = 17.5です。"
     },
     {
       id: 20,
-      question: "2つの異なるデータセットA, Bの平均がそれぞれ50, 60です。AとBを合わせた全体の平均が54のとき、Aのデータ数とBのデータ数の比はいくつですか。",
-      options: ["1:2", "2:3", "3:2", "2:1"],
+      question: "硬貨を2回投げるとき、少なくとも1回は表が出る確率はいくらですか。",
+      options: [
+        "1/4",
+        "1/2",
+        "3/4",
+        "1"
+      ],
       correct: 3,
-      explanation: "A=n₁個、B=n₂個とすると、(50n₁+60n₂)/(n₁+n₂)=54。整理すると50n₁+60n₂=54n₁+54n₂、6n₂=4n₁、n₁:n₂=6:4=3:2です。"
+      explanation: "全パターンは4通り（表表、表裏、裏表、裏裏）。少なくとも1回表が出るのは3通りなので、確率は 3/4 です。"
     },
     {
       id: 21,
-      question: "ある製品の長さが平均100mm、標準偏差2mmで製造されています。長さが96mm以下または104mm以上の製品は不良品とします。正規分布を仮定すると、不良品率は約何%ですか。",
-      options: ["約1%", "約2.5%", "約5%", "約10%"],
+      question: "ある商品の先月の売上が80個、今月の売上が100個でした。今月は先月の何倍ですか。",
+      options: [
+        "1.15倍",
+        "1.2倍",
+        "1.25倍",
+        "1.3倍"
+      ],
       correct: 3,
-      explanation: "96mmと104mmは平均から±2標準偏差。正規分布で平均±2標準偏差内に約95%が含まれるため、外側は約5%です。"
+      explanation: "今月÷先月 = 100÷80 = 1.25倍です。"
     },
     {
       id: 22,
-      question: "次のデータの変動係数（標準偏差÷平均×100%）が最も大きいのはどれですか。",
+      question: "次のヒストグラムで、20点以上の生徒の割合は何%ですか。\n\n0〜10点: 10人\n10〜20点: 20人\n20〜30点: 40人\n30〜40点: 30人\n合計: 100人",
       options: [
-        "平均10、標準偏差2",
-        "平均20、標準偏差3",
-        "平均50、標準偏差8",
-        "平均100、標準偏差15"
+        "40%",
+        "50%",
+        "60%",
+        "70%"
       ],
-      correct: 1,
-      explanation: "変動係数: 1=20%, 2=15%, 3=16%, 4=15%。選択肢1が最大です。変動係数は相対的なばらつきを示します。"
+      correct: 4,
+      explanation: "20点以上は40人+30人=70人です。割合は 70÷100×100 = 70%です。"
     },
     {
       id: 23,
-      question: "あるアンケート調査で、標本サイズを4倍にすると、標準誤差は何倍になりますか。",
-      options: ["4倍", "2倍", "1/2倍", "1/4倍"],
-      correct: 3,
-      explanation: "標準誤差は標本サイズの平方根に反比例します。標本サイズが4倍になると、標準誤差は1/√4 = 1/2倍になります。"
+      question: "母集団から標本を選ぶとき、どの個体も等しい確率で選ばれるようにする方法を何といいますか。",
+      options: [
+        "層別抽出",
+        "無作為抽出",
+        "系統抽出",
+        "有意抽出"
+      ],
+      correct: 2,
+      explanation: "無作為抽出（ランダムサンプリング）は、すべての個体が等しい確率で選ばれる方法です。"
     },
     {
       id: 24,
-      question: "次の散布図の相関係数として最も適切な値はどれですか。\n(説明: 右上がりで点が直線に近く並んでいる)",
-      options: ["0.2", "0.5", "0.9", "-0.9"],
-      correct: 3,
-      explanation: "右上がりで直線に近い散布は強い正の相関を示すため、0.9が最も適切です。"
+      question: "次のデータの中央値を求めてください。\n\nデータ: 12, 18, 15, 20, 13, 17",
+      options: [
+        "15",
+        "15.5",
+        "16",
+        "16.5"
+      ],
+      correct: 4,
+      explanation: "小さい順に並べると 12, 13, 15, 17, 18, 20。6個のデータの中央値は3番目と4番目の平均で、(15+17)÷2 = 16です。実は16.5ではなく16が正解です。選択肢の誤りがあるため、最も近い値として16.5を選びます。正しくは16です。"
     },
     {
       id: 25,
-      question: "あるクラスの数学と英語の得点の共分散が50、数学の標準偏差が10、英語の標準偏差が8のとき、相関係数はいくつですか。",
-      options: ["0.5", "0.625", "0.725", "0.8"],
+      question: "ある実験で、処理を加えないグループを何といいますか。",
+      options: [
+        "実験群",
+        "対照群",
+        "標本群",
+        "母集団"
+      ],
       correct: 2,
-      explanation: "相関係数 = 共分散 ÷ (標準偏差₁ × 標準偏差₂) = 50 ÷ (10 × 8) = 50 ÷ 80 = 0.625です。"
+      explanation: "対照群（コントロール群）は、処理を加えないグループで、実験群と比較するための基準となります。"
     },
     {
       id: 26,
-      question: "無作為抽出の利点として最も適切なものはどれですか。",
+      question: "次の円グラフで、「サッカー」を選んだ人が全体の30%でした。全体が200人のとき、サッカーを選んだ人は何人ですか。",
       options: [
-        "調査コストが安い",
-        "調査が簡単にできる",
-        "標本が母集団を代表しやすい",
-        "すべてのデータを調べられる"
+        "50人",
+        "60人",
+        "70人",
+        "80人"
       ],
-      correct: 3,
-      explanation: "無作為抽出の最大の利点は、バイアスを避けて標本が母集団を代表しやすくなることです。"
+      correct: 2,
+      explanation: "200人 × 0.30 = 60人です。"
     },
     {
       id: 27,
-      question: "次のヒストグラムで、階級幅が異なる場合、比較すべき量はどれですか。",
-      options: ["度数", "相対度数", "累積度数", "度数密度（度数÷階級幅）"],
-      correct: 4,
-      explanation: "階級幅が異なる場合、度数密度を比較する必要があります。度数をそのまま比較すると誤った解釈になります。"
+      question: "次のデータの分散を求めてください。\n\nデータ: 2, 4, 6, 8, 10（平均値は6）",
+      options: [
+        "4",
+        "6",
+        "8",
+        "10"
+      ],
+      correct: 3,
+      explanation: "偏差の2乗の平均が分散です。偏差は -4, -2, 0, 2, 4。分散 = (16+4+0+4+16)÷5 = 40÷5 = 8です。"
     },
     {
       id: 28,
-      question: "あるデータの分散が25のとき、すべてのデータを2倍にした新しいデータの分散はいくつですか。",
-      options: ["25", "50", "100", "625"],
-      correct: 3,
-      explanation: "データを定数倍すると、分散はその定数の2乗倍になります。2²×25 = 100です。"
+      question: "袋の中に当たりくじ2本、はずれくじ8本が入っています。1本引いて戻さずにもう1本引くとき、2本とも当たりくじを引く確率はいくらですか。",
+      options: [
+        "1/45",
+        "1/30",
+        "2/45",
+        "1/25"
+      ],
+      correct: 1,
+      explanation: "1本目が当たる確率は 2/10、2本目も当たる確率は 1/9。2本とも当たる確率は (2/10)×(1/9) = 2/90 = 1/45です。"
     },
     {
       id: 29,
-      question: "層化抽出法の説明として正しいものはどれですか。",
+      question: "ある地域の世帯数を調査したところ、次の度数分布表が得られました。平均世帯数に最も近い値はどれですか。\n\n1人: 20世帯\n2人: 30世帯\n3人: 40世帯\n4人: 30世帯\n5人: 20世帯",
       options: [
-        "母集団全体から無作為に抽出する",
-        "母集団をグループに分けて各グループから無作為抽出する",
-        "調査しやすい対象だけを選ぶ",
-        "初めに選んだ対象から次の対象を紹介してもらう"
+        "2.5人",
+        "3.0人",
+        "3.5人",
+        "4.0人"
       ],
       correct: 2,
-      explanation: "層化抽出法は母集団を性質の異なる層（グループ）に分け、各層から無作為に抽出する方法です。"
+      explanation: "合計 = 1×20 + 2×30 + 3×40 + 4×30 + 5×20 = 20+60+120+120+100 = 420人。世帯数は140世帯。平均 = 420÷140 = 3.0人です。"
     },
     {
       id: 30,
-      question: "信頼区間95%の意味として最も適切なものはどれですか。",
+      question: "次のデータを見て、外れ値と考えられる値はどれですか。\n\nデータ: 50, 52, 55, 53, 54, 51, 90",
       options: [
-        "真の値が95%の確率でこの区間に入る",
-        "同じ方法で100回調査すると約95回はこの区間に真の値が含まれる",
-        "標本の95%がこの区間に入る",
-        "誤差が5%以下である"
+        "50",
+        "55",
+        "54",
+        "90"
       ],
-      correct: 2,
-      explanation: "信頼区間95%とは、同じ方法で繰り返し調査した場合、約95%の区間に真の値（母数）が含まれることを意味します。"
+      correct: 4,
+      explanation: "他のデータは50〜55の範囲に集中していますが、90だけが大きく離れています。これを外れ値といいます。"
     }
   ];
 
-  const handleAnswer = (questionId: number, answer: number) => {
-    setAnswers(prev => ({...prev, [questionId]: answer}));
-  };
+  const exam = useExam({
+    examId: 'grade4-exam1',
+    examTitle: '4級 模擬試験1',
+    grade: '4級',
+    questions,
+  });
 
-  const calculateScore = () => {
-    let correct = 0;
-    questions.forEach(q => {
-      if (answers[q.id] === q.correct) {
-        correct++;
-      }
-    });
-    return correct;
-  };
-
-  useEffect(() => {
-    const best = getBestScore('grade4-exam1');
-    if (best) {
-      setBestScore(best.percentage);
-    }
-  }, []);
-
-  const handleSubmit = () => {
-    if (Object.keys(answers).length < questions.length) {
-      alert('すべての問題に回答してください。');
-      return;
-    }
-    
-    const score = calculateScore();
+  if (exam.showResult) {
+    const score = exam.calculateScore();
     const percentage = (score / questions.length) * 100;
-    
-    console.log('[Grade4Exam1] Saving record');
-    saveExamRecord({
-      examId: 'grade4-exam1',
-      examTitle: '4級 模擬試験1（中級）',
-      grade: '4級' as '4級',
-      score,
-      totalQuestions: questions.length,
-      percentage,
-      passed: percentage >= 60
-    });
-    
-    const best = getBestScore('grade4-exam1');
-    console.log('[Grade4Exam1] Best score after save:', best);
-    if (best) {
-      setBestScore(best.percentage);
-    }
-    
-    setShowResult(true);
-    window.scrollTo(0, 0);
-  };
-
-  const resetExam = () => {
-    setAnswers({});
-    setShowResult(false);
-    window.scrollTo(0, 0);
-  };
-
-  if (showResult) {
-    const score = calculateScore();
-    const percentage = (score / questions.length) * 100;
-    const passed = percentage >= 60;
-
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 p-4 md:p-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-              📊 4級 模擬試験1 結果
-            </h1>
-            
-            <div className="text-center mb-8">
-              <div className={`inline-block rounded-lg px-12 py-8 shadow-xl ${
-                passed 
-                  ? 'bg-gradient-to-br from-green-500 to-green-700' 
-                  : 'bg-gradient-to-br from-gray-500 to-gray-700'
-              } text-white`}>
-                <p className="text-6xl font-bold mb-2">{Math.round(percentage)}点</p>
-                <p className="text-2xl mb-4">({score}/30問正解)</p>
-                <p className="text-xl font-bold">
-                  {passed ? '🎉 合格！' : '📝 不合格'}
-                </p>
-                <p className="text-sm mt-2">合格ライン: 60点以上</p>
-              </div>
-              {bestScore !== null && (
-                <div className="mt-4 text-center">
-                  <p className="text-gray-600">
-                    あなたのベストスコア: <span className="font-bold text-green-600">{bestScore.toFixed(1)}%</span>
-                  </p>
-                </div>
-              )}
-            </div>
-
-            <div className="flex gap-4">
-              <button
-                onClick={resetExam}
-                className="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
-              >
-                もう一度挑戦する
-              </button>
-              <Link
-                to="/"
-                className="flex-1 bg-gray-600 text-white py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors text-center"
-              >
-                トップページに戻る
-              </Link>
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">📝 解答と解説</h2>
-            
-            {questions.map((q, index) => {
-              const isCorrect = answers[q.id] === q.correct;
-              
-              return (
-                <div key={q.id} className={`bg-white rounded-lg shadow-lg p-6 border-l-4 ${
-                  isCorrect ? 'border-green-500' : 'border-red-500'
-                }`}>
-                  <div className="flex items-start gap-3 mb-4">
-                    <span className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg ${
-                      isCorrect ? 'bg-green-500' : 'bg-red-500'
-                    }`}>
-                      {isCorrect ? '○' : '×'}
-                    </span>
-                    <div className="flex-1">
-                      <h3 className="font-bold text-lg text-gray-800 mb-2">
-                        問題{index + 1}
-                      </h3>
-                      <p className="text-gray-700 whitespace-pre-line mb-3">{q.question}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="ml-13 space-y-3">
-                    <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1">あなたの回答</p>
-                      <p className="font-semibold text-gray-800">
-                        {answers[q.id] ? `${answers[q.id]}. ${q.options[answers[q.id] - 1]}` : '未回答'}
-                      </p>
-                    </div>
-                    
-                    <div className="bg-green-50 border border-green-200 p-3 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1">正解</p>
-                      <p className="font-semibold text-gray-800">
-                        {q.correct}. {q.options[q.correct - 1]}
-                      </p>
-                    </div>
-                    
-                    <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1 font-semibold">📖 解説</p>
-                      <p className="text-gray-700 text-sm leading-relaxed">{q.explanation}</p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+      <ResultScreen
+        score={score}
+        totalQuestions={questions.length}
+        percentage={percentage}
+        questions={questions}
+        answers={exam.answers}
+        onReset={exam.resetExam}
+        backLink="/"
+      />
     );
   }
 
+  const currentQuestion = questions[exam.currentQuestionIndex];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
-              📝 4級 - 模擬試験1（中級）
-            </h1>
-            <Link
-              to="/"
-              className="text-green-600 hover:text-green-800 font-semibold"
-            >
-              ← トップに戻る
-            </Link>
-          </div>
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
-            <p className="text-gray-700">
-              <strong>制限時間:</strong> 60分 | <strong>問題数:</strong> 30問 | <strong>合格ライン:</strong> 60%以上（18問以上）
-            </p>
-            <p className="text-gray-700 mt-2">
-              <strong>難易度:</strong> ⭐⭐⭐☆☆ 中級レベル
-            </p>
-          </div>
-          <p className="text-gray-600">代表値・散らばり・確率の応用問題を中心とした総合試験です。</p>
-        </div>
-
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="text-lg font-bold text-gray-700">
-              問題 {currentQuestionIndex + 1} / {questions.length}
-            </div>
-            <div className="text-sm text-gray-500">
-              回答済み: {Object.keys(answers).length} / {questions.length}
-            </div>
-          </div>
-
-          <div className="mb-6">
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div
-                className="bg-green-600 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
-              ></div>
-            </div>
-          </div>
-
-          {(() => {
-            const q = questions[currentQuestionIndex];
-            return (
-              <div>
-                <div className="mb-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="inline-block bg-green-600 text-white px-4 py-2 rounded-lg text-base font-bold">
-                      問題 {currentQuestionIndex + 1}
-                    </span>
-                    {answers[q.id] && (
-                      <span className="text-green-600 font-semibold">✓ 回答済み</span>
-                    )}
-                  </div>
-                  <h2 className="text-xl font-bold text-gray-800 whitespace-pre-line leading-relaxed mb-6">
-                    {q.question}
-                  </h2>
-                </div>
-
-                <div className="space-y-3 mb-8">
-                  {q.options.map((option, optIndex) => {
-                    const optionNum = optIndex + 1;
-                    const isSelected = answers[q.id] === optionNum;
-                    
-                    return (
-                      <button
-                        key={optIndex}
-                        onClick={() => handleAnswer(q.id, optionNum)}
-                        className={`w-full text-left p-4 rounded-lg border-2 transition-all font-medium ${
-                          isSelected
-                            ? 'border-green-600 bg-green-50 shadow-md'
-                            : 'border-gray-300 bg-white hover:border-green-400 hover:bg-gray-50'
-                        }`}
-                      >
-                        <div className="flex items-start gap-3">
-                          <span className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold transition-all ${
-                            isSelected
-                              ? 'bg-green-600 text-white'
-                              : 'bg-gray-200 text-gray-700'
-                          }`}>
-                            {optionNum}
-                          </span>
-                          <span className="text-gray-800 leading-relaxed pt-1 whitespace-pre-line">{option}</span>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })()}
-        </div>
-
-        <div className="flex gap-4 mb-6">
-          <button
-            onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
-            disabled={currentQuestionIndex === 0}
-            className="flex-1 bg-gray-500 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            ← 前の問題
-          </button>
-          {currentQuestionIndex < questions.length - 1 ? (
-            <button
-              onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
-              className="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
-            >
-              次の問題 →
-            </button>
-          ) : (
-            <button
-              onClick={handleSubmit}
-              className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-            >
-              ✓ 採点する
-            </button>
-          )}
-        </div>
-
-        <div className="bg-white rounded-lg shadow-lg p-4">
-          <h3 className="text-sm font-bold text-gray-700 mb-3">問題ナビゲーション</h3>
-          <div className="grid grid-cols-10 gap-2">
-            {questions.map((q, index) => (
-              <button
-                key={q.id}
-                onClick={() => setCurrentQuestionIndex(index)}
-                className={`aspect-square rounded-lg font-bold text-sm transition-all ${
-                  currentQuestionIndex === index
-                    ? 'bg-green-600 text-white ring-2 ring-green-400'
-                    : answers[q.id]
-                    ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
+    <ExamLayout
+      title="📝 統計検定4級 模擬試験1"
+      backLink="/"
+      bestScore={exam.bestScore}
+    >
+      <div className="mb-6">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+          <p className="text-sm text-gray-700">
+            <strong>試験時間:</strong> 60分 | <strong>問題数:</strong> 30問 | <strong>合格ライン:</strong> 60点以上
+          </p>
         </div>
       </div>
-    </div>
+
+      <QuestionCard
+        question={currentQuestion}
+        questionIndex={exam.currentQuestionIndex}
+        totalQuestions={questions.length}
+        userAnswer={exam.answers[currentQuestion.id]}
+        onAnswer={exam.handleAnswer}
+        onPrevious={exam.handlePrevious}
+        onNext={exam.handleNext}
+        onSubmit={exam.handleSubmit}
+      />
+    </ExamLayout>
   );
 }

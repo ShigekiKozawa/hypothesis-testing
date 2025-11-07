@@ -1,678 +1,419 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { saveExamRecord, getBestScore } from '../../utils/localStorage';
+import { useExam, Question } from '../../hooks/useExam';
+import { ExamLayout, ResultScreen, QuestionCard } from '../common/ExamLayout';
 
 export default function Grade3Exam1() {
-  const [answers, setAnswers] = useState<Record<number, number>>({});
-  const [showResult, setShowResult] = useState(false);
-  const [bestScore, setBestScore] = useState<number | null>(null);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-
-  const questions = [
+  const questions: Question[] = [
     {
-        id: 1,
-        question: "次のデータのうち、量的変数はどれですか。\n\nI. 血液型（A型、B型、O型、AB型）\nII. 身長（cm）\nIII. 体重（kg）\nIV. 好きな色",
-        options: [
-            "IとIIのみ",
-            "IIとIIIのみ",
-            "I、II、IIIのみ",
-            "すべて"
-        ],
-        correct: 2,
-        explanation: "量的変数は数値として計算可能なデータです。身長と体重は量的変数、血液型と好きな色は質的変数です。"
+      id: 1,
+      question: "次のデータの標準偏差を求めてください。\n\nデータ: 2, 4, 6, 8, 10（平均値は6、分散は8）",
+      options: [
+        "2.0",
+        "2.4",
+        "2.8",
+        "3.2"
+      ],
+      correct: 3,
+      explanation: "標準偏差は分散の平方根です。√8 ≒ 2.83 ≒ 2.8です。"
     },
     {
-        id: 2,
-        question: "次のデータの中央値を求めてください。\n\nデータ: 12, 15, 18, 20, 25, 30, 35",
-        options: [
-            "18",
-            "20",
-            "22.5",
-            "25"
-        ],
-        correct: 2,
-        explanation: "7個のデータなので、中央値は4番目の値で20です。"
+      id: 2,
+      question: "2つのグループA, Bの平均と標準偏差は以下の通りです。どちらが散らばりが大きいですか。\n\nA: 平均50、標準偏差10\nB: 平均100、標準偏差15",
+      options: [
+        "Aの方が大きい",
+        "Bの方が大きい",
+        "同じ",
+        "変動係数で比較する必要がある"
+      ],
+      correct: 4,
+      explanation: "平均が異なる場合、標準偏差だけでは散らばりを比較できません。変動係数（標準偏差÷平均）で比較する必要があります。"
     },
     {
-        id: 3,
-        question: "ある店舗の月別売上の推移を示すのに最も適したグラフはどれですか。",
-        options: [
-            "円グラフ",
-            "棒グラフ",
-            "折れ線グラフ",
-            "箱ひげ図"
-        ],
-        correct: 3,
-        explanation: "時系列データの推移を示すには折れ線グラフが最適です。"
+      id: 3,
+      question: "次の散布図で、相関係数が最も大きいのはどれですか。",
+      options: [
+        "点が右上がりの直線状に並んでいる",
+        "点が右下がりの直線状に並んでいる",
+        "点がランダムに散らばっている",
+        "点が曲線状に並んでいる"
+      ],
+      correct: 1,
+      explanation: "相関係数は-1から1の値を取り、1に近いほど強い正の相関です。右上がりの直線状が最も大きい正の相関係数を持ちます。"
     },
     {
-        id: 4,
-        question: "次のデータから平均値を計算してください。\n\nデータ: 10, 15, 20, 25, 30",
-        options: [
-            "18",
-            "20",
-            "22",
-            "25"
-        ],
-        correct: 2,
-        explanation: "平均値 = (10+15+20+25+30)/5 = 100/5 = 20です。"
+      id: 4,
+      question: "ある変数xとyの間に y = 2x + 3 という回帰式が得られました。x=5のとき、yの予測値はいくらですか。",
+      options: [
+        "10",
+        "11",
+        "12",
+        "13"
+      ],
+      correct: 4,
+      explanation: "y = 2×5 + 3 = 10 + 3 = 13です。"
     },
     {
-        id: 5,
-        question: "次のデータの範囲（レンジ）はいくらですか。\n\nデータ: 5, 12, 18, 24, 30",
-        options: [
-            "18",
-            "24",
-            "25",
-            "30"
-        ],
-        correct: 3,
-        explanation: "範囲 = 最大値 - 最小値 = 30 - 5 = 25です。"
+      id: 5,
+      question: "相関係数r=0.9のとき、決定係数（寄与率）はいくらですか。",
+      options: [
+        "0.81",
+        "0.85",
+        "0.90",
+        "0.95"
+      ],
+      correct: 1,
+      explanation: "決定係数 = r² = 0.9² = 0.81です。これは、yの変動の81%がxで説明できることを意味します。"
     },
     {
-        id: 6,
-        question: "次のヒストグラムの説明として正しいものはどれですか。\n\n階級幅が等しいヒストグラムの場合について考えます。",
-        options: [
-            "棒の高さは累積度数を表す",
-            "棒の面積は相対度数を表す",
-            "横軸の順序は変更できる",
-            "棒と棒の間に隙間がある"
-        ],
-        correct: 2,
-        explanation: "ヒストグラムでは、棒の面積が相対度数を表します。階級幅が等しい場合、棒の高さも度数に比例します。"
+      id: 6,
+      question: "標本平均の期待値は何に等しいですか。",
+      options: [
+        "標本分散",
+        "母平均",
+        "母分散",
+        "標本数"
+      ],
+      correct: 2,
+      explanation: "標本平均の期待値は母平均に等しくなります。これを不偏性といいます。"
     },
     {
-        id: 7,
-        question: "箱ひげ図で箱の中の線が表すものは何ですか。",
-        options: [
-            "平均値",
-            "中央値",
-            "最頻値",
-            "標準偏差"
-        ],
-        correct: 2,
-        explanation: "箱ひげ図の箱の中の線は中央値（第2四分位数）を表します。"
+      id: 7,
+      question: "母集団の分散がσ²、標本サイズがnのとき、標本平均の分散はいくらですか。",
+      options: [
+        "σ²",
+        "σ²/n",
+        "σ/√n",
+        "nσ²"
+      ],
+      correct: 2,
+      explanation: "標本平均の分散 = σ²/n です。標本サイズが大きくなると、標本平均のばらつきは小さくなります。"
     },
     {
-        id: 8,
-        question: "次の散布図から読み取れる相関はどれですか。\n\n右上がりの点の分布が見られる場合",
-        options: [
-            "正の相関",
-            "負の相関",
-            "無相関",
-            "判断できない"
-        ],
-        correct: 1,
-        explanation: "右上がりの散布図は正の相関を示します。一方の変数が増えると他方も増える傾向があります。"
+      id: 8,
+      question: "95%信頼区間とは何を意味しますか。",
+      options: [
+        "母集団の95%がこの区間に含まれる",
+        "標本の95%がこの区間に含まれる",
+        "同じ方法で何度も標本抽出したとき、その95%で真の値がこの区間に含まれる",
+        "誤差が5%以下である"
+      ],
+      correct: 3,
+      explanation: "95%信頼区間は、同じ方法で何度も標本抽出して区間推定を行ったとき、その95%の区間に真の母数が含まれることを意味します。"
     },
     {
-        id: 9,
-        question: "相関係数の取りうる値の範囲はどれですか。",
-        options: [
-            "-1以上1以下",
-            "0以上1以下",
-            "0以上",
-            "すべての実数"
-        ],
-        correct: 1,
-        explanation: "相関係数は-1から1の範囲の値を取ります。-1は完全な負の相関、1は完全な正の相関を示します。"
+      id: 9,
+      question: "仮説検定で、「差がない」という仮説を何といいますか。",
+      options: [
+        "対立仮説",
+        "帰無仮説",
+        "有意仮説",
+        "検定仮説"
+      ],
+      correct: 2,
+      explanation: "帰無仮説（H0）は、「差がない」「効果がない」という仮説で、これを棄却することを目的とします。"
     },
     {
-        id: 10,
-        question: "次のクロス集計表から、「Aを選んだ」人数は何人ですか。\n\n【好み調査】\n　　　　男性　女性　計\nA選択　30　　20　　？\nB選択　20　　30　　50\n計　　　50　　50　　100",
-        options: [
-            "30",
-            "40",
-            "50",
-            "100"
-        ],
-        correct: 3,
-        explanation: "A選択の合計は、男性30人+女性20人=50人です。"
+      id: 10,
+      question: "有意水準5%で検定を行い、p値が0.03でした。この結果をどう解釈しますか。",
+      options: [
+        "帰無仮説を棄却できない",
+        "帰無仮説を棄却する",
+        "対立仮説を棄却する",
+        "判断できない"
+      ],
+      correct: 2,
+      explanation: "p値0.03 < 有意水準0.05なので、帰無仮説を棄却します。つまり、統計的に有意な差があると判断します。"
     },
     {
-        id: 11,
-        question: "サイコロを1回振って3の倍数が出る確率はいくらですか。",
-        options: [
-            "1/6",
-            "1/3",
-            "1/2",
-            "2/3"
-        ],
-        correct: 2,
-        explanation: "3の倍数は3と6の2通り、全体は6通りなので、2/6=1/3です。"
+      id: 11,
+      question: "次のデータの変動係数を求めてください。\n\n平均: 50、標準偏差: 10",
+      options: [
+        "0.1",
+        "0.2",
+        "0.5",
+        "5"
+      ],
+      correct: 2,
+      explanation: "変動係数 = 標準偏差 ÷ 平均 = 10 ÷ 50 = 0.2です。"
     },
     {
-        id: 12,
-        question: "次のデータの第1四分位数（Q1）を求めてください。\n\nデータ（昇順）: 10, 15, 20, 25, 30, 35, 40, 45, 50",
-        options: [
-            "15",
-            "17.5",
-            "20",
-            "22.5"
-        ],
-        correct: 3,
-        explanation: "9個のデータの下位4つ（10,15,20,25）の中央値がQ1で、(15+20)/2ではなく、下位25%点なので20です。（簡易的な計算方法）"
+      id: 12,
+      question: "2つの変数の間に強い正の相関があります。このとき、一方が原因で他方が結果であると言えますか。",
+      options: [
+        "必ず言える",
+        "言えない場合がある",
+        "絶対に言えない",
+        "相関係数が0.9以上なら言える"
+      ],
+      correct: 2,
+      explanation: "相関関係があっても因果関係があるとは限りません。第三の変数が両方に影響している可能性（疑似相関）もあります。"
     },
     {
-        id: 13,
-        question: "偏差値が50のとき、その得点は平均値に対してどのような位置にありますか。",
-        options: [
-            "平均値より高い",
-            "平均値と同じ",
-            "平均値より低い",
-            "判断できない"
-        ],
-        correct: 2,
-        explanation: "偏差値50は平均値に対応します。偏差値が50より大きければ平均より上、小さければ平均より下です。"
+      id: 13,
+      question: "正規分布において、平均±1標準偏差の範囲に含まれるデータの割合は約何%ですか。",
+      options: [
+        "50%",
+        "68%",
+        "95%",
+        "99%"
+      ],
+      correct: 2,
+      explanation: "正規分布では、平均±1標準偏差の範囲に約68%のデータが含まれます。"
     },
     {
-        id: 14,
-        question: "標準偏差が大きいデータの特徴はどれですか。",
-        options: [
-            "データのばらつきが小さい",
-            "データのばらつきが大きい",
-            "平均値が大きい",
-            "中央値が大きい"
-        ],
-        correct: 2,
-        explanation: "標準偏差はデータのばらつきを表す指標で、値が大きいほどばらつきが大きいことを示します。"
+      id: 14,
+      question: "標本サイズを4倍にすると、標本平均の標準誤差はどうなりますか。",
+      options: [
+        "4倍になる",
+        "2倍になる",
+        "1/2になる",
+        "1/4になる"
+      ],
+      correct: 3,
+      explanation: "標準誤差 = σ/√n なので、nを4倍にすると √4 = 2で割ることになり、標準誤差は1/2になります。"
     },
     {
-        id: 15,
-        question: "次のデータで外れ値（はずれ値）はどれですか。\n\nデータ: 10, 12, 15, 18, 20, 100",
-        options: [
-            "10",
-            "20",
-            "100",
-            "外れ値はない"
-        ],
-        correct: 3,
-        explanation: "100は他のデータと比べて極端に大きいため、外れ値と考えられます。"
+      id: 15,
+      question: "第一種の過誤（タイプIエラー）とは何ですか。",
+      options: [
+        "帰無仮説が正しいのに棄却してしまう誤り",
+        "帰無仮説が誤っているのに棄却しない誤り",
+        "標本サイズが小さすぎる誤り",
+        "計算間違い"
+      ],
+      correct: 1,
+      explanation: "第一種の過誤は、帰無仮説が真であるのに棄却してしまう誤りです。有意水準αがこの確率を表します。"
     },
     {
-        id: 16,
-        question: "外れ値が平均値に与える影響について正しいものはどれですか。",
-        options: [
-            "外れ値は平均値に影響しない",
-            "外れ値は平均値を大きく変化させることがある",
-            "外れ値は中央値を大きく変化させる",
-            "外れ値は最頻値に影響する"
-        ],
-        correct: 2,
-        explanation: "外れ値は平均値を大きく変化させる可能性があります。中央値は外れ値の影響を受けにくいです。"
+      id: 16,
+      question: "ある試験の得点が平均60点、標準偏差10点の正規分布に従うとき、70点以上の人の割合は約何%ですか。",
+      options: [
+        "16%",
+        "32%",
+        "50%",
+        "84%"
+      ],
+      correct: 1,
+      explanation: "70点は平均+1標準偏差です。正規分布では平均+1標準偏差以上は約16%です。"
     },
     {
-        id: 17,
-        question: "コインを2回投げて、1回目も2回目も表が出る確率はいくらですか。",
-        options: [
-            "1/2",
-            "1/3",
-            "1/4",
-            "1/8"
-        ],
-        correct: 3,
-        explanation: "1回目が表の確率は1/2、2回目も表の確率は1/2。独立なので(1/2)×(1/2)=1/4です。"
+      id: 17,
+      question: "回帰分析で、残差とは何を表しますか。",
+      options: [
+        "予測値と実測値の差",
+        "xとyの相関",
+        "回帰係数",
+        "決定係数"
+      ],
+      correct: 1,
+      explanation: "残差 = 実測値 - 予測値 です。残差が小さいほど、回帰式が実際のデータをよく説明しています。"
     },
     {
-        id: 18,
-        question: "52枚のトランプから1枚引いたとき、スペードまたはハートが出る確率はいくらですか。",
-        options: [
-            "1/4",
-            "1/2",
-            "3/4",
-            "13/52"
-        ],
-        correct: 2,
-        explanation: "スペードは13枚、ハートは13枚で合計26枚。26/52=1/2です。"
+      id: 18,
+      question: "無作為化（ランダム化）の目的は何ですか。",
+      options: [
+        "標本サイズを大きくする",
+        "交絡因子の影響を減らす",
+        "費用を削減する",
+        "調査時間を短縮する"
+      ],
+      correct: 2,
+      explanation: "無作為化により、観測していない交絡因子が実験群と対照群に均等に配分され、その影響を減らすことができます。"
     },
     {
-        id: 19,
-        question: "ある商品の価格が2020年を基準（100）として、2021年に110になりました。価格は何%上昇しましたか。",
-        options: [
-            "5%",
-            "10%",
-            "15%",
-            "20%"
-        ],
-        correct: 2,
-        explanation: "指数が100から110になったので、(110-100)/100×100=10%上昇です。"
+      id: 19,
+      question: "標本から母平均を推定するとき、不偏分散を使う理由は何ですか。",
+      options: [
+        "計算が簡単",
+        "標本分散は母分散を過小評価するため",
+        "標本分散は母分散を過大評価するため",
+        "常に正の値になるため"
+      ],
+      correct: 2,
+      explanation: "標本分散（nで割る）は母分散を過小評価する傾向があるため、不偏分散（n-1で割る）を使います。"
     },
     {
-        id: 20,
-        question: "母集団とは何ですか。",
-        options: [
-            "調査の対象となる全体の集合",
-            "調査で実際に抽出された一部",
-            "サンプルの平均値",
-            "データの種類"
-        ],
-        correct: 1,
-        explanation: "母集団は調査の対象となる全体の集合です。そこから一部を抽出したものが標本（サンプル）です。"
+      id: 20,
+      question: "2つの変数x, yの共分散が正のとき、相関はどうですか。",
+      options: [
+        "正の相関",
+        "負の相関",
+        "相関なし",
+        "判断できない"
+      ],
+      correct: 1,
+      explanation: "共分散が正のとき、相関係数も正となり、正の相関があります。"
     },
     {
-        id: 21,
-        question: "無作為抽出の目的として最も適切なものはどれですか。",
-        options: [
-            "調査を簡単にするため",
-            "偏りのない標本を得るため",
-            "費用を削減するため",
-            "時間を短縮するため"
-        ],
-        correct: 2,
-        explanation: "無作為抽出の主な目的は、偏りのない代表的な標本を得ることです。"
+      id: 21,
+      question: "中心極限定理によると、標本サイズが大きくなると標本平均の分布はどうなりますか。",
+      options: [
+        "一様分布に近づく",
+        "正規分布に近づく",
+        "二項分布に近づく",
+        "指数分布に近づく"
+      ],
+      correct: 2,
+      explanation: "中心極限定理により、元の分布によらず、標本サイズが大きくなると標本平均の分布は正規分布に近づきます。"
     },
     {
-        id: 22,
-        question: "次のデータの最頻値（モード）を求めてください。\n\nデータ: 5, 7, 7, 8, 9, 9, 9, 10",
-        options: [
-            "7",
-            "8",
-            "9",
-            "10"
-        ],
-        correct: 3,
-        explanation: "最頻値は最も頻繁に現れる値で、9が3回出現しているので9です。"
+      id: 22,
+      question: "クロス集計表でカイ二乗検定を行う目的は何ですか。",
+      options: [
+        "平均値の差を検定する",
+        "2つの変数の独立性を検定する",
+        "分散の差を検定する",
+        "相関係数を検定する"
+      ],
+      correct: 2,
+      explanation: "カイ二乗検定は、クロス集計表で2つのカテゴリカル変数が独立かどうかを検定します。"
     },
     {
-        id: 23,
-        question: "分散が0のデータはどのような特徴を持ちますか。",
-        options: [
-            "すべての値が異なる",
-            "すべての値が同じ",
-            "平均値が0",
-            "中央値が0"
-        ],
-        correct: 2,
-        explanation: "分散が0ということは、すべてのデータが同じ値であることを意味します。"
+      id: 23,
+      question: "信頼区間の幅を狭くするにはどうすればよいですか。",
+      options: [
+        "標本サイズを大きくする",
+        "標本サイズを小さくする",
+        "信頼係数を大きくする",
+        "平均値を変える"
+      ],
+      correct: 1,
+      explanation: "標本サイズを大きくすると、標準誤差が小さくなり、信頼区間の幅が狭くなります。"
     },
     {
-        id: 24,
-        question: "ヒストグラムから読み取れないものはどれですか。",
-        options: [
-            "データの分布の形",
-            "データの個々の値",
-            "中央値が含まれる階級",
-            "度数"
-        ],
-        correct: 2,
-        explanation: "ヒストグラムは度数分布を示しますが、個々のデータの正確な値は読み取れません。"
+      id: 24,
+      question: "偏相関係数とは何ですか。",
+      options: [
+        "2変数間の相関",
+        "他の変数の影響を除いた2変数間の相関",
+        "3変数以上の相関",
+        "負の相関"
+      ],
+      correct: 2,
+      explanation: "偏相関係数は、第三の変数の影響を取り除いた後の2変数間の純粋な相関を表します。"
     },
     {
-        id: 25,
-        question: "相関関係があっても因果関係があるとは限らない例として適切なものはどれですか。",
-        options: [
-            "身長と体重",
-            "気温とアイスクリームの売上",
-            "アイスクリームの売上と水難事故（夏という共通要因）",
-            "勉強時間と成績"
-        ],
-        correct: 3,
-        explanation: "アイスクリームの売上と水難事故には相関がありますが、直接の因果関係はありません。夏という共通の要因（交絡因子）があります。"
+      id: 25,
+      question: "検出力（power）とは何ですか。",
+      options: [
+        "帰無仮説が正しいのに棄却する確率",
+        "帰無仮説が誤っているときに正しく棄却する確率",
+        "標本サイズ",
+        "有意水準"
+      ],
+      correct: 2,
+      explanation: "検出力（1-β）は、帰無仮説が実際に誤っているときに、それを正しく棄却できる確率です。"
     },
     {
-        id: 26,
-        question: "赤玉4個、白玉6個の袋から玉を1個取り出すとき、白玉が出る確率はいくらですか。",
-        options: [
-            "2/5",
-            "3/5",
-            "4/10",
-            "1/2"
-        ],
-        correct: 2,
-        explanation: "白玉は6個、全体は10個なので、6/10=3/5です。"
+      id: 26,
+      question: "時系列データで、前年同月比を計算する目的は何ですか。",
+      options: [
+        "季節変動の影響を考慮する",
+        "長期トレンドを見る",
+        "誤差を修正する",
+        "データを平滑化する"
+      ],
+      correct: 1,
+      explanation: "前年同月比は、季節変動の影響を考慮しながら変化を見るために使われます。"
     },
     {
-        id: 27,
-        question: "時系列グラフから読み取れる情報として適切でないものはどれですか。",
-        options: [
-            "データの推移",
-            "季節変動",
-            "データ間の相関",
-            "トレンド"
-        ],
-        correct: 3,
-        explanation: "単一の時系列グラフからは、異なるデータ間の相関は読み取れません。散布図が必要です。"
+      id: 27,
+      question: "2群の平均値の差を検定するとき、最も適切な検定法はどれですか。",
+      options: [
+        "カイ二乗検定",
+        "t検定",
+        "F検定",
+        "相関係数の検定"
+      ],
+      correct: 2,
+      explanation: "2群の平均値の差を検定するには、t検定が適切です。"
     },
     {
-        id: 28,
-        question: "標本平均は母平均の推定値として使われます。標本サイズが大きくなると、標本平均の精度はどうなりますか。",
-        options: [
-            "悪くなる",
-            "変わらない",
-            "良くなる",
-            "判断できない"
-        ],
-        correct: 3,
-        explanation: "標本サイズが大きくなると、標本平均の標準誤差が小さくなり、推定の精度が向上します。"
+      id: 28,
+      question: "実験計画で、被験者をランダムに2つのグループに分けて処理する方法を何といいますか。",
+      options: [
+        "観察研究",
+        "完全無作為化法",
+        "乱塊法",
+        "要因計画"
+      ],
+      correct: 2,
+      explanation: "完全無作為化法は、被験者をランダムに処理群に割り当てる最も基本的な実験計画法です。"
     },
     {
-        id: 29,
-        question: "信頼区間の幅を狭くするためにはどうすればよいですか。",
-        options: [
-            "標本サイズを大きくする",
-            "標本サイズを小さくする",
-            "信頼度を上げる",
-            "平均値を変える"
-        ],
-        correct: 1,
-        explanation: "標本サイズを大きくすると標準誤差が小さくなり、信頼区間の幅が狭くなります。"
+      id: 29,
+      question: "多重比較を行うとき、何が問題になりますか。",
+      options: [
+        "計算が複雑になる",
+        "第一種の過誤が増える",
+        "検出力が高くなりすぎる",
+        "標本サイズが必要になる"
+      ],
+      correct: 2,
+      explanation: "複数の検定を繰り返すと、偶然有意になる確率（第一種の過誤）が増えます。これを調整する必要があります。"
     },
     {
-        id: 30,
-        question: "仮説検定において、帰無仮説を棄却するとはどういう意味ですか。",
-        options: [
-            "帰無仮説が正しいと判断する",
-            "帰無仮説が正しくないと判断する",
-            "対立仮説が正しくないと判断する",
-            "判断を保留する"
-        ],
-        correct: 2,
-        explanation: "帰無仮説を棄却するということは、データから見て帰無仮説が正しくない（対立仮説が正しい可能性が高い）と判断することです。"
+      id: 30,
+      question: "正規分布において、平均±2標準偏差の範囲に含まれるデータの割合は約何%ですか。",
+      options: [
+        "68%",
+        "90%",
+        "95%",
+        "99%"
+      ],
+      correct: 3,
+      explanation: "正規分布では、平均±2標準偏差の範囲に約95%のデータが含まれます。"
     }
-];
+  ];
 
-  const handleAnswer = (questionId: number, answer: number) => {
-    setAnswers(prev => ({...prev, [questionId]: answer}));
-  };
+  const exam = useExam({
+    examId: 'grade3-exam1',
+    examTitle: '3級 模擬試験1',
+    grade: '3級',
+    questions,
+  });
 
-  const calculateScore = () => {
-    let correct = 0;
-    questions.forEach(q => {
-      if (answers[q.id] === q.correct) {
-        correct++;
-      }
-    });
-    return correct;
-  };
-
-  useEffect(() => {
-    const best = getBestScore('grade3-exam1');
-    if (best) {
-      setBestScore(best.percentage);
-    }
-  }, []);
-
-  const handleSubmit = () => {
-    if (Object.keys(answers).length < questions.length) {
-      alert('すべての問題に回答してください。');
-      return;
-    }
-    
-    const score = calculateScore();
+  if (exam.showResult) {
+    const score = exam.calculateScore();
     const percentage = (score / questions.length) * 100;
-    
-    saveExamRecord({
-      examId: 'grade3-exam1',
-      examTitle: '3級 模擬試験1（中級）',
-      grade: '3級' as '3級',
-      score,
-      totalQuestions: questions.length,
-      percentage,
-      passed: percentage >= 65
-    });
-    
-    const best = getBestScore('grade3-exam1');
-    if (best) {
-      setBestScore(best.percentage);
-    }
-    
-    setShowResult(true);
-    window.scrollTo(0, 0);
-  };
-
-  const resetExam = () => {
-    setAnswers({});
-    setShowResult(false);
-    window.scrollTo(0, 0);
-  };
-
-  if (showResult) {
-    const score = calculateScore();
-    const percentage = (score / questions.length) * 100;
-    const passed = percentage >= 65;
-
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4 md:p-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-              📊 3級 模擬試験1 結果
-            </h1>
-            
-            <div className="text-center mb-8">
-              <div className={`inline-block rounded-lg px-12 py-8 shadow-xl ${
-                passed 
-                  ? 'bg-gradient-to-br from-blue-500 to-blue-700' 
-                  : 'bg-gradient-to-br from-gray-500 to-gray-700'
-              } text-white`}>
-                <p className="text-6xl font-bold mb-2">{Math.round(percentage)}点</p>
-                <p className="text-2xl mb-4">({score}/30問正解)</p>
-                <p className="text-xl font-bold">
-                  {passed ? '🎉 合格！' : '📝 不合格'}
-                </p>
-                <p className="text-sm mt-2">合格ライン: 65点以上</p>
-              </div>
-              {bestScore !== null && (
-                <div className="mt-4 text-center">
-                  <p className="text-gray-600">
-                    あなたのベストスコア: <span className="font-bold text-blue-600">{bestScore.toFixed(1)}%</span>
-                  </p>
-                </div>
-              )}
-            </div>
-
-            <div className="flex gap-4">
-              <button
-                onClick={resetExam}
-                className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-              >
-                もう一度挑戦する
-              </button>
-              <Link
-                to="/"
-                className="flex-1 bg-gray-600 text-white py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors text-center"
-              >
-                トップページに戻る
-              </Link>
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">📝 解答と解説</h2>
-            
-            {questions.map((q, index) => {
-              const isCorrect = answers[q.id] === q.correct;
-              
-              return (
-                <div key={q.id} className={`bg-white rounded-lg shadow-lg p-6 border-l-4 ${
-                  isCorrect ? 'border-blue-500' : 'border-red-500'
-                }`}>
-                  <div className="flex items-start gap-3 mb-4">
-                    <span className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg ${
-                      isCorrect ? 'bg-blue-500' : 'bg-red-500'
-                    }`}>
-                      {isCorrect ? '○' : '×'}
-                    </span>
-                    <div className="flex-1">
-                      <h3 className="font-bold text-lg text-gray-800 mb-2">
-                        問題{index + 1}
-                      </h3>
-                      <p className="text-gray-700 whitespace-pre-line mb-3">{q.question}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="ml-13 space-y-3">
-                    <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1">あなたの回答</p>
-                      <p className="font-semibold text-gray-800">
-                        {answers[q.id] ? `${answers[q.id]}. ${q.options[answers[q.id] - 1]}` : '未回答'}
-                      </p>
-                    </div>
-                    
-                    <div className="bg-indigo-50 border border-indigo-200 p-3 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1">正解</p>
-                      <p className="font-semibold text-gray-800">
-                        {q.correct}. {q.options[q.correct - 1]}
-                      </p>
-                    </div>
-                    
-                    <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1 font-semibold">📖 解説</p>
-                      <p className="text-gray-700 text-sm leading-relaxed">{q.explanation}</p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+      <ResultScreen
+        score={score}
+        totalQuestions={questions.length}
+        percentage={percentage}
+        questions={questions}
+        answers={exam.answers}
+        onReset={exam.resetExam}
+        backLink="/"
+      />
     );
   }
 
+  const currentQuestion = questions[exam.currentQuestionIndex];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
-              📝 3級 - 模擬試験1（中級）
-            </h1>
-            <Link
-              to="/"
-              className="text-blue-600 hover:text-blue-800 font-semibold"
-            >
-              ← トップに戻る
-            </Link>
-          </div>
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-            <p className="text-gray-700">
-              <strong>制限時間:</strong> 60分 | <strong>問題数:</strong> 30問 | <strong>合格ライン:</strong> 65%以上（20問以上）
-            </p>
-            <p className="text-gray-700 mt-2">
-              <strong>難易度:</strong> ⭐⭐⭐☆☆ 中級レベル
-            </p>
-          </div>
-          <p className="text-gray-600">推測統計・回帰分析・検定の基礎を総合的に問う試験です。</p>
-        </div>
-
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="text-lg font-bold text-gray-700">
-              問題 {currentQuestionIndex + 1} / {questions.length}
-            </div>
-            <div className="text-sm text-gray-500">
-              回答済み: {Object.keys(answers).length} / {questions.length}
-            </div>
-          </div>
-
-          <div className="mb-6">
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div
-                className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
-              ></div>
-            </div>
-          </div>
-
-          {(() => {
-            const q = questions[currentQuestionIndex];
-            return (
-              <div>
-                <div className="mb-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg text-base font-bold">
-                      問題 {currentQuestionIndex + 1}
-                    </span>
-                    {answers[q.id] && (
-                      <span className="text-blue-600 font-semibold">✓ 回答済み</span>
-                    )}
-                  </div>
-                  <h2 className="text-xl font-bold text-gray-800 whitespace-pre-line leading-relaxed mb-6">
-                    {q.question}
-                  </h2>
-                </div>
-
-                <div className="space-y-3 mb-8">
-                  {q.options.map((option, optIndex) => {
-                    const optionNum = optIndex + 1;
-                    const isSelected = answers[q.id] === optionNum;
-                    
-                    return (
-                      <button
-                        key={optIndex}
-                        onClick={() => handleAnswer(q.id, optionNum)}
-                        className={`w-full text-left p-4 rounded-lg border-2 transition-all font-medium ${
-                          isSelected
-                            ? 'border-blue-600 bg-blue-50 shadow-md'
-                            : 'border-gray-300 bg-white hover:border-blue-400 hover:bg-gray-50'
-                        }`}
-                      >
-                        <div className="flex items-start gap-3">
-                          <span className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold transition-all ${
-                            isSelected
-                              ? 'bg-blue-600 text-white'
-                              : 'bg-gray-200 text-gray-700'
-                          }`}>
-                            {optionNum}
-                          </span>
-                          <span className="text-gray-800 leading-relaxed pt-1 whitespace-pre-line">{option}</span>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })()}
-        </div>
-
-        <div className="flex gap-4 mb-6">
-          <button
-            onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
-            disabled={currentQuestionIndex === 0}
-            className="flex-1 bg-gray-500 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            ← 前の問題
-          </button>
-          {currentQuestionIndex < questions.length - 1 ? (
-            <button
-              onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
-              className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-            >
-              次の問題 →
-            </button>
-          ) : (
-            <button
-              onClick={handleSubmit}
-              className="flex-1 bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
-            >
-              ✓ 採点する
-            </button>
-          )}
-        </div>
-
-        <div className="bg-white rounded-lg shadow-lg p-4">
-          <h3 className="text-sm font-bold text-gray-700 mb-3">問題ナビゲーション</h3>
-          <div className="grid grid-cols-10 gap-2">
-            {questions.map((q, index) => (
-              <button
-                key={q.id}
-                onClick={() => setCurrentQuestionIndex(index)}
-                className={`aspect-square rounded-lg font-bold text-sm transition-all ${
-                  currentQuestionIndex === index
-                    ? 'bg-blue-600 text-white ring-2 ring-blue-400'
-                    : answers[q.id]
-                    ? 'bg-blue-100 text-blue-700 hover:bg-blue-200'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
+    <ExamLayout
+      title="📝 統計検定3級 模擬試験1"
+      backLink="/"
+      bestScore={exam.bestScore}
+    >
+      <div className="mb-6">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+          <p className="text-sm text-gray-700">
+            <strong>試験時間:</strong> 60分 | <strong>問題数:</strong> 30問 | <strong>合格ライン:</strong> 65点以上
+          </p>
         </div>
       </div>
-    </div>
+
+      <QuestionCard
+        question={currentQuestion}
+        questionIndex={exam.currentQuestionIndex}
+        totalQuestions={questions.length}
+        userAnswer={exam.answers[currentQuestion.id]}
+        onAnswer={exam.handleAnswer}
+        onPrevious={exam.handlePrevious}
+        onNext={exam.handleNext}
+        onSubmit={exam.handleSubmit}
+      />
+    </ExamLayout>
   );
 }
