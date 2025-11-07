@@ -15,32 +15,29 @@ export default function Home() {
   const grade3Exams = [
     {
       id: 'grade3-exam1',
-      title: '模擬試験1（中級）',
-      description: '推測統計・回帰分析・検定の基礎を総合的に問う30問の試験',
+      title: '第1回模擬試験',
+      description: '記述統計・推測統計・検定など3級の全範囲から出題される30問',
       questions: 30,
       time: 60,
       path: '/grade3/exam1',
-      difficulty: '⭐⭐⭐☆☆',
       available: true
     },
     {
       id: 'grade3-exam2',
-      title: '模擬試験2（難）',
-      description: '多変量解析・高度な検定・機械学習の基礎を含む30問の試験',
+      title: '第2回模擬試験',
+      description: '確率分布・回帰分析・多変量解析など3級の全範囲から出題される30問',
       questions: 30,
       time: 60,
       path: '/grade3/exam2',
-      difficulty: '⭐⭐⭐⭐☆',
       available: true
     },
     {
       id: 'grade3-exam3',
-      title: '模擬試験3（超難）',
-      description: 'ベイズ統計・因果推論・機械学習・最先端手法を含む30問の試験',
+      title: '第3回模擬試験',
+      description: 'データ収集・時系列分析・応用統計など3級の全範囲から出題される30問',
       questions: 30,
       time: 60,
       path: '/grade3/exam3',
-      difficulty: '⭐⭐⭐⭐⭐',
       available: true
     }
   ];
@@ -151,32 +148,29 @@ export default function Home() {
   const grade4Exams = [
     {
       id: 'grade4-exam1',
-      title: '模擬試験1（中級）',
-      description: '代表値・散らばり・確率の応用問題を中心とした30問の試験',
+      title: '第1回模擬試験',
+      description: '度数分布・代表値・散らばりなど4級の全範囲から出題される30問',
       questions: 30,
       time: 60,
       path: '/grade4/exam1',
-      difficulty: '⭐⭐⭐☆☆',
       available: true
     },
     {
       id: 'grade4-exam2',
-      title: '模擬試験2（難）',
-      description: '応用的な統計計算と推測統計の理解を問う30問の試験',
+      title: '第2回模擬試験',
+      description: '確率・標本調査・相関など4級の全範囲から出題される30問',
       questions: 30,
       time: 60,
       path: '/grade4/exam2',
-      difficulty: '⭐⭐⭐⭐☆',
       available: true
     },
     {
       id: 'grade4-exam3',
-      title: '模擬試験3（超難）',
-      description: '推測統計・多変量解析・高度な検定手法まで含む30問の試験',
+      title: '第3回模擬試験',
+      description: 'グラフ・箱ひげ図・データ分析など4級の全範囲から出題される30問',
       questions: 30,
       time: 60,
       path: '/grade4/exam3',
-      difficulty: '⭐⭐⭐⭐⭐',
       available: true
     }
   ];

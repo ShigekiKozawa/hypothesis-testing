@@ -788,7 +788,7 @@ const sectionPrompts: Record<string, { grade3?: string; grade4?: string }> = {
 export async function generateQuestions(
   request: QuestionGenerationRequest
 ): Promise<GeneratedQuestion[]> {
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
   const grade4Topics = `
 【4級の出題範囲】

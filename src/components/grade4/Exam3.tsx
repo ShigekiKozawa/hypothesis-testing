@@ -367,7 +367,7 @@ export default function Grade4Exam3() {
 
   const exam = useExam({
     examId: 'grade4-exam3',
-    examTitle: '4級 模擬試験3',
+    examTitle: '統計検定4級 第3回模擬試験',
     grade: '4級',
     questions,
   });
