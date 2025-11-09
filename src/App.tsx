@@ -89,7 +89,7 @@ import Grade4Section10Set3 from './components/grade4/Section10_DataCollection_3'
 
 function App() {
   return (
-    <Router basename="/hypothesis-testing">
+    <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/grade3/exam1" element={<Grade3Exam1 />} />
