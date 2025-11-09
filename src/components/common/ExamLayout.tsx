@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Question } from '../../hooks/useExam';
-import { ScatterPlot, BarChartComponent, LineChartComponent, Histogram, BoxPlot } from './Charts';
+import { ScatterPlot, BarChartComponent, LineChartComponent } from './Charts';
 
 interface ExamLayoutProps {
   title: string;

@@ -1,4 +1,4 @@
-import { ScatterChart, Scatter, BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+import { ScatterChart, Scatter, BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export interface ScatterData {
   x: number;
@@ -30,10 +30,9 @@ interface ScatterChartProps {
   title?: string;
   xLabel?: string;
   yLabel?: string;
-  showTrendLine?: boolean;
 }
 
-export function ScatterPlot({ data, title, xLabel = 'X', yLabel = 'Y', showTrendLine = false }: ScatterChartProps) {
+export function ScatterPlot({ data, title, xLabel = 'X', yLabel = 'Y' }: ScatterChartProps) {
   return (
     <div className="w-full my-4">
       {title && <h4 className="text-center font-semibold mb-2">{title}</h4>}
@@ -127,14 +126,9 @@ export function Histogram({ data, title, xLabel = '階級', yLabel = '度数' }:
 interface BoxPlotProps {
   data: BoxPlotData;
   title?: string;
-  yLabel?: string;
 }
 
-export function BoxPlot({ data, title, yLabel = '値' }: BoxPlotProps) {
-  const boxPlotData = [
-    { name: 'Box', min: data.min, q1: data.q1, median: data.median, q3: data.q3, max: data.max }
-  ];
-
+export function BoxPlot({ data, title }: BoxPlotProps) {
   return (
     <div className="w-full my-4">
       {title && <h4 className="text-center font-semibold mb-2">{title}</h4>}
