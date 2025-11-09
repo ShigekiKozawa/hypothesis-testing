@@ -269,11 +269,8 @@ function ensureGraphData(question: GeneratedQuestion): void {
   const hasChartData = !!(question.chartData || question.barData || question.boxPlotData);
   
   if (hasChartType && hasChartData) {
-    console.log(`✅ 問題${question.id}: グラフデータが正しく含まれています (${question.chartType})`);
     return;
   }
-  
-  console.warn(`⚠️ 問題${question.id}: グラフ参照があるのにデータがありません。自動生成します。`);
   
   let detectedType = question.chartType || detectGraphType(question.question, question.options);
   
@@ -288,34 +285,29 @@ function ensureGraphData(question: GeneratedQuestion): void {
       const data = generateHistogramData();
       question.barData = data.barData;
       question.chartLabels = data.chartLabels;
-      console.log(`✅ 問題${question.id}: ヒストグラムデータを自動生成しました`);
       break;
     }
     case 'boxplot': {
       const data = generateBoxPlotData();
       question.boxPlotData = data.boxPlotData;
-      console.log(`✅ 問題${question.id}: 箱ひげ図データを自動生成しました`);
       break;
     }
     case 'scatter': {
       const data = generateScatterData();
       question.chartData = data.chartData;
       question.chartLabels = data.chartLabels;
-      console.log(`✅ 問題${question.id}: 散布図データを自動生成しました`);
       break;
     }
     case 'line': {
       const data = generateLineData();
       question.chartData = data.chartData;
       question.chartLabels = data.chartLabels;
-      console.log(`✅ 問題${question.id}: 折れ線グラフデータを自動生成しました`);
       break;
     }
     case 'bar': {
       const data = generateBarData();
       question.barData = data.barData;
       question.chartLabels = data.chartLabels;
-      console.log(`✅ 問題${question.id}: 棒グラフデータを自動生成しました`);
       break;
     }
   }
@@ -362,12 +354,10 @@ async function retryWithBackoff<T>(
 
     if (error instanceof RateLimitError) {
       const waitTime = error.retryAfter || delay;
-      console.warn(`レート制限エラー。${waitTime}ms後にリトライします... 残り${retries}回`);
       await new Promise(resolve => setTimeout(resolve, waitTime));
       return retryWithBackoff(fn, retries - 1, Math.max(waitTime * 2, delay * 2));
     }
 
-    console.warn(`リトライします... 残り${retries}回 (${delay}ms待機)`);
     await new Promise(resolve => setTimeout(resolve, delay));
     return retryWithBackoff(fn, retries - 1, delay * 2);
   }
@@ -1369,7 +1359,6 @@ ${request.grade === '4級'
         try {
           text = response.text();
         } catch (textError) {
-          console.error('レスポンステキスト取得エラー:', textError);
           throw new APIError('APIレスポンスからテキストを取得できませんでした。');
         }
 
@@ -1377,30 +1366,18 @@ ${request.grade === '4級'
           throw new APIError('APIから空のレスポンスが返されました。');
         }
 
-        // JSON mode使用時は、レスポンスは既に有効なJSONのはず
         let parsedData: any;
         
         try {
-          // 直接パース（JSON modeなので整形済み）
           parsedData = JSON.parse(text);
-          console.log('✅ JSON modeによる直接パース成功');
-          
         } catch (parseError) {
-          console.error('JSONパースエラー:', parseError);
-          console.error('レスポンス（最初の1000文字）:', text.substring(0, 1000));
-          
-          // フォールバック: 配列を抽出して再試行
           try {
             const jsonMatch = text.match(/\[[\s\S]*\]/);
             if (!jsonMatch) {
               throw new Error('JSON配列が見つかりません');
             }
-            
             parsedData = JSON.parse(jsonMatch[0]);
-            console.log('✅ 配列抽出後のパース成功');
-            
           } catch (secondError) {
-            console.error('配列抽出後もパース失敗:', secondError);
             throw new ValidationError(
               'JSONデータの解析に失敗しました。もう一度お試しください。'
             );
@@ -1415,28 +1392,18 @@ ${request.grade === '4級'
           throw new ValidationError('AIが問題を生成しませんでした。');
         }
 
-        if (parsedData.length !== request.count) {
-          console.warn(
-            `要求された問題数（${request.count}）と生成された問題数（${parsedData.length}）が一致しません。`
-          );
-        }
 
         const validatedQuestions: GeneratedQuestion[] = [];
         for (let i = 0; i < parsedData.length; i++) {
-          try {
-            const validated = validateQuestion(parsedData[i], i);
-            
-            validated.question = sanitizeText(validated.question);
-            validated.options = validated.options.map(opt => sanitizeText(opt));
-            validated.explanation = sanitizeText(validated.explanation);
-            
-            ensureGraphData(validated);
-            
-            validatedQuestions.push(validated);
-          } catch (validationError) {
-            console.error(`問題${i + 1}のバリデーションエラー:`, validationError);
-            throw validationError;
-          }
+          const validated = validateQuestion(parsedData[i], i);
+          
+          validated.question = sanitizeText(validated.question);
+          validated.options = validated.options.map(opt => sanitizeText(opt));
+          validated.explanation = sanitizeText(validated.explanation);
+          
+          ensureGraphData(validated);
+          
+          validatedQuestions.push(validated);
         }
 
         if (validatedQuestions.length < Math.min(3, request.count)) {
@@ -1488,8 +1455,6 @@ ${request.grade === '4級'
     return await retryWithBackoff(generateWithRetry);
 
   } catch (error) {
-    console.error('問題生成の最終エラー:', error);
-
     if (error instanceof ValidationError) {
       throw error;
     }
