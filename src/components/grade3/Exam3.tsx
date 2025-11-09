@@ -41,7 +41,7 @@ export default function Grade3Exam3() {
     },
     {
       id: 4,
-      question: "次のヒストグラムの特徴から、平均値と中央値の大小関係を推定してください。\n\n「右に裾が長い分布（右に歪んだ分布）」",
+      question: "下のヒストグラムから、平均値と中央値の大小関係を推定してください。",
       options: [
         "平均値<中央値",
         "平均値=中央値",
@@ -49,7 +49,21 @@ export default function Grade3Exam3() {
         "判断できない"
       ],
       correct: 3,
-      explanation: "右に裾が長い分布では、極端に大きい値に引っ張られて平均値>中央値となります。"
+      explanation: "右に裾が長い分布では、極端に大きい値に引っ張られて平均値>中央値となります。",
+      chartType: 'bar',
+      barData: [
+        { name: '0-10', value: 18 },
+        { name: '10-20', value: 22 },
+        { name: '20-30', value: 16 },
+        { name: '30-40', value: 12 },
+        { name: '40-50', value: 8 },
+        { name: '50-60', value: 5 },
+        { name: '60-70', value: 3 },
+        { name: '70-80', value: 2 },
+        { name: '80-90', value: 1 },
+        { name: '90-100', value: 3 }
+      ],
+      chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
       id: 5,

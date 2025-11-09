@@ -65,7 +65,7 @@ export default function Grade3Exam2() {
     },
     {
       id: 6,
-      question: "次の散布図の説明として正しいものはどれですか。\n\n「右下がりの強い直線的な関係が見られる」",
+      question: "下の散布図について、相関係数の値として最も適切なものはどれですか。",
       options: [
         "相関係数は約0.9",
         "相関係数は約-0.9",
@@ -73,7 +73,19 @@ export default function Grade3Exam2() {
         "相関がない"
       ],
       correct: 2,
-      explanation: "右下がりの強い関係は負の相関を示し、相関係数は-1に近い値（約-0.9）になります。"
+      explanation: "右下がりの強い関係は負の相関を示し、相関係数は-1に近い値（約-0.9）になります。",
+      chartType: 'scatter',
+      chartData: [
+        { x: 1, y: 16.2 },
+        { x: 2, y: 14.1 },
+        { x: 3, y: 11.9 },
+        { x: 4, y: 10.2 },
+        { x: 5, y: 8.1 },
+        { x: 6, y: 5.8 },
+        { x: 7, y: 3.9 },
+        { x: 8, y: 2.2 }
+      ],
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 7,
