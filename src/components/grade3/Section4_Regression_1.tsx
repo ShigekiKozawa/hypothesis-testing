@@ -24,7 +24,7 @@ export default function Section4Regression1() {
     },
     {
       id: 3,
-      question: "次のヒストグラムから、最も度数が多い階級（最頻値が含まれる階級）を選んでください。\n\n【ヒストグラムの説明】\n10〜20点: 5人\n20〜30点: 12人\n30〜40点: 8人\n40〜50点: 3人",
+      question: "下のヒストグラムから、最も度数が多い階級（最頻値が含まれる階級）を選んでください。",
       options: [
         "10〜20点",
         "20〜30点",
@@ -32,7 +32,15 @@ export default function Section4Regression1() {
         "40〜50点"
       ],
       correct: 2,
-      explanation: "度数が最も多い階級は20〜30点（12人）です。この階級に最頻値（モード）が含まれます。"
+      explanation: "度数が最も多い階級は20〜30点（12人）です。この階級に最頻値（モード）が含まれます。",
+      chartType: 'bar',
+      barData: [
+        { name: '10-20', value: 5 },
+        { name: '20-30', value: 12 },
+        { name: '30-40', value: 8 },
+        { name: '40-50', value: 3 }
+      ],
+      chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
       id: 4,
@@ -60,7 +68,7 @@ export default function Section4Regression1() {
     },
     {
       id: 6,
-      question: "次のヒストグラムについて、平均値が中央値より大きいか小さいか判断してください。\n\n【ヒストグラムの説明】\n0〜10: 度数2\n10〜20: 度数3\n20〜30: 度数5\n30〜40: 度数8\n40〜50: 度数2\n50〜60: 度数1\n\n※右側に少し裾が伸びている分布",
+      question: "下のヒストグラムについて、平均値が中央値より大きいか小さいか判断してください。",
       options: [
         "平均値 < 中央値（左に偏っている）",
         "平均値 > 中央値（右に偏っている）",
@@ -68,7 +76,17 @@ export default function Section4Regression1() {
         "判断できない"
       ],
       correct: 2,
-      explanation: "分布が右側に裾を引いている（右に偏っている）場合、平均値は中央値より大きくなります。極端な値（50〜60）が平均値を引き上げるためです。"
+      explanation: "分布が右側に裾を引いている（右に偏っている）場合、平均値は中央値より大きくなります。極端な値（50〜60）が平均値を引き上げるためです。",
+      chartType: 'bar',
+      barData: [
+        { name: '0-10', value: 2 },
+        { name: '10-20', value: 3 },
+        { name: '20-30', value: 5 },
+        { name: '30-40', value: 8 },
+        { name: '40-50', value: 2 },
+        { name: '50-60', value: 1 }
+      ],
+      chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
       id: 7,
@@ -84,7 +102,7 @@ export default function Section4Regression1() {
     },
     {
       id: 8,
-      question: "次のヒストグラムから、中央値が含まれる階級を特定してください。\n\n【データ: 全30人】\n0〜10点: 3人（累積3人）\n10〜20点: 5人（累積8人）\n20〜30点: 10人（累積18人）\n30〜40点: 8人（累積26人）\n40〜50点: 4人（累積30人）",
+      question: "下のヒストグラムから、中央値が含まれる階級を特定してください。",
       options: [
         "10〜20点",
         "20〜30点",
@@ -92,7 +110,16 @@ export default function Section4Regression1() {
         "40〜50点"
       ],
       correct: 2,
-      explanation: "30人の中央値は15番目と16番目の平均です。累積度数を見ると、15〜16番目は20〜30点の階級に含まれます（8人までで終わり、18人までで次の階級）。"
+      explanation: "30人の中央値は15番目と16番目の平均です。累積度数を見ると、15〜16番目は20〜30点の階級に含まれます（8人までで終わり、18人までで次の階級）。",
+      chartType: 'bar',
+      barData: [
+        { name: '0-10', value: 3 },
+        { name: '10-20', value: 5 },
+        { name: '20-30', value: 10 },
+        { name: '30-40', value: 8 },
+        { name: '40-50', value: 4 }
+      ],
+      chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
       id: 9,

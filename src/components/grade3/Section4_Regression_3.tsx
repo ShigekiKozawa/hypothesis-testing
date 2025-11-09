@@ -17,10 +17,19 @@ export default function Section4Regression3() {
     },
     {
       id: 2,
-      question: "次のヒストグラムから、累積相対度数を計算してください。\n\n【データ: 全30人】\n0〜10点: 3人\n10〜20点: 6人\n20〜30点: 12人\n\n20点未満の累積相対度数はいくらですか。",
+      question: "下のヒストグラムから、累積相対度数を計算してください。20点未満の累積相対度数はいくらですか。",
       options: ["0.1", "0.2", "0.3", "0.4"],
       correct: 3,
-      explanation: "20点未満は0〜20点の範囲です。累積度数は3+6=9人。累積相対度数は 9÷30=0.3 です。"
+      explanation: "20点未満は0〜20点の範囲です。累積度数は3+6=9人。累積相対度数は 9÷30=0.3 です。",
+      chartType: 'bar',
+      barData: [
+        { name: '0-10', value: 3 },
+        { name: '10-20', value: 6 },
+        { name: '20-30', value: 12 },
+        { name: '30-40', value: 6 },
+        { name: '40-50', value: 3 }
+      ],
+      chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
       id: 3,
@@ -36,10 +45,19 @@ export default function Section4Regression3() {
     },
     {
       id: 4,
-      question: "次のヒストグラムで、「40点以上」の人は全体の何%ですか。\n\n【データ: 全50人】\n0〜20点: 5人\n20〜40点: 20人\n40〜60点: 15人\n60〜80点: 8人\n80〜100点: 2人",
+      question: "下のヒストグラムで、「40点以上」の人は全体の何%ですか。",
       options: ["25%", "30%", "40%", "50%"],
       correct: 4,
-      explanation: "40点以上は 15+8+2=25人。25÷50=0.5 なので50%です。"
+      explanation: "40点以上は 15+8+2=25人。25÷50=0.5 なので50%です。",
+      chartType: 'bar',
+      barData: [
+        { name: '0-20', value: 5 },
+        { name: '20-40', value: 20 },
+        { name: '40-60', value: 15 },
+        { name: '60-80', value: 8 },
+        { name: '80-100', value: 2 }
+      ],
+      chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
       id: 5,

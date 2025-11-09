@@ -17,7 +17,7 @@ export default function Section4Regression2() {
     },
     {
       id: 2,
-      question: "次のヒストグラムで、相対度数が最も大きい階級を選んでください。\n\n【ヒストグラム: 全50人】\n0〜10点: 5人\n10〜20点: 10人\n20〜30点: 20人\n30〜40点: 10人\n40〜50点: 5人",
+      question: "下のヒストグラムで、相対度数が最も大きい階級を選んでください。",
       options: [
         "0〜10点",
         "10〜20点",
@@ -25,7 +25,16 @@ export default function Section4Regression2() {
         "30〜40点"
       ],
       correct: 3,
-      explanation: "相対度数は度数÷全体です。20〜30点の相対度数は 20÷50=0.4 で最も大きいです。"
+      explanation: "相対度数は度数÷全体です。20〜30点の相対度数は 20÷50=0.4 で最も大きいです。",
+      chartType: 'bar',
+      barData: [
+        { name: '0-10', value: 5 },
+        { name: '10-20', value: 10 },
+        { name: '20-30', value: 20 },
+        { name: '30-40', value: 10 },
+        { name: '40-50', value: 5 }
+      ],
+      chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
       id: 3,
@@ -36,7 +45,7 @@ export default function Section4Regression2() {
     },
     {
       id: 4,
-      question: "次のヒストグラムの分布の形状について、正しい記述を選んでください。\n\n【ヒストグラム】\n0〜10: 1人\n10〜20: 2人\n20〜30: 5人\n30〜40: 10人\n40〜50: 8人\n50〜60: 3人\n60〜70: 1人",
+      question: "下のヒストグラムの分布の形状について、正しい記述を選んでください。",
       options: [
         "左に偏っている（平均値 < 中央値）",
         "右に偏っている（平均値 > 中央値）",
@@ -44,7 +53,18 @@ export default function Section4Regression2() {
         "判断できない"
       ],
       correct: 3,
-      explanation: "このヒストグラムはほぼ左右対称の釣鐘型（正規分布に近い形）をしています。平均値と中央値はほぼ等しくなります。"
+      explanation: "このヒストグラムはほぼ左右対称の釣鐘型（正規分布に近い形）をしています。平均値と中央値はほぼ等しくなります。",
+      chartType: 'bar',
+      barData: [
+        { name: '0-10', value: 1 },
+        { name: '10-20', value: 2 },
+        { name: '20-30', value: 5 },
+        { name: '30-40', value: 10 },
+        { name: '40-50', value: 8 },
+        { name: '50-60', value: 3 },
+        { name: '60-70', value: 1 }
+      ],
+      chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
       id: 5,
@@ -60,7 +80,7 @@ export default function Section4Regression2() {
     },
     {
       id: 6,
-      question: "次のヒストグラムから、平均値が含まれる階級を推定してください。\n\n【ヒストグラム: 全20人】\n10〜20点: 2人（階級値15）\n20〜30点: 5人（階級値25）\n30〜40点: 8人（階級値35）\n40〜50点: 4人（階級値45）\n50〜60点: 1人（階級値55）",
+      question: "下のヒストグラムから、平均値が含まれる階級を推定してください。",
       options: [
         "20〜30点",
         "30〜40点",
@@ -68,7 +88,16 @@ export default function Section4Regression2() {
         "50〜60点"
       ],
       correct: 2,
-      explanation: "階級値を使って平均値を計算すると、(15×2 + 25×5 + 35×8 + 45×4 + 55×1) ÷ 20 = (30+125+280+180+55) ÷ 20 = 670 ÷ 20 = 33.5点 となり、30〜40点の階級に含まれます。"
+      explanation: "階級値を使って平均値を計算すると、(15×2 + 25×5 + 35×8 + 45×4 + 55×1) ÷ 20 = (30+125+280+180+55) ÷ 20 = 670 ÷ 20 = 33.5点 となり、30〜40点の階級に含まれます。",
+      chartType: 'bar',
+      barData: [
+        { name: '10-20', value: 2 },
+        { name: '20-30', value: 5 },
+        { name: '30-40', value: 8 },
+        { name: '40-50', value: 4 },
+        { name: '50-60', value: 1 }
+      ],
+      chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
       id: 7,
