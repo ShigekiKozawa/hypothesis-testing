@@ -970,8 +970,8 @@ export async function generateQuestions(
       temperature: 0.7,
       topP: 0.95,
       topK: 40,
-      maxOutputTokens: 8192,
-      responseMimeType: 'application/json',  // 🔥 JSON mode を有効化
+      maxOutputTokens: 16384,  // 30問生成に対応するため増量
+      responseMimeType: 'application/json',
     }
   });
 
@@ -1147,7 +1147,7 @@ ${detailedPrompt}
 🚨 必ず有効なJSON形式（trailing commaなし）
 
 正しい例:
-[{"id":1,"question":"平均値が10、標準偏差が2のとき、データの散らばりを表す指標はどれですか。","options":["平均値","標準偏差","中央値","最頻値"],"correct":2,"explanation":"標準偏差はデータの散らばりを表す指標です。"},{"id":2,"question":"下の散布図について、相関を判断してください。","options":["強い正の相関","強い負の相関","相関なし","不明"],"correct":1,"explanation":"右上がりなので正の相関です。","chartType":"scatter","chartData":[{"x":1,"y":2.1},{"x":2,"y":4.0},{"x":3,"y":5.9}],"chartLabels":{"x":"変数X","y":"変数Y"}}]
+[{"id":1,"question":"平均値が10、標準偏差が2のとき、データの散らばりを表す指標はどれですか。","options":["平均値","標準偏差","中央値","最頻値"],"correct":2,"explanation":"標準偏差はデータの散らばりを示します。"},{"id":2,"question":"下の散布図について、相関を判断してください。","options":["強い正の相関","強い負の相関","相関なし","不明"],"correct":1,"explanation":"右上がりなので正の相関です。","chartType":"scatter","chartData":[{"x":1,"y":2.1},{"x":2,"y":4.0},{"x":3,"y":5.9}],"chartLabels":{"x":"変数X","y":"変数Y"}}]
 
 ⚠️ 文字列内のルール:
 - 改行は使わない → スペースで代用
@@ -1159,6 +1159,7 @@ ${detailedPrompt}
 - 必ず配列 [...] で囲む
 - 最後の要素の後にカンマを付けない
 - グラフ使用率60-70%
+- explanationは簡潔に（100文字以内推奨、最大150文字）
 
 【重要】
 - すべてのフィールド名は必ず小文字で記述してください
@@ -1366,11 +1367,28 @@ ${request.grade === '4級'
           throw new APIError('APIから空のレスポンスが返されました。');
         }
 
+        // レスポンスが途中で切れていないかチェック
+        const trimmedText = text.trim();
+        if (!trimmedText.endsWith(']') && !trimmedText.endsWith('}')) {
+          throw new ValidationError(
+            'レスポンスが途中で切れています。問題数を減らして再試行してください。'
+          );
+        }
+
         let parsedData: any;
         
         try {
           parsedData = JSON.parse(text);
         } catch (parseError) {
+          // Unterminated stringエラーの場合は、レスポンスが切れている
+          if (parseError instanceof Error && 
+              (parseError.message.includes('Unterminated') || 
+               parseError.message.includes('Unexpected end'))) {
+            throw new ValidationError(
+              'レスポンスが途中で切れています。問題数を減らして（15-20問程度）再試行してください。'
+            );
+          }
+          
           try {
             const jsonMatch = text.match(/\[[\s\S]*\]/);
             if (!jsonMatch) {
@@ -1379,7 +1397,7 @@ ${request.grade === '4級'
             parsedData = JSON.parse(jsonMatch[0]);
           } catch (secondError) {
             throw new ValidationError(
-              'JSONデータの解析に失敗しました。もう一度お試しください。'
+              'JSONデータの解析に失敗しました。問題数を減らして再試行してください。'
             );
           }
         }
