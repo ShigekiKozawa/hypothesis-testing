@@ -981,6 +981,7 @@ export async function generateQuestions(
       topP: 0.95,
       topK: 40,
       maxOutputTokens: 8192,
+      responseMimeType: 'application/json',  // 🔥 JSON mode を有効化
     }
   });
 
@@ -1376,63 +1377,32 @@ ${request.grade === '4級'
           throw new APIError('APIから空のレスポンスが返されました。');
         }
 
-        // Step 1: Extract JSON array from response
-        const jsonMatch = text.match(/\[[\s\S]*\]/);
-        if (!jsonMatch) {
-          console.error('JSONが見つかりません。レスポンス:', text.substring(0, 500));
-          throw new ValidationError(
-            'AIの応答からJSON形式のデータを抽出できませんでした。再度お試しください。'
-          );
-        }
-
+        // JSON mode使用時は、レスポンスは既に有効なJSONのはず
         let parsedData: any;
-        let rawJson = jsonMatch[0];
         
         try {
-          // Step 2: Aggressive cleaning of problematic characters
-          let cleanedJson = rawJson
-            // Remove all control characters (including newlines in strings)
-            .replace(/[\u0000-\u0008\u000B-\u000C\u000E-\u001F\u007F-\u009F]/g, ' ')
-            // Fix common JSON issues
-            .replace(/,(\s*[}\]])/g, '$1')  // Remove trailing commas
-            .replace(/\n/g, '\\n')           // Escape actual newlines
-            .replace(/\r/g, '\\r')           // Escape carriage returns
-            .replace(/\t/g, '\\t');          // Escape tabs
-          
-          // Step 3: Try to parse
-          parsedData = JSON.parse(cleanedJson);
+          // 直接パース（JSON modeなので整形済み）
+          parsedData = JSON.parse(text);
+          console.log('✅ JSON modeによる直接パース成功');
           
         } catch (parseError) {
           console.error('JSONパースエラー:', parseError);
-          console.error('パース対象（最初の1000文字）:', rawJson.substring(0, 1000));
-          console.error('パース対象（最後の500文字）:', rawJson.substring(Math.max(0, rawJson.length - 500)));
+          console.error('レスポンス（最初の1000文字）:', text.substring(0, 1000));
           
-          // Step 4: Try more aggressive fixes
+          // フォールバック: 配列を抽出して再試行
           try {
-            let fixedJson = rawJson
-              // Remove all control characters
-              .replace(/[\u0000-\u001F\u007F-\u009F]/g, ' ')
-              // Fix newlines in strings (between quotes)
-              .replace(/"([^"]*?)"/g, (_match, content) => {
-                return '"' + content
-                  .replace(/\n/g, ' ')
-                  .replace(/\r/g, ' ')
-                  .replace(/\t/g, ' ')
-                  .replace(/\\/g, '\\\\')
-                  .replace(/"/g, '\\"') + '"';
-              })
-              // Remove trailing commas
-              .replace(/,(\s*[}\]])/g, '$1')
-              // Fix multiple spaces
-              .replace(/\s+/g, ' ');
+            const jsonMatch = text.match(/\[[\s\S]*\]/);
+            if (!jsonMatch) {
+              throw new Error('JSON配列が見つかりません');
+            }
             
-            parsedData = JSON.parse(fixedJson);
-            console.log('✅ 修復後のJSONパースに成功');
+            parsedData = JSON.parse(jsonMatch[0]);
+            console.log('✅ 配列抽出後のパース成功');
             
           } catch (secondError) {
-            console.error('修復試行後もパース失敗:', secondError);
+            console.error('配列抽出後もパース失敗:', secondError);
             throw new ValidationError(
-              'JSONデータの解析に失敗しました。AIの応答形式が不正です。もう一度お試しください。'
+              'JSONデータの解析に失敗しました。もう一度お試しください。'
             );
           }
         }
