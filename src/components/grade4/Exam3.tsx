@@ -53,7 +53,7 @@ export default function Grade4Exam3() {
     },
     {
       id: 5,
-      question: "次のヒストグラムで、度数が最も少ない階級はどれですか。\n\n10〜20: 15人\n20〜30: 25人\n30〜40: 30人\n40〜50: 20人\n50〜60: 10人",
+      question: "下のヒストグラムで、度数が最も少ない階級はどれですか。",
       options: [
         "10〜20",
         "20〜30",
@@ -61,7 +61,16 @@ export default function Grade4Exam3() {
         "50〜60"
       ],
       correct: 4,
-      explanation: "度数が最も少ないのは10人の50〜60の階級です。"
+      explanation: "度数が最も少ないのは10人の50〜60の階級です。",
+      chartType: 'bar',
+      barData: [
+        { name: '10-20', value: 15 },
+        { name: '20-30', value: 25 },
+        { name: '30-40', value: 30 },
+        { name: '40-50', value: 20 },
+        { name: '50-60', value: 10 }
+      ],
+      chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
       id: 6,
@@ -137,7 +146,7 @@ export default function Grade4Exam3() {
     },
     {
       id: 12,
-      question: "次の散布図で、相関の強さを表す相関係数に最も近い値はどれですか。\n\n（点がほぼ直線状に右上がりに並んでいる図）",
+      question: "下の散布図で、相関の強さを表す相関係数に最も近い値はどれですか。",
       options: [
         "0.2",
         "0.5",
@@ -145,7 +154,19 @@ export default function Grade4Exam3() {
         "-0.9"
       ],
       correct: 3,
-      explanation: "点が直線状に並んでいる場合、相関係数は1に近い値になります。右上がりなので正の相関で、0.9が最も適切です。"
+      explanation: "点が直線状に並んでいる場合、相関係数は1に近い値になります。右上がりなので正の相関で、0.9が最も適切です。",
+      chartType: 'scatter',
+      chartData: [
+        { x: 1, y: 1.8 },
+        { x: 2, y: 3.9 },
+        { x: 3, y: 6.1 },
+        { x: 4, y: 8.2 },
+        { x: 5, y: 10.0 },
+        { x: 6, y: 12.1 },
+        { x: 7, y: 14.2 },
+        { x: 8, y: 15.9 }
+      ],
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 13,
@@ -257,7 +278,7 @@ export default function Grade4Exam3() {
     },
     {
       id: 22,
-      question: "次のヒストグラムで、25点以上の生徒は全体の何%ですか。\n\n0〜10点: 10人\n10〜20点: 20人\n20〜25点: 30人\n25〜30点: 25人\n30〜40点: 15人\n合計: 100人",
+      question: "下のヒストグラムで、25点以上の生徒は全体の何%ですか。",
       options: [
         "30%",
         "35%",
@@ -265,7 +286,16 @@ export default function Grade4Exam3() {
         "45%"
       ],
       correct: 3,
-      explanation: "25点以上は25+15=40人です。割合は 40÷100×100 = 40%です。"
+      explanation: "25点以上は25+15=40人です。割合は 40÷100×100 = 40%です。",
+      chartType: 'bar',
+      barData: [
+        { name: '0-10', value: 10 },
+        { name: '10-20', value: 20 },
+        { name: '20-25', value: 30 },
+        { name: '25-30', value: 25 },
+        { name: '30-40', value: 15 }
+      ],
+      chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
       id: 23,
