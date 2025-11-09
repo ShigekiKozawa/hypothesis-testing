@@ -53,7 +53,7 @@ export default function Grade4Exam2() {
     },
     {
       id: 5,
-      question: "次のヒストグラムで、中央値が含まれる階級はどれですか。\n\n0〜10: 5人\n10〜20: 10人\n20〜30: 20人\n30〜40: 15人\n合計: 50人",
+      question: "下のヒストグラムで、中央値が含まれる階級はどれですか。",
       options: [
         "0〜10",
         "10〜20",
@@ -61,7 +61,15 @@ export default function Grade4Exam2() {
         "30〜40"
       ],
       correct: 3,
-      explanation: "50人の中央値は25番目と26番目の平均です。累積度数は5、15、35、50なので、25番目と26番目は20〜30の階級に含まれます。"
+      explanation: "50人の中央値は25番目と26番目の平均です。累積度数は5、15、35、50なので、25番目と26番目は20〜30の階級に含まれます。",
+      chartType: 'bar',
+      barData: [
+        { name: '0-10', value: 5 },
+        { name: '10-20', value: 10 },
+        { name: '20-30', value: 20 },
+        { name: '30-40', value: 15 }
+      ],
+      chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
       id: 6,
@@ -137,7 +145,7 @@ export default function Grade4Exam2() {
     },
     {
       id: 12,
-      question: "次の散布図の説明として正しいものはどれですか。\n\n（点が右下がりに分布している図）",
+      question: "下の散布図の説明として正しいものはどれですか。",
       options: [
         "正の相関がある",
         "負の相関がある",
@@ -145,7 +153,19 @@ export default function Grade4Exam2() {
         "強い相関がある"
       ],
       correct: 2,
-      explanation: "点が右下がりに分布している場合、一方が増えるともう一方が減る傾向があるため、負の相関があります。"
+      explanation: "点が右下がりに分布している場合、一方が増えるともう一方が減る傾向があるため、負の相関があります。",
+      chartType: 'scatter',
+      chartData: [
+        { x: 1, y: 14.5 },
+        { x: 2, y: 12.8 },
+        { x: 3, y: 11.2 },
+        { x: 4, y: 9.5 },
+        { x: 5, y: 7.8 },
+        { x: 6, y: 6.2 },
+        { x: 7, y: 4.5 },
+        { x: 8, y: 2.8 }
+      ],
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 13,
@@ -257,7 +277,7 @@ export default function Grade4Exam2() {
     },
     {
       id: 22,
-      question: "次のヒストグラムで、15点未満の生徒の割合は何%ですか。\n\n0〜5点: 5人\n5〜10点: 10人\n10〜15点: 15人\n15〜20点: 30人\n20〜25点: 40人\n合計: 100人",
+      question: "下のヒストグラムで、15点未満の生徒の割合は何%ですか。",
       options: [
         "20%",
         "25%",
@@ -265,7 +285,16 @@ export default function Grade4Exam2() {
         "35%"
       ],
       correct: 3,
-      explanation: "15点未満は5+10+15=30人です。割合は 30÷100×100 = 30%です。"
+      explanation: "15点未満は5+10+15=30人です。割合は 30÷100×100 = 30%です。",
+      chartType: 'bar',
+      barData: [
+        { name: '0-5', value: 5 },
+        { name: '5-10', value: 10 },
+        { name: '10-15', value: 15 },
+        { name: '15-20', value: 30 },
+        { name: '20-25', value: 40 }
+      ],
+      chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
       id: 23,
