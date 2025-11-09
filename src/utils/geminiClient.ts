@@ -140,6 +140,187 @@ function sanitizeText(text: string): string {
     .trim();
 }
 
+function detectGraphReference(question: string): boolean {
+  const graphKeywords = [
+    '下のグラフ', '次のグラフ', '以下のグラフ',
+    '下の図', '次の図', '以下の図',
+    '下の散布図', '次の散布図',
+    '下のヒストグラム', '次のヒストグラム',
+    '下の箱ひげ図', '次の箱ひげ図',
+    '下の折れ線グラフ', '次の折れ線グラフ',
+    '下の棒グラフ', '次の棒グラフ'
+  ];
+  return graphKeywords.some(keyword => question.includes(keyword));
+}
+
+function detectGraphType(question: string, options: string[]): 'histogram' | 'boxplot' | 'scatter' | 'line' | 'bar' | null {
+  const text = question + ' ' + options.join(' ');
+  
+  if (text.includes('箱ひげ図') || text.includes('四分位') || text.includes('IQR') || text.includes('Q1') || text.includes('Q3')) {
+    return 'boxplot';
+  }
+  if (text.includes('ヒストグラム') || text.includes('度数分布') || text.includes('階級') || text.includes('最頻値')) {
+    return 'histogram';
+  }
+  if (text.includes('散布図') || text.includes('相関') || text.includes('回帰')) {
+    return 'scatter';
+  }
+  if (text.includes('折れ線') || text.includes('時系列') || text.includes('推移') || text.includes('傾向')) {
+    return 'line';
+  }
+  if (text.includes('棒グラフ') || text.includes('カテゴリー') || text.includes('比較')) {
+    return 'bar';
+  }
+  
+  return 'histogram';
+}
+
+function generateHistogramData(): { barData: Array<{name: string; value: number}>; chartLabels: {x: string; y: string} } {
+  const classCount = 6 + Math.floor(Math.random() * 4);
+  const barData = [];
+  
+  for (let i = 0; i < classCount; i++) {
+    const start = i * 10;
+    const end = (i + 1) * 10;
+    const value = Math.floor(Math.random() * 15) + 5;
+    barData.push({
+      name: `${start}-${end}`,
+      value: value
+    });
+  }
+  
+  return {
+    barData,
+    chartLabels: { x: '階級', y: '度数' }
+  };
+}
+
+function generateBoxPlotData(): { boxPlotData: { min: number; q1: number; median: number; q3: number; max: number } } {
+  const min = 40 + Math.floor(Math.random() * 10);
+  const q1 = min + 10 + Math.floor(Math.random() * 10);
+  const median = q1 + 8 + Math.floor(Math.random() * 8);
+  const q3 = median + 8 + Math.floor(Math.random() * 10);
+  const max = q3 + 10 + Math.floor(Math.random() * 15);
+  
+  return {
+    boxPlotData: { min, q1, median, q3, max }
+  };
+}
+
+function generateScatterData(): { chartData: Array<{x: number; y: number}>; chartLabels: {x: string; y: string} } {
+  const pointCount = 6 + Math.floor(Math.random() * 5);
+  const chartData = [];
+  const slope = 1.5 + Math.random() * 1.5;
+  const intercept = 1 + Math.random() * 3;
+  
+  for (let i = 0; i < pointCount; i++) {
+    const x = i + 1;
+    const y = slope * x + intercept + (Math.random() - 0.5) * 2;
+    chartData.push({ x, y: Math.round(y * 10) / 10 });
+  }
+  
+  return {
+    chartData,
+    chartLabels: { x: '変数X', y: '変数Y' }
+  };
+}
+
+function generateLineData(): { chartData: Array<{name: string; value: number}>; chartLabels: {x: string; y: string} } {
+  const months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月'];
+  const pointCount = 5 + Math.floor(Math.random() * 4);
+  const chartData = [];
+  
+  let value = 100 + Math.floor(Math.random() * 50);
+  for (let i = 0; i < pointCount; i++) {
+    chartData.push({
+      name: months[i],
+      value: value
+    });
+    value += Math.floor(Math.random() * 20) - 5;
+  }
+  
+  return {
+    chartData,
+    chartLabels: { x: '月', y: '値' }
+  };
+}
+
+function generateBarData(): { barData: Array<{name: string; value: number}>; chartLabels: {x: string; y: string} } {
+  const categories = ['A', 'B', 'C', 'D', 'E'];
+  const barData = categories.map(cat => ({
+    name: cat,
+    value: Math.floor(Math.random() * 80) + 20
+  }));
+  
+  return {
+    barData,
+    chartLabels: { x: 'カテゴリー', y: '値' }
+  };
+}
+
+function ensureGraphData(question: GeneratedQuestion): void {
+  const hasGraphReference = detectGraphReference(question.question);
+  
+  if (!hasGraphReference) {
+    return;
+  }
+  
+  const hasChartType = !!question.chartType;
+  const hasChartData = !!(question.chartData || question.barData || question.boxPlotData);
+  
+  if (hasChartType && hasChartData) {
+    console.log(`✅ 問題${question.id}: グラフデータが正しく含まれています (${question.chartType})`);
+    return;
+  }
+  
+  console.warn(`⚠️ 問題${question.id}: グラフ参照があるのにデータがありません。自動生成します。`);
+  
+  let detectedType = question.chartType || detectGraphType(question.question, question.options);
+  
+  if (!detectedType) {
+    detectedType = 'histogram';
+  }
+  
+  question.chartType = detectedType;
+  
+  switch (detectedType) {
+    case 'histogram': {
+      const data = generateHistogramData();
+      question.barData = data.barData;
+      question.chartLabels = data.chartLabels;
+      console.log(`✅ 問題${question.id}: ヒストグラムデータを自動生成しました`);
+      break;
+    }
+    case 'boxplot': {
+      const data = generateBoxPlotData();
+      question.boxPlotData = data.boxPlotData;
+      console.log(`✅ 問題${question.id}: 箱ひげ図データを自動生成しました`);
+      break;
+    }
+    case 'scatter': {
+      const data = generateScatterData();
+      question.chartData = data.chartData;
+      question.chartLabels = data.chartLabels;
+      console.log(`✅ 問題${question.id}: 散布図データを自動生成しました`);
+      break;
+    }
+    case 'line': {
+      const data = generateLineData();
+      question.chartData = data.chartData;
+      question.chartLabels = data.chartLabels;
+      console.log(`✅ 問題${question.id}: 折れ線グラフデータを自動生成しました`);
+      break;
+    }
+    case 'bar': {
+      const data = generateBarData();
+      question.barData = data.barData;
+      question.chartLabels = data.chartLabels;
+      console.log(`✅ 問題${question.id}: 棒グラフデータを自動生成しました`);
+      break;
+    }
+  }
+}
+
 async function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
   let timeoutHandle: number | undefined;
   
@@ -1549,6 +1730,8 @@ ${request.grade === '4級'
             validated.question = sanitizeText(validated.question);
             validated.options = validated.options.map(opt => sanitizeText(opt));
             validated.explanation = sanitizeText(validated.explanation);
+            
+            ensureGraphData(validated);
             
             validatedQuestions.push(validated);
           } catch (validationError) {
