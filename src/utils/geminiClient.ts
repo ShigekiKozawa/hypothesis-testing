@@ -1149,10 +1149,8 @@ ${detailedPrompt}
    × 実務で使われない架空の概念
    × 選択肢が明らかに不自然なもの
 
-【出力形式】
-以下のJSON形式で出力してください（JSONのみを出力し、他の文章は含めないでください）：
+【出力形式】⚠️ 必ず配列形式のJSONのみ出力（他の文章は一切含めない）
 
-基本形式（グラフなし）:
 [
   {
     "id": 1,
@@ -1160,22 +1158,24 @@ ${detailedPrompt}
     "options": ["選択肢1", "選択肢2", "選択肢3", "選択肢4"],
     "correct": 2,
     "explanation": "詳しい解説"
+  },
+  {
+    "id": 2,
+    "question": "下の散布図について、相関を判断してください。",
+    "options": ["強い正の相関", "強い負の相関", "相関なし", "不明"],
+    "correct": 1,
+    "explanation": "右上がりなので正の相関です。",
+    "chartType": "scatter",
+    "chartData": [{"x": 1, "y": 2.1}, {"x": 2, "y": 4.0}, {"x": 3, "y": 5.9}],
+    "chartLabels": {"x": "変数X", "y": "変数Y"}
   }
 ]
 
-グラフ例:
-{"id": 2, "question": "下の散布図について...", "chartType": "scatter", "chartData": [{"x": 1, "y": 2.1}, ...], "chartLabels": {"x": "X", "y": "Y"}}
-{"id": 3, "question": "下のヒストグラムで...", "chartType": "histogram", "barData": [{"name": "0-10", "value": 15}, ...], "chartLabels": {"x": "階級", "y": "度数"}}
-{"id": 4, "question": "下の箱ひげ図から...", "chartType": "boxplot", "boxPlotData": {"min": 40, "q1": 55, "median": 65, "q3": 75, "max": 90}}
-
-グラフフィールド:
-- chartType: scatter/bar/line/histogram/boxplot
-- chartData: scatter/line用 [{"x": 数, "y": 数}, ...]
-- barData: bar/histogram用 [{"name": "文字", "value": 数}, ...]
-- boxPlotData: boxplot用 {"min", "q1", "median", "q3", "max"}
-- chartLabels: {"x": "X軸", "y": "Y軸"}
-
-グラフ使用率: 60-70%（相関100%、ヒストグラム90%、箱ひげ図100%、時系列80%）
+⚠️ 重要:
+- 必ず配列 [...] で囲む
+- 各問題はカンマで区切る
+- グラフフィールド: chartType, chartData/barData/boxPlotData, chartLabels
+- グラフ使用率60-70%（相関100%、ヒストグラム90%、箱ひげ図100%）
 
 【重要】
 - すべてのフィールド名は必ず小文字で記述してください
