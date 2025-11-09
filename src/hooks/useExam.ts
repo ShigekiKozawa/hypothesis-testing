@@ -9,7 +9,8 @@ export interface Question {
   explanation: string;
   chartData?: any;
   barData?: any;
-  chartType?: 'scatter' | 'line' | 'bar';
+  boxPlotData?: { min: number; q1: number; median: number; q3: number; max: number };
+  chartType?: 'scatter' | 'line' | 'bar' | 'histogram' | 'boxplot';
   chartLabels?: { x: string; y: string };
 }
 

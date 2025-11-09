@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Question } from '../../hooks/useExam';
-import { ScatterPlot, BarChartComponent, LineChartComponent } from './Charts';
+import { ScatterPlot, BarChartComponent, LineChartComponent, BoxPlot, Histogram } from './Charts';
 
 interface ExamLayoutProps {
   title: string;
@@ -156,11 +156,23 @@ export function ResultScreen({
                           yLabel={q.chartLabels?.y || 'Value'}
                         />
                       )}
+                      {q.chartType === 'histogram' && q.barData && (
+                        <Histogram 
+                          data={q.barData}
+                          xLabel={q.chartLabels?.x || '階級'}
+                          yLabel={q.chartLabels?.y || '度数'}
+                        />
+                      )}
                       {q.chartType === 'line' && q.chartData && (
                         <LineChartComponent 
                           data={q.chartData}
                           xLabel={q.chartLabels?.x || 'X'}
                           yLabel={q.chartLabels?.y || 'Y'}
+                        />
+                      )}
+                      {q.chartType === 'boxplot' && q.boxPlotData && (
+                        <BoxPlot 
+                          data={q.boxPlotData}
                         />
                       )}
 
@@ -285,11 +297,23 @@ export function QuestionCard({
             yLabel={question.chartLabels?.y || 'Value'}
           />
         )}
+        {question.chartType === 'histogram' && question.barData && (
+          <Histogram 
+            data={question.barData}
+            xLabel={question.chartLabels?.x || '階級'}
+            yLabel={question.chartLabels?.y || '度数'}
+          />
+        )}
         {question.chartType === 'line' && question.chartData && (
           <LineChartComponent 
             data={question.chartData}
             xLabel={question.chartLabels?.x || 'X'}
             yLabel={question.chartLabels?.y || 'Y'}
+          />
+        )}
+        {question.chartType === 'boxplot' && question.boxPlotData && (
+          <BoxPlot 
+            data={question.boxPlotData}
           />
         )}
 

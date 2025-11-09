@@ -22,9 +22,10 @@ export interface GeneratedQuestion {
   options: string[];
   correct: number;
   explanation: string;
-  chartType?: 'scatter' | 'line' | 'bar';
+  chartType?: 'scatter' | 'line' | 'bar' | 'histogram' | 'boxplot';
   chartData?: Array<{x: number; y: number} | {name: string; value: number}>;
   barData?: Array<{name: string; value: number}>;
+  boxPlotData?: { min: number; q1: number; median: number; q3: number; max: number };
   chartLabels?: {x: string; y: string};
 }
 
@@ -972,9 +973,19 @@ ${detailedPrompt}
 - 「季節変動や周期性を判断させる」
 - 「移動平均による平滑化の効果を確認」
 
+📊 ヒストグラムを使う問題（度数分布で90%以上使用）
+- chartType: "histogram" を使用（"bar"ではない）
+- 「下のヒストグラムから最頻値を含む階級を選ぶ」
+- 「分布の歪み（右歪み/左歪み）を判断」
+- 「平均値と中央値の大小関係を分布形状から判断」
+- 「度数が最も多い階級を特定」
+
 📊 箱ひげ図を使う問題（100%使用）
-- 「下の箱ひげ図から四分位範囲を求める」
-- 「外れ値の有無を判断させる」
+- chartType: "boxplot" を使用
+- boxPlotData: {"min": 数値, "q1": 数値, "median": 数値, "q3": 数値, "max": 数値}
+- 「下の箱ひげ図から四分位範囲（IQR）を求める」
+- 「箱ひげ図から中央値を読み取る」
+- 「データの範囲（レンジ）を求める」
 - 「複数の箱ひげ図を比較してばらつきを判断」
 
 ⚠️ グラフなしでも解ける場合でも、視覚化できるならグラフを追加
@@ -1085,22 +1096,65 @@ ${detailedPrompt}
   }
 ]
 
+グラフ付き形式（ヒストグラムの例）:
+[
+  {
+    "id": 5,
+    "question": "下のヒストグラムから、このデータの分布形状について最も適切に説明しているのはどれですか。",
+    "options": ["左右対称である", "右に歪んでいる", "左に歪んでいる", "二峰性である"],
+    "correct": 2,
+    "explanation": "度数の最大値が左側にあり、右側に長い裾を引いているため、右に歪んだ分布（正の歪み）です。",
+    "chartType": "histogram",
+    "barData": [
+      {"name": "0-10", "value": 15},
+      {"name": "10-20", "value": 25},
+      {"name": "20-30", "value": 20},
+      {"name": "30-40", "value": 12},
+      {"name": "40-50", "value": 6},
+      {"name": "50-60", "value": 2}
+    ],
+    "chartLabels": {"x": "階級（点）", "y": "度数（人）"}
+  }
+]
+
+グラフ付き形式（箱ひげ図の例）:
+[
+  {
+    "id": 6,
+    "question": "下の箱ひげ図から四分位範囲（IQR）を求めなさい。",
+    "options": ["10", "15", "20", "25"],
+    "correct": 3,
+    "explanation": "四分位範囲（IQR）は第3四分位数Q3から第1四分位数Q1を引いた値です。75 - 55 = 20となります。",
+    "chartType": "boxplot",
+    "boxPlotData": {
+      "min": 40,
+      "q1": 55,
+      "median": 65,
+      "q3": 75,
+      "max": 90
+    }
+  }
+]
+
 【グラフフィールドの説明】
-- chartType: "scatter" | "bar" | "line" のいずれか（グラフ不要の場合は省略）
+- chartType: "scatter" | "bar" | "line" | "histogram" | "boxplot" のいずれか（グラフ不要の場合は省略）
 - chartData: scatter/lineの場合 → [{"x": 数値, "y": 数値}, ...] または [{"name": "文字列", "value": 数値}, ...]
-- barData: barの場合 → [{"name": "文字列", "value": 数値}, ...]
-- chartLabels: {"x": "X軸ラベル", "y": "Y軸ラベル"}
+- barData: bar/histogramの場合 → [{"name": "文字列", "value": 数値}, ...]
+- boxPlotData: boxplotの場合 → {"min": 数値, "q1": 数値, "median": 数値, "q3": 数値, "max": 数値}
+- chartLabels: {"x": "X軸ラベル", "y": "Y軸ラベル"}（boxplot以外）
 
 【グラフデータ生成のガイドライン】
 1. データポイント数
    - 散布図: 5〜12点程度
    - ヒストグラム: 6〜10階級程度
    - 折れ線グラフ: 5〜10点程度
+   - 箱ひげ図: min, q1, median, q3, maxの5つの値
 
 2. データの妥当性
    - 相関がある散布図: データが直線状に並ぶ（y ≈ ax + b + 少しのばらつき）
    - 相関がない散布図: データがランダムに散らばる
    - ヒストグラムの度数: 1〜20程度の整数
+   - 箱ひげ図: min < q1 < median < q3 < max の関係を必ず守る
 
 3. グラフを含める問題の割合 🎯 実際の試験レベル（6〜7割）
    - セクション問題（10問想定）: 6〜7問（60-70%）
@@ -1120,7 +1174,10 @@ ${detailedPrompt}
 - すべてのフィールド名は必ず小文字で記述してください
 - chartDataとbarDataを同時に含めないでください
 - グラフなしの問題では、chartType等のフィールドを含めないでください
-- グラフは視覚的判断が必要な問題にのみ使用し、計算で解ける問題には不要です
+- ヒストグラムは chartType: "histogram" を使用（"bar"と混同しない）
+- 箱ひげ図は chartType: "boxplot" を使用し、boxPlotData を必ず含める
+- barData は "bar" と "histogram" で共用
+- boxPlotData は "boxplot" 専用で、{"min": 数値, "q1": 数値, "median": 数値, "q3": 数値, "max": 数値} の形式
 
 【選択肢作成の注意点 - 最重要】
 ⚠️ 確率・分数の選択肢では、必ず既約分数（約分済み）にしてください
@@ -1282,22 +1339,65 @@ ${request.grade === '4級'
   }
 ]
 
+グラフ付き形式（ヒストグラムの例）:
+[
+  {
+    "id": 5,
+    "question": "下のヒストグラムから、このデータの分布形状について最も適切に説明しているのはどれですか。",
+    "options": ["左右対称である", "右に歪んでいる", "左に歪んでいる", "二峰性である"],
+    "correct": 2,
+    "explanation": "度数の最大値が左側にあり、右側に長い裾を引いているため、右に歪んだ分布（正の歪み）です。",
+    "chartType": "histogram",
+    "barData": [
+      {"name": "0-10", "value": 15},
+      {"name": "10-20", "value": 25},
+      {"name": "20-30", "value": 20},
+      {"name": "30-40", "value": 12},
+      {"name": "40-50", "value": 6},
+      {"name": "50-60", "value": 2}
+    ],
+    "chartLabels": {"x": "階級（点）", "y": "度数（人）"}
+  }
+]
+
+グラフ付き形式（箱ひげ図の例）:
+[
+  {
+    "id": 6,
+    "question": "下の箱ひげ図から四分位範囲（IQR）を求めなさい。",
+    "options": ["10", "15", "20", "25"],
+    "correct": 3,
+    "explanation": "四分位範囲（IQR）は第3四分位数Q3から第1四分位数Q1を引いた値です。75 - 55 = 20となります。",
+    "chartType": "boxplot",
+    "boxPlotData": {
+      "min": 40,
+      "q1": 55,
+      "median": 65,
+      "q3": 75,
+      "max": 90
+    }
+  }
+]
+
 【グラフフィールドの説明】
-- chartType: "scatter" | "bar" | "line" のいずれか（グラフ不要の場合は省略）
+- chartType: "scatter" | "bar" | "line" | "histogram" | "boxplot" のいずれか（グラフ不要の場合は省略）
 - chartData: scatter/lineの場合 → [{"x": 数値, "y": 数値}, ...] または [{"name": "文字列", "value": 数値}, ...]
-- barData: barの場合 → [{"name": "文字列", "value": 数値}, ...]
-- chartLabels: {"x": "X軸ラベル", "y": "Y軸ラベル"}
+- barData: bar/histogramの場合 → [{"name": "文字列", "value": 数値}, ...]
+- boxPlotData: boxplotの場合 → {"min": 数値, "q1": 数値, "median": 数値, "q3": 数値, "max": 数値}
+- chartLabels: {"x": "X軸ラベル", "y": "Y軸ラベル"}（boxplot以外）
 
 【グラフデータ生成のガイドライン】
 1. データポイント数
    - 散布図: 5〜12点程度
    - ヒストグラム: 6〜10階級程度
    - 折れ線グラフ: 5〜10点程度
+   - 箱ひげ図: min, q1, median, q3, maxの5つの値
 
 2. データの妥当性
    - 相関がある散布図: データが直線状に並ぶ（y ≈ ax + b + 少しのばらつき）
    - 相関がない散布図: データがランダムに散らばる
    - ヒストグラムの度数: 1〜20程度の整数
+   - 箱ひげ図: min < q1 < median < q3 < max の関係を必ず守る
 
 3. グラフを含める問題の割合 🎯 実際の試験レベル（6〜7割）
    - 模擬試験（30問）: 18〜21問（60-70%）
@@ -1315,7 +1415,10 @@ ${request.grade === '4級'
 - すべてのフィールド名は必ず小文字で記述してください
 - chartDataとbarDataを同時に含めないでください
 - グラフなしの問題では、chartType等のフィールドを含めないでください
-- グラフは視覚的判断が必要な問題にのみ使用し、計算で解ける問題には不要です
+- ヒストグラムは chartType: "histogram" を使用（"bar"と混同しない）
+- 箱ひげ図は chartType: "boxplot" を使用し、boxPlotData を必ず含める
+- barData は "bar" と "histogram" で共用
+- boxPlotData は "boxplot" 専用で、{"min": 数値, "q1": 数値, "median": 数値, "q3": 数値, "max": 数値} の形式
 
 【選択肢作成の注意点 - 最重要】
 ⚠️ 確率・分数の選択肢では、必ず既約分数（約分済み）にしてください
