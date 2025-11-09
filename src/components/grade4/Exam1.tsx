@@ -53,7 +53,7 @@ export default function Grade4Exam1() {
     },
     {
       id: 5,
-      question: "次のヒストグラムで、度数が最も多い階級（最頻階級）はどれですか。\n\n10〜20: 5人\n20〜30: 12人\n30〜40: 18人\n40〜50: 10人\n50〜60: 5人",
+      question: "下のヒストグラムで、度数が最も多い階級（最頻階級）はどれですか。",
       options: [
         "10〜20",
         "20〜30",
@@ -61,7 +61,16 @@ export default function Grade4Exam1() {
         "40〜50"
       ],
       correct: 3,
-      explanation: "度数が18人で最も多いのは30〜40の階級です。これを最頻階級といいます。"
+      explanation: "度数が18人で最も多いのは30〜40の階級です。これを最頻階級といいます。",
+      chartType: 'bar',
+      barData: [
+        { name: '10-20', value: 5 },
+        { name: '20-30', value: 12 },
+        { name: '30-40', value: 18 },
+        { name: '40-50', value: 10 },
+        { name: '50-60', value: 5 }
+      ],
+      chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
       id: 6,
@@ -137,7 +146,7 @@ export default function Grade4Exam1() {
     },
     {
       id: 12,
-      question: "次の散布図で、2つの変数の関係を表す相関として最も適切なものはどれですか。\n\n（右上がりの点の集まり）",
+      question: "下の散布図で、2つの変数の関係を表す相関として最も適切なものはどれですか。",
       options: [
         "正の相関がある",
         "負の相関がある",
@@ -145,7 +154,19 @@ export default function Grade4Exam1() {
         "判断できない"
       ],
       correct: 1,
-      explanation: "点が右上がりに分布している場合、一方が増えるともう一方も増える傾向があるため、正の相関があります。"
+      explanation: "点が右上がりに分布している場合、一方が増えるともう一方も増える傾向があるため、正の相関があります。",
+      chartType: 'scatter',
+      chartData: [
+        { x: 1, y: 2.2 },
+        { x: 2, y: 3.8 },
+        { x: 3, y: 5.5 },
+        { x: 4, y: 7.3 },
+        { x: 5, y: 9.1 },
+        { x: 6, y: 10.8 },
+        { x: 7, y: 12.5 },
+        { x: 8, y: 14.2 }
+      ],
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 13,
@@ -257,7 +278,7 @@ export default function Grade4Exam1() {
     },
     {
       id: 22,
-      question: "次のヒストグラムで、20点以上の生徒の割合は何%ですか。\n\n0〜10点: 10人\n10〜20点: 20人\n20〜30点: 40人\n30〜40点: 30人\n合計: 100人",
+      question: "下のヒストグラムで、20点以上の生徒の割合は何%ですか。",
       options: [
         "40%",
         "50%",
@@ -265,7 +286,15 @@ export default function Grade4Exam1() {
         "70%"
       ],
       correct: 4,
-      explanation: "20点以上は40人+30人=70人です。割合は 70÷100×100 = 70%です。"
+      explanation: "20点以上は40人+30人=70人です。割合は 70÷100×100 = 70%です。",
+      chartType: 'bar',
+      barData: [
+        { name: '0-10', value: 10 },
+        { name: '10-20', value: 20 },
+        { name: '20-30', value: 40 },
+        { name: '30-40', value: 30 }
+      ],
+      chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
       id: 23,

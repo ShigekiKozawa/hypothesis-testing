@@ -53,7 +53,7 @@ export default function Section8Multivariate1() {
     },
     {
         id: 5,
-        question: "次のグラフで、7月の売上が例年より高い理由として最も適切なものはどれですか。\n\n（小売店の月別売上グラフ）",
+        question: "下のグラフで、7月の売上が例年より高い理由として最も適切なものはどれですか。",
         options: [
             "季節変動",
             "長期的な成長",
@@ -61,7 +61,23 @@ export default function Section8Multivariate1() {
             "測定誤差"
         ],
         correct: 3,
-        explanation: "例年と異なる特定月の突出した値は、一時的な要因（キャンペーンなど）による可能性が高いです。"
+        explanation: "例年と異なる特定月の突出した値は、一時的な要因（キャンペーンなど）による可能性が高いです。7月だけが突出して高く、他の月は平均的な推移を示しています。",
+        chartType: 'line',
+        chartData: [
+            { name: '1月', value: 120 },
+            { name: '2月', value: 115 },
+            { name: '3月', value: 130 },
+            { name: '4月', value: 125 },
+            { name: '5月', value: 135 },
+            { name: '6月', value: 140 },
+            { name: '7月', value: 220 },
+            { name: '8月', value: 145 },
+            { name: '9月', value: 130 },
+            { name: '10月', value: 135 },
+            { name: '11月', value: 150 },
+            { name: '12月', value: 160 }
+        ],
+        chartLabels: { x: '月', y: '売上（万円）' }
     },
     {
         id: 6,
