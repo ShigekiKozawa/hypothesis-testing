@@ -22,7 +22,7 @@ export default function Section7TimeSeries1() {
             "1/13",
             "1/4",
             "1/2",
-            "13/52"
+            "4/13"
         ],
         correct: 2,
         explanation: "ハートは13枚、全体は52枚なので、13/52=1/4です。"
