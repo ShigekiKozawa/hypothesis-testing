@@ -8,9 +8,9 @@ export default function Section7TimeSeries2() {
         question: "赤玉5個、白玉3個の袋から2個同時に取り出すとき、2個とも赤玉である確率はいくらですか。",
         options: [
             "5/14",
-            "10/28",
+            "3/14",
             "5/8",
-            "15/56"
+            "3/8"
         ],
         correct: 1,
         explanation: "組み合わせで計算します。2個とも赤玉は5C2=10通り、全体は8C2=28通りなので、10/28=5/14です。"
@@ -58,7 +58,7 @@ export default function Section7TimeSeries2() {
             "1/45",
             "2/45",
             "1/25",
-            "4/100"
+            "1/50"
         ],
         correct: 1,
         explanation: "1本目が当たる確率は2/10、2本目も当たる確率は1/9（非復元）。(2/10)×(1/9)=2/90=1/45です。"
