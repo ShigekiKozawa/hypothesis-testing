@@ -1038,7 +1038,8 @@ ${request.grade === '4級'
 
         let parsedData: any;
         try {
-          parsedData = JSON.parse(jsonMatch[0]);
+          const cleanedJson = jsonMatch[0].replace(/[\u0000-\u0008\u000B-\u000C\u000E-\u001F\u007F-\u009F]/g, ' ');
+          parsedData = JSON.parse(cleanedJson);
         } catch (parseError) {
           console.error('JSONパースエラー:', parseError);
           console.error('パース対象:', jsonMatch[0].substring(0, 500));
