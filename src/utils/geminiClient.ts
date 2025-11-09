@@ -11,10 +11,16 @@ if (!API_KEY) {
 
 const genAI = new GoogleGenerativeAI(API_KEY);
 
-const API_TIMEOUT = 60000;
 const MAX_RETRIES = 3;
 const MIN_QUESTION_COUNT = 1;
 const MAX_QUESTION_COUNT = 50;
+
+function getTimeoutForQuestionCount(count: number): number {
+  if (count <= 10) return 60000;   // 1分
+  if (count <= 20) return 90000;   // 1.5分
+  if (count <= 30) return 150000;  // 2.5分
+  return 180000;                   // 3分
+}
 
 export interface GeneratedQuestion {
   id: number;
@@ -1345,9 +1351,10 @@ ${request.grade === '4級'
 
     const generateWithRetry = async (): Promise<GeneratedQuestion[]> => {
       try {
+        const timeout = getTimeoutForQuestionCount(request.count);
         const result = await withTimeout(
           model.generateContent(prompt),
-          API_TIMEOUT
+          timeout
         );
 
         const response = result.response;
