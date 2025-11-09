@@ -1149,33 +1149,25 @@ ${detailedPrompt}
    × 実務で使われない架空の概念
    × 選択肢が明らかに不自然なもの
 
-【出力形式】⚠️ 必ず配列形式のJSONのみ出力（他の文章は一切含めない）
+【出力形式】⚠️⚠️⚠️ 絶対厳守 ⚠️⚠️⚠️
 
-[
-  {
-    "id": 1,
-    "question": "問題文",
-    "options": ["選択肢1", "選択肢2", "選択肢3", "選択肢4"],
-    "correct": 2,
-    "explanation": "詳しい解説"
-  },
-  {
-    "id": 2,
-    "question": "下の散布図について、相関を判断してください。",
-    "options": ["強い正の相関", "強い負の相関", "相関なし", "不明"],
-    "correct": 1,
-    "explanation": "右上がりなので正の相関です。",
-    "chartType": "scatter",
-    "chartData": [{"x": 1, "y": 2.1}, {"x": 2, "y": 4.0}, {"x": 3, "y": 5.9}],
-    "chartLabels": {"x": "変数X", "y": "変数Y"}
-  }
-]
+🚨 JSON配列のみ出力（説明文・コメント・マークダウン等は一切禁止）
+🚨 文字列内に改行・タブ・制御文字を含めない（スペースに置換）
+🚨 必ず有効なJSON形式（trailing commaなし）
 
-⚠️ 重要:
+正しい例:
+[{"id":1,"question":"平均値が10、標準偏差が2のとき、データの散らばりを表す指標はどれですか。","options":["平均値","標準偏差","中央値","最頻値"],"correct":2,"explanation":"標準偏差はデータの散らばりを表す指標です。"},{"id":2,"question":"下の散布図について、相関を判断してください。","options":["強い正の相関","強い負の相関","相関なし","不明"],"correct":1,"explanation":"右上がりなので正の相関です。","chartType":"scatter","chartData":[{"x":1,"y":2.1},{"x":2,"y":4.0},{"x":3,"y":5.9}],"chartLabels":{"x":"変数X","y":"変数Y"}}]
+
+⚠️ 文字列内のルール:
+- 改行は使わない → スペースで代用
+- タブは使わない → スペースで代用
+- 引用符は \" でエスケープ
+- バックスラッシュは \\\\ でエスケープ
+
+⚠️ JSON構造:
 - 必ず配列 [...] で囲む
-- 各問題はカンマで区切る
-- グラフフィールド: chartType, chartData/barData/boxPlotData, chartLabels
-- グラフ使用率60-70%（相関100%、ヒストグラム90%、箱ひげ図100%）
+- 最後の要素の後にカンマを付けない
+- グラフ使用率60-70%
 
 【重要】
 - すべてのフィールド名は必ず小文字で記述してください
@@ -1384,6 +1376,7 @@ ${request.grade === '4級'
           throw new APIError('APIから空のレスポンスが返されました。');
         }
 
+        // Step 1: Extract JSON array from response
         const jsonMatch = text.match(/\[[\s\S]*\]/);
         if (!jsonMatch) {
           console.error('JSONが見つかりません。レスポンス:', text.substring(0, 500));
@@ -1393,13 +1386,55 @@ ${request.grade === '4級'
         }
 
         let parsedData: any;
+        let rawJson = jsonMatch[0];
+        
         try {
-          const cleanedJson = jsonMatch[0].replace(/[\u0000-\u0008\u000B-\u000C\u000E-\u001F\u007F-\u009F]/g, ' ');
+          // Step 2: Aggressive cleaning of problematic characters
+          let cleanedJson = rawJson
+            // Remove all control characters (including newlines in strings)
+            .replace(/[\u0000-\u0008\u000B-\u000C\u000E-\u001F\u007F-\u009F]/g, ' ')
+            // Fix common JSON issues
+            .replace(/,(\s*[}\]])/g, '$1')  // Remove trailing commas
+            .replace(/\n/g, '\\n')           // Escape actual newlines
+            .replace(/\r/g, '\\r')           // Escape carriage returns
+            .replace(/\t/g, '\\t');          // Escape tabs
+          
+          // Step 3: Try to parse
           parsedData = JSON.parse(cleanedJson);
+          
         } catch (parseError) {
           console.error('JSONパースエラー:', parseError);
-          console.error('パース対象:', jsonMatch[0].substring(0, 500));
-          throw new ValidationError('JSONデータの解析に失敗しました。形式が不正です。');
+          console.error('パース対象（最初の1000文字）:', rawJson.substring(0, 1000));
+          console.error('パース対象（最後の500文字）:', rawJson.substring(Math.max(0, rawJson.length - 500)));
+          
+          // Step 4: Try more aggressive fixes
+          try {
+            let fixedJson = rawJson
+              // Remove all control characters
+              .replace(/[\u0000-\u001F\u007F-\u009F]/g, ' ')
+              // Fix newlines in strings (between quotes)
+              .replace(/"([^"]*?)"/g, (_match, content) => {
+                return '"' + content
+                  .replace(/\n/g, ' ')
+                  .replace(/\r/g, ' ')
+                  .replace(/\t/g, ' ')
+                  .replace(/\\/g, '\\\\')
+                  .replace(/"/g, '\\"') + '"';
+              })
+              // Remove trailing commas
+              .replace(/,(\s*[}\]])/g, '$1')
+              // Fix multiple spaces
+              .replace(/\s+/g, ' ');
+            
+            parsedData = JSON.parse(fixedJson);
+            console.log('✅ 修復後のJSONパースに成功');
+            
+          } catch (secondError) {
+            console.error('修復試行後もパース失敗:', secondError);
+            throw new ValidationError(
+              'JSONデータの解析に失敗しました。AIの応答形式が不正です。もう一度お試しください。'
+            );
+          }
         }
 
         if (!Array.isArray(parsedData)) {
