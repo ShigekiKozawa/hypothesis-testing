@@ -16,10 +16,10 @@ const MIN_QUESTION_COUNT = 1;
 const MAX_QUESTION_COUNT = 50;
 
 function getTimeoutForQuestionCount(count: number): number {
-  if (count <= 10) return 60000;   // 1分
-  if (count <= 20) return 90000;   // 1.5分
-  if (count <= 30) return 150000;  // 2.5分
-  return 180000;                   // 3分
+  if (count <= 10) return 90000;   // 1.5分
+  if (count <= 20) return 180000;  // 3分
+  if (count <= 30) return 240000;  // 4分
+  return 300000;                   // 5分
 }
 
 export interface GeneratedQuestion {
