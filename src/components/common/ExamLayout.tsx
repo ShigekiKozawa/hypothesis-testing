@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Question } from '../../hooks/useExam';
+import { ScatterPlot, BarChartComponent, LineChartComponent, Histogram, BoxPlot } from './Charts';
 
 interface ExamLayoutProps {
   title: string;
@@ -141,6 +142,28 @@ export function ResultScreen({
                         {q.question}
                       </p>
 
+                      {q.chartType === 'scatter' && q.chartData && (
+                        <ScatterPlot 
+                          data={q.chartData} 
+                          xLabel={q.chartLabels?.x || 'X'}
+                          yLabel={q.chartLabels?.y || 'Y'}
+                        />
+                      )}
+                      {q.chartType === 'bar' && q.barData && (
+                        <BarChartComponent 
+                          data={q.barData}
+                          xLabel={q.chartLabels?.x || 'Category'}
+                          yLabel={q.chartLabels?.y || 'Value'}
+                        />
+                      )}
+                      {q.chartType === 'line' && q.chartData && (
+                        <LineChartComponent 
+                          data={q.chartData}
+                          xLabel={q.chartLabels?.x || 'X'}
+                          yLabel={q.chartLabels?.y || 'Y'}
+                        />
+                      )}
+
                       <div className="space-y-2 mb-4">
                         {q.options.map((option, optIndex) => {
                           const optionNumber = optIndex + 1;
@@ -247,6 +270,28 @@ export function QuestionCard({
         <h2 className="text-xl font-bold text-gray-800 mb-4 whitespace-pre-wrap">
           {question.question}
         </h2>
+
+        {question.chartType === 'scatter' && question.chartData && (
+          <ScatterPlot 
+            data={question.chartData} 
+            xLabel={question.chartLabels?.x || 'X'}
+            yLabel={question.chartLabels?.y || 'Y'}
+          />
+        )}
+        {question.chartType === 'bar' && question.barData && (
+          <BarChartComponent 
+            data={question.barData}
+            xLabel={question.chartLabels?.x || 'Category'}
+            yLabel={question.chartLabels?.y || 'Value'}
+          />
+        )}
+        {question.chartType === 'line' && question.chartData && (
+          <LineChartComponent 
+            data={question.chartData}
+            xLabel={question.chartLabels?.x || 'X'}
+            yLabel={question.chartLabels?.y || 'Y'}
+          />
+        )}
 
         <div className="space-y-3">
           {question.options.map((option, index) => {

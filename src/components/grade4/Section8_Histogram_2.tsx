@@ -5,15 +5,27 @@ export default function Section8Histogram2() {
   const questions: Question[] = [
     {
         id: 1,
-        question: "ヒストグラムで最頻値（モード）はどう読み取りますか。",
+        question: "下のヒストグラムで最頻値（モード）を含む階級はどれですか。",
         options: [
-            "最も低い柱の階級",
-            "最も高い柱の階級",
-            "横軸の端",
-            "読み取れない",
+            "10-20点",
+            "20-30点",
+            "30-40点",
+            "40-50点",
         ],
-        correct: 2,
-        explanation: "最も高い柱（度数が最大）の階級が、最頻値（モード）を含む階級です。"
+        correct: 3,
+        explanation: "最も高い柱（度数が最大）の階級が、最頻値（モード）を含む階級です。このヒストグラムでは30-40点の階級が最も高くなっています。",
+        chartType: 'bar',
+        barData: [
+            { name: '0-10', value: 2 },
+            { name: '10-20', value: 5 },
+            { name: '20-30', value: 8 },
+            { name: '30-40', value: 15 },
+            { name: '40-50', value: 10 },
+            { name: '50-60', value: 6 },
+            { name: '60-70', value: 3 },
+            { name: '70-80', value: 1 }
+        ],
+        chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
         id: 2,
@@ -53,7 +65,7 @@ export default function Section8Histogram2() {
     },
     {
         id: 5,
-        question: "ヒストグラムで左に裾が長い形のとき、平均と中央値の関係はどうですか。",
+        question: "下のヒストグラムは左に裾が長い形をしています。このとき、平均と中央値の関係はどうですか。",
         options: [
             "平均 < 中央値",
             "平均 > 中央値",
@@ -61,11 +73,25 @@ export default function Section8Histogram2() {
             "判断できない",
         ],
         correct: 1,
-        explanation: "左に裾が長い（負の歪み）とき、平均は中央値より小さくなる傾向があります。"
+        explanation: "左に裾が長い（負の歪み）とき、平均は中央値より小さくなる傾向があります。左側の極端な値が平均を引き下げるためです。",
+        chartType: 'bar',
+        barData: [
+            { name: '0-10', value: 1 },
+            { name: '10-20', value: 2 },
+            { name: '20-30', value: 3 },
+            { name: '30-40', value: 5 },
+            { name: '40-50', value: 8 },
+            { name: '50-60', value: 12 },
+            { name: '60-70', value: 15 },
+            { name: '70-80', value: 18 },
+            { name: '80-90', value: 14 },
+            { name: '90-100', value: 12 }
+        ],
+        chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
         id: 6,
-        question: "ヒストグラムで右に裾が長い形のとき、平均と中央値の関係はどうですか。",
+        question: "下のヒストグラムは右に裾が長い形をしています。このとき、平均と中央値の関係はどうですか。",
         options: [
             "平均 < 中央値",
             "平均 > 中央値",
@@ -73,7 +99,21 @@ export default function Section8Histogram2() {
             "判断できない",
         ],
         correct: 2,
-        explanation: "右に裾が長い（正の歪み）とき、平均は中央値より大きくなる傾向があります。"
+        explanation: "右に裾が長い（正の歪み）とき、平均は中央値より大きくなる傾向があります。右側の極端な値が平均を引き上げるためです。",
+        chartType: 'bar',
+        barData: [
+            { name: '0-10', value: 15 },
+            { name: '10-20', value: 18 },
+            { name: '20-30', value: 14 },
+            { name: '30-40', value: 12 },
+            { name: '40-50', value: 8 },
+            { name: '50-60', value: 5 },
+            { name: '60-70', value: 3 },
+            { name: '70-80', value: 2 },
+            { name: '80-90', value: 1 },
+            { name: '90-100', value: 2 }
+        ],
+        chartLabels: { x: '点数', y: '度数（人）' }
     },
     {
         id: 7,

@@ -29,15 +29,27 @@ export default function Grade3Exam1() {
     },
     {
       id: 3,
-      question: "次の散布図で、相関係数が最も大きいのはどれですか。",
+      question: "下の散布図について、この2変数の関係を最もよく説明しているのはどれですか。",
       options: [
-        "点が右上がりの直線状に並んでいる",
-        "点が右下がりの直線状に並んでいる",
-        "点がランダムに散らばっている",
-        "点が曲線状に並んでいる"
+        "強い正の相関がある",
+        "強い負の相関がある",
+        "相関はほとんどない",
+        "曲線的な関係がある"
       ],
       correct: 1,
-      explanation: "相関係数は-1から1の値を取り、1に近いほど強い正の相関です。右上がりの直線状が最も大きい正の相関係数を持ちます。"
+      explanation: "散布図を見ると、点が右上がりの直線状に並んでいます。これは強い正の相関を示しており、相関係数は1に近い値となります。",
+      chartType: 'scatter',
+      chartData: [
+        { x: 1, y: 2.1 },
+        { x: 2, y: 3.9 },
+        { x: 3, y: 5.8 },
+        { x: 4, y: 8.2 },
+        { x: 5, y: 10.1 },
+        { x: 6, y: 11.9 },
+        { x: 7, y: 14.2 },
+        { x: 8, y: 15.8 }
+      ],
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 4,
@@ -396,7 +408,7 @@ export default function Grade3Exam1() {
       backLink="/"
       bestScore={exam.bestScore}
     >
-      <div className="mb-6">
+          <div className="mb-6">
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
           <p className="text-sm text-gray-700">
             <strong>試験時間:</strong> 60分 | <strong>問題数:</strong> 30問 | <strong>合格ライン:</strong> 65点以上
