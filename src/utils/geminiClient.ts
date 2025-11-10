@@ -264,6 +264,107 @@ function generateBarData(): { barData: Array<{name: string; value: number}>; cha
   };
 }
 
+async function factCheckQuestions(
+  questions: GeneratedQuestion[]
+): Promise<GeneratedQuestion[]> {
+  const model = genAI.getGenerativeModel({ 
+    model: 'gemini-2.0-flash-exp',
+    generationConfig: {
+      temperature: 0.1,
+      topP: 0.8,
+      topK: 20,
+      maxOutputTokens: 8192,
+      responseMimeType: 'application/json',
+    },
+  });
+
+  const factCheckPrompt = `
+あなたは統計検定のファクトチェッカーです。以下の問題について、正解として指定された選択肢が実際に正しいかを厳密に検証してください。
+
+【検証対象の問題】
+${JSON.stringify(questions, null, 2)}
+
+【検証ルール】
+1. 各問題について、正解として指定された選択肢（correct）が実際に正しいか計算・検証する
+2. 解説の論理が正しいか確認する
+3. 選択肢の数値計算が正確か確認する
+4. もし正解が間違っている場合は、正しい選択肢番号（1-4）に修正する
+5. 解説が間違っている場合は、正しい解説に修正する
+
+【出力形式】
+以下のJSON配列形式で、検証済みの問題を返してください：
+[
+  {
+    "id": 1,
+    "question": "元の問題文",
+    "options": ["選択肢1", "選択肢2", "選択肢3", "選択肢4"],
+    "correct": 正しい選択肢番号（1-4）,
+    "explanation": "正しい解説",
+    "chartType": "scatter",
+    "chartData": [...],
+    "chartLabels": {...}
+  }
+]
+
+重要：
+- 必ず全ての問題を検証して返してください
+- correctフィールドは必ず1-4の範囲内の数値にしてください
+- 計算ミスや論理エラーがある場合は必ず修正してください
+- グラフデータ（chartType, chartData等）はそのまま保持してください
+`;
+
+  try {
+    const timeout = 120000;
+    const result = await withTimeout(
+      model.generateContent(factCheckPrompt),
+      timeout
+    );
+
+    const response = await result.response;
+    const text = response.text();
+
+    if (!text || text.trim().length === 0) {
+      return questions;
+    }
+
+    let parsedData: any;
+    try {
+      parsedData = JSON.parse(text);
+    } catch (parseError) {
+      try {
+        const jsonMatch = text.match(/\[[\s\S]*\]/);
+        if (!jsonMatch) {
+          return questions;
+        }
+        parsedData = JSON.parse(jsonMatch[0]);
+      } catch (secondError) {
+        return questions;
+      }
+    }
+
+    if (!Array.isArray(parsedData) || parsedData.length === 0) {
+      return questions;
+    }
+
+    const factCheckedQuestions: GeneratedQuestion[] = [];
+    for (let i = 0; i < parsedData.length; i++) {
+      try {
+        const validated = validateQuestion(parsedData[i], i);
+        factCheckedQuestions.push(validated);
+      } catch (error) {
+        factCheckedQuestions.push(questions[i]);
+      }
+    }
+
+    return factCheckedQuestions.length === questions.length 
+      ? factCheckedQuestions 
+      : questions;
+
+  } catch (error) {
+    return questions;
+  }
+}
+
 function ensureGraphData(question: GeneratedQuestion): void {
   const hasGraphReference = detectGraphReference(question.question);
   
@@ -1437,7 +1538,9 @@ ${request.grade === '4級'
           );
         }
 
-        return validatedQuestions.slice(0, request.count);
+        const questionsToCheck = validatedQuestions.slice(0, request.count);
+        const factCheckResults = await factCheckQuestions(questionsToCheck);
+        return factCheckResults;
 
       } catch (error) {
         if (error instanceof ValidationError || error instanceof TimeoutError || error instanceof RateLimitError) {
