@@ -1068,8 +1068,28 @@ const sectionPrompts: Record<string, { grade3?: string; grade4?: string }> = {
   }
 };
 
+async function generateInBatches(request: QuestionGenerationRequest): Promise<GeneratedQuestion[]> {
+  const total = request.count;
+  const batchSize = 10;
+  const results: GeneratedQuestion[] = [];
+  let nextId = 1;
+  
+  for (let generated = 0; generated < total; generated += batchSize) {
+    const size = Math.min(batchSize, total - generated);
+    const subRequest: QuestionGenerationRequest = { ...request, count: size };
+    const subQuestions = await generateQuestions(subRequest, { disableBatchFallback: true });
+    for (const q of subQuestions) {
+      q.id = nextId++;
+      results.push(q);
+    }
+  }
+  
+  return results;
+}
+
 export async function generateQuestions(
-  request: QuestionGenerationRequest
+  request: QuestionGenerationRequest,
+  options?: { disableBatchFallback?: boolean }
 ): Promise<GeneratedQuestion[]> {
   const model = genAI.getGenerativeModel({ 
     model: 'gemini-2.5-flash',
@@ -1580,7 +1600,16 @@ ${request.grade === '4級'
       }
     };
 
-    return await retryWithBackoff(generateWithRetry);
+    try {
+      return await retryWithBackoff(generateWithRetry);
+    } catch (error) {
+      if (error instanceof ValidationError && error.message.includes('途中で切れ')) {
+        if (!options?.disableBatchFallback) {
+          return await generateInBatches(request);
+        }
+      }
+      throw error;
+    }
 
   } catch (error) {
     if (error instanceof ValidationError) {
