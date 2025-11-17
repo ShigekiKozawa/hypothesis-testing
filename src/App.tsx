@@ -42,14 +42,6 @@ import Grade4Section8Set1 from './components/grade4/Section8_Histogram_1';
 import Grade4Section8Set2 from './components/grade4/Section8_Histogram_2';
 import Grade4Section8Set3 from './components/grade4/Section8_Histogram_3';
 
-import Grade4Section9Set1 from './components/grade4/Section9_Sample_1';
-import Grade4Section9Set2 from './components/grade4/Section9_Sample_2';
-import Grade4Section9Set3 from './components/grade4/Section9_Sample_3';
-
-import Grade4Section10Set1 from './components/grade4/Section10_DataCollection_1';
-import Grade4Section10Set2 from './components/grade4/Section10_DataCollection_2';
-import Grade4Section10Set3 from './components/grade4/Section10_DataCollection_3';
-
 function App() {
   return (
     <Router>
@@ -95,14 +87,6 @@ function App() {
         <Route path="/grade4/section8/set1" element={<Grade4Section8Set1 />} />
         <Route path="/grade4/section8/set2" element={<Grade4Section8Set2 />} />
         <Route path="/grade4/section8/set3" element={<Grade4Section8Set3 />} />
-        
-        <Route path="/grade4/section9/set1" element={<Grade4Section9Set1 />} />
-        <Route path="/grade4/section9/set2" element={<Grade4Section9Set2 />} />
-        <Route path="/grade4/section9/set3" element={<Grade4Section9Set3 />} />
-        
-        <Route path="/grade4/section10/set1" element={<Grade4Section10Set1 />} />
-        <Route path="/grade4/section10/set2" element={<Grade4Section10Set2 />} />
-        <Route path="/grade4/section10/set3" element={<Grade4Section10Set3 />} />
       </Routes>
     </Router>
   );
