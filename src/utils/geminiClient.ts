@@ -270,26 +270,61 @@ async function factCheckQuestions(
   const model = genAI.getGenerativeModel({ 
     model: 'gemini-2.5-pro',
     generationConfig: {
-      temperature: 0.1,
-      topP: 0.8,
-      topK: 20,
-      maxOutputTokens: 8192,
+      temperature: 0.05,  // より厳格な検証のため温度を下げる
+      topP: 0.7,
+      topK: 10,
+      maxOutputTokens: 16384,  // 詳細な検証のため増量
       responseMimeType: 'application/json',
     },
   });
 
   const factCheckPrompt = `
-あなたは統計検定のファクトチェッカーです。以下の問題について、正解として指定された選択肢が実際に正しいかを厳密に検証してください。
+あなたは統計検定の厳格なファクトチェッカーです。以下の問題について、正解として指定された選択肢が実際に正しいかを**数学的に厳密に**検証してください。
 
 【検証対象の問題】
 ${JSON.stringify(questions, null, 2)}
 
-【検証ルール】
-1. 各問題について、正解として指定された選択肢（correct）が実際に正しいか計算・検証する
-2. 解説の論理が正しいか確認する
-3. 選択肢の数値計算が正確か確認する
-4. もし正解が間違っている場合は、正しい選択肢番号（1-4）に修正する
-5. 解説が間違っている場合は、正しい解説に修正する
+【🚨 厳格な検証ルール（最優先事項）】
+
+1️⃣ **計算の完全な検証（必須）**
+   - 問題文のデータから、すべての選択肢の値を自分で計算する
+   - 平均値、中央値、標準偏差、確率などは実際に計算式を使って求める
+   - 計算結果と選択肢を比較し、正解が本当に正しいか確認する
+   - 正解が間違っていれば、正しい選択肢番号（1-4）に必ず修正する
+
+2️⃣ **解説の論理チェック（必須）**
+   - 解説の計算過程が正しいか、ステップごとに確認する
+   - 誤った論理や計算ミスがあれば、正しい解説に書き直す
+   - 解説の最終的な答えが、正解の選択肢と一致するか確認する
+
+3️⃣ **数値の精度チェック（必須）**
+   - 分数の約分を確認（既約分数になっているか）
+   - 小数の桁数を確認（適切な桁数か）
+   - 単位の確認（点、時間、分など）
+
+4️⃣ **統計的な妥当性チェック（必須）**
+   - データの範囲に対して、平均値・中央値が妥当か
+   - 標準偏差が負の値でないか
+   - 確率が0～1の範囲内か、パーセントなら0～100か
+   - 相関係数が-1～1の範囲内か
+
+5️⃣ **誤答選択肢のチェック（推奨）**
+   - 誤答選択肢が明らかに正解でないか確認
+   - 正解と誤答が入れ替わっていないか確認
+
+【検証例】
+
+❌ 悪い例（チェック不足）：
+問題: 「{2, 4, 6, 8, 10}の平均値は？」
+正解: 3（選択肢2）
+→ これは間違い！ 実際の平均は (2+4+6+8+10)/5 = 6
+
+✅ 良い例（厳密なチェック）：
+問題: 「{2, 4, 6, 8, 10}の平均値は？」
+計算: (2+4+6+8+10)/5 = 30/5 = 6
+選択肢を確認: 1.4, 2.5, 3.6, 4.8
+→ 正解が選択肢にない！これは問題自体のエラー
+→ 解説を「(2+4+6+8+10)/5 = 6」に修正
 
 【出力形式】
 以下のJSON配列形式で、検証済みの問題を返してください：
@@ -299,22 +334,23 @@ ${JSON.stringify(questions, null, 2)}
     "question": "元の問題文",
     "options": ["選択肢1", "選択肢2", "選択肢3", "選択肢4"],
     "correct": 正しい選択肢番号（1-4）,
-    "explanation": "正しい解説",
+    "explanation": "正しく検証済みの解説（計算過程を含む）",
     "chartType": "scatter",
     "chartData": [...],
     "chartLabels": {...}
   }
 ]
 
-重要：
-- 必ず全ての問題を検証して返してください
-- correctフィールドは必ず1-4の範囲内の数値にしてください
-- 計算ミスや論理エラーがある場合は必ず修正してください
-- グラフデータ（chartType, chartData等）はそのまま保持してください
+【最重要事項】
+⚠️ 必ず全ての問題を自分で計算し直してください
+⚠️ correctフィールドは必ず1-4の範囲内の数値にしてください
+⚠️ 計算ミスや論理エラーがある場合は**必ず修正**してください
+⚠️ グラフデータ（chartType, chartData等）はそのまま保持してください
+⚠️ 正解が本当に正しいか、疑問を持ってチェックしてください
 `;
 
   try {
-    const timeout = 120000;
+    const timeout = 240000; // 4分に延長（厳格な検証のため）
     const result = await withTimeout(
       model.generateContent(factCheckPrompt),
       timeout
@@ -366,28 +402,109 @@ ${JSON.stringify(questions, null, 2)}
 }
 
 function ensureGraphData(question: GeneratedQuestion): void {
-  const hasGraphReference = detectGraphReference(question.question);
-  
-  if (!hasGraphReference) {
-    return;
-  }
-  
   const hasChartType = !!question.chartType;
   const hasChartData = !!(question.chartData || question.barData || question.boxPlotData);
   
+  // 既に図表データが完全に揃っている場合は何もしない
   if (hasChartType && hasChartData) {
     return;
   }
   
-  let detectedType = question.chartType || detectGraphType(question.question, question.options);
+  const hasGraphReference = detectGraphReference(question.question);
   
-  if (!detectedType) {
-    detectedType = 'histogram';
+  // 1. 問題文に図表への参照がある場合は必ず図表を追加
+  if (hasGraphReference) {
+    let detectedType = question.chartType || detectGraphType(question.question, question.options);
+    
+    if (!detectedType) {
+      detectedType = 'histogram';
+    }
+    
+    question.chartType = detectedType;
+    
+    switch (detectedType) {
+      case 'histogram': {
+        const data = generateHistogramData();
+        question.barData = data.barData;
+        question.chartLabels = data.chartLabels;
+        break;
+      }
+      case 'boxplot': {
+        const data = generateBoxPlotData();
+        question.boxPlotData = data.boxPlotData;
+        break;
+      }
+      case 'scatter': {
+        const data = generateScatterData();
+        question.chartData = data.chartData;
+        question.chartLabels = data.chartLabels;
+        break;
+      }
+      case 'line': {
+        const data = generateLineData();
+        question.chartData = data.chartData;
+        question.chartLabels = data.chartLabels;
+        break;
+      }
+      case 'bar': {
+        const data = generateBarData();
+        question.barData = data.barData;
+        question.chartLabels = data.chartLabels;
+        break;
+      }
+    }
+    
+    // 問題文を修正して図表参照を確実にする
+    if (!hasGraphReference) {
+      question.question = `下の図について。${question.question}`;
+    }
+    
+    return;
   }
   
-  question.chartType = detectedType;
+  // 2. 図表がない場合、統計的なキーワードから自動判定して追加
+  const questionLower = question.question.toLowerCase();
+  const optionsText = question.options.join(' ').toLowerCase();
+  const allText = questionLower + ' ' + optionsText;
   
-  switch (detectedType) {
+  // 図表を追加すべきキーワードパターン
+  const shouldAddChart = (
+    // 記述統計
+    allText.includes('平均') || allText.includes('中央値') || allText.includes('最頻値') ||
+    allText.includes('四分位') || allText.includes('標準偏差') || allText.includes('分散') ||
+    allText.includes('範囲') || allText.includes('レンジ') ||
+    // 相関・回帰
+    allText.includes('相関') || allText.includes('散布図') || allText.includes('回帰') ||
+    // グラフ関連
+    allText.includes('ヒストグラム') || allText.includes('箱ひげ') || allText.includes('度数分布') ||
+    // データの分布
+    allText.includes('分布') || allText.includes('ばらつき') || allText.includes('データ')
+  );
+  
+  if (!shouldAddChart) {
+    return; // 確率問題など、図表が不要な場合はスキップ
+  }
+  
+  // 3. 問題内容から適切な図表タイプを判定
+  let chartType: 'scatter' | 'line' | 'bar' | 'histogram' | 'boxplot';
+  
+  if (allText.includes('相関') || allText.includes('散布図')) {
+    chartType = 'scatter';
+  } else if (allText.includes('箱ひげ') || allText.includes('四分位')) {
+    chartType = 'boxplot';
+  } else if (allText.includes('時系列') || allText.includes('推移') || allText.includes('変化')) {
+    chartType = 'line';
+  } else if (allText.includes('カテゴリ') || allText.includes('項目') || allText.includes('種類')) {
+    chartType = 'bar';
+  } else {
+    // デフォルトはヒストグラム
+    chartType = 'histogram';
+  }
+  
+  question.chartType = chartType;
+  
+  // 4. 図表データを生成
+  switch (chartType) {
     case 'histogram': {
       const data = generateHistogramData();
       question.barData = data.barData;
@@ -417,6 +534,22 @@ function ensureGraphData(question: GeneratedQuestion): void {
       question.chartLabels = data.chartLabels;
       break;
     }
+  }
+  
+  // 5. 問題文を修正して図表参照を追加
+  const chartNames: Record<string, string> = {
+    'histogram': 'ヒストグラム',
+    'boxplot': '箱ひげ図',
+    'scatter': '散布図',
+    'line': '折れ線グラフ',
+    'bar': '棒グラフ'
+  };
+  
+  const chartName = chartNames[chartType] || '図';
+  
+  // 問題文の先頭に図表参照を追加
+  if (!hasGraphReference) {
+    question.question = `下の${chartName}は、${question.question.charAt(0).toLowerCase()}${question.question.slice(1)}`;
   }
 }
 
@@ -1288,36 +1421,43 @@ ${detailedPrompt}
    - 解説は200〜400文字程度で、丁寧かつ分かりやすく
 
 6. 問題の構成（必須）
-   🎯 全問題の70-80%は図表を含む問題にすること
+   🎯🎯🎯 全問題の85%以上は図表を含む問題にすること（最重要）
    
-   【図表を含む問題】（70-80%）：
+   【図表を含む問題】（85%以上）：
    - グラフから値を読み取る問題（ヒストグラム、箱ひげ図、散布図など）
    - 度数分布表から統計量を計算する問題
    - 時系列グラフから傾向を読み取る問題
    - 複数のグラフを比較する問題
+   - **記述統計の問題は必ずヒストグラムまたは箱ひげ図を含める**
+   - **相関の問題は必ず散布図を含める**
    
-   【データから計算する問題】（20-30%）：
-   - 具体的な数値データを提示し、平均値・標準偏差などを計算
-   - 確率の計算（具体的な状況設定が必須）
-   - 偏差値の計算
+   【データから計算する問題】（15%以下）：
+   - 純粋な確率計算のみ（具体的な状況設定が必須）
+   - 単純な平均値計算（データを直接提示）
    
    ❌ 絶対に作らない問題：
    - 概念や定義を選択させる問題
    - 図表もデータもない抽象的な問題
    - 「正しい記述を選べ」形式の問題
 
-【グラフ使用の必須度】
+【🚨 グラフ使用の必須度（厳格に守ること）】
 - 相関/回帰分析: 100%必須（散布図）
 - ヒストグラム読解: 100%必須
 - 箱ひげ図: 100%必須
-- 時系列データ: 80%以上
-- 代表値の比較: 70%以上
-- グラフ問題では必ず「下のグラフ」「次の図」「下の表」などと明記
+- 記述統計（平均・中央値・標準偏差）: 90%以上（ヒストグラムまたは箱ひげ図）
+- 時系列データ: 90%以上（折れ線グラフ）
+- 代表値の比較: 85%以上
+- **グラフ問題では必ず「下のグラフ」「次の図」「下の表」「以下のヒストグラム」などと明記**
 
 【問題作成の戦略（ベストプラクティス）】
 1. 問題形式の配分
-   - 70-80%：グラフ・表を含む問題（ヒストグラム、散布図、箱ひげ図、度数分布表など）
-   - 20-30%：データから計算する問題（具体的な数値データを提示）
+   - 85%以上：グラフ・表を含む問題（ヒストグラム、散布図、箱ひげ図、度数分布表など）
+   - 15%以下：純粋な計算問題（確率計算など、図表なし）
+   
+2. 図表を含める優先順位
+   ⭐⭐⭐ 最優先：散布図、ヒストグラム、箱ひげ図
+   ⭐⭐ 優先：折れ線グラフ、棒グラフ
+   ⭐ 通常：度数分布表
    - 0%：概念や定義を選択させる問題（絶対に作らない）
 
 2. 誤答選択肢の設計（学習効果を高める）
