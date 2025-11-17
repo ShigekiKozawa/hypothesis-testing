@@ -40,6 +40,39 @@ export default function Home() {
     }
   ];
 
+  const grade3Sections = [
+    {
+      id: 'section1',
+      title: 'セクション1: 記述統計とグラフ読解',
+      description: 'ヒストグラム、箱ひげ図、度数分布表、幹葉図、外れ値'
+    },
+    {
+      id: 'section2',
+      title: 'セクション2: 散布図・相関・単回帰分析',
+      description: '散布図、相関係数、線形単回帰分析、決定係数、残差'
+    },
+    {
+      id: 'section3',
+      title: 'セクション3: データの変換と統計量',
+      description: '1次変換、偏差値、標準化、変動係数'
+    },
+    {
+      id: 'section4',
+      title: 'セクション4: 確率と確率分布',
+      description: '基本的な確率、条件付き確率、二項分布'
+    },
+    {
+      id: 'section5',
+      title: 'セクション5: 推測統計の基礎',
+      description: '標本分布、信頼区間、仮説検定の基礎'
+    },
+    {
+      id: 'section6',
+      title: 'セクション6: クロス集計表・実験計画',
+      description: 'クロス集計表、標本調査、実験計画の基礎'
+    }
+  ];
+
   const grade4Exams = [
     {
       id: 'grade4-exam1',
@@ -255,19 +288,37 @@ export default function Home() {
               <span className="text-sm text-gray-600">※ 結果は記録されません。純粋な練習用です。</span>
             </p>
             
-            <div className="bg-white rounded-lg p-4 border border-purple-200">
-              <h3 className="font-bold text-lg mb-3 text-green-700">📗 4級のセクション</h3>
-              <div className="space-y-2">
-                {grade4Sections.map((section) => (
-                  <button
-                    key={section.id}
-                    onClick={() => handleStartPractice('4級', 'section', section.title, section.description)}
-                    className="w-full text-left px-3 py-2 bg-green-50 hover:bg-green-100 rounded border border-green-200 transition-colors text-sm"
-                  >
-                    <div className="font-semibold text-green-900">{section.title}</div>
-                    <div className="text-xs text-gray-600">{section.description}</div>
-                  </button>
-                ))}
+            <div className="grid md:grid-cols-2 gap-4 mb-4">
+              <div className="bg-white rounded-lg p-4 border border-purple-200">
+                <h3 className="font-bold text-lg mb-3 text-blue-700">📘 3級のセクション</h3>
+                <div className="space-y-2">
+                  {grade3Sections.map((section) => (
+                    <button
+                      key={section.id}
+                      onClick={() => handleStartPractice('3級', 'section', section.title, section.description)}
+                      className="w-full text-left px-3 py-2 bg-blue-50 hover:bg-blue-100 rounded border border-blue-200 transition-colors text-sm"
+                    >
+                      <div className="font-semibold text-blue-900">{section.title}</div>
+                      <div className="text-xs text-gray-600">{section.description}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-lg p-4 border border-purple-200">
+                <h3 className="font-bold text-lg mb-3 text-green-700">📗 4級のセクション</h3>
+                <div className="space-y-2">
+                  {grade4Sections.map((section) => (
+                    <button
+                      key={section.id}
+                      onClick={() => handleStartPractice('4級', 'section', section.title, section.description)}
+                      className="w-full text-left px-3 py-2 bg-green-50 hover:bg-green-100 rounded border border-green-200 transition-colors text-sm"
+                    >
+                      <div className="font-semibold text-green-900">{section.title}</div>
+                      <div className="text-xs text-gray-600">{section.description}</div>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
             
