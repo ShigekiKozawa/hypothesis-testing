@@ -268,7 +268,7 @@ async function factCheckQuestions(
   questions: GeneratedQuestion[]
 ): Promise<GeneratedQuestion[]> {
   const model = genAI.getGenerativeModel({ 
-    model: 'gemini-1.5-pro',
+    model: 'gemini-2.5-pro',
     generationConfig: {
       temperature: 0.1,
       topP: 0.8,
@@ -1092,7 +1092,7 @@ export async function generateQuestions(
   options?: { disableBatchFallback?: boolean }
 ): Promise<GeneratedQuestion[]> {
   const model = genAI.getGenerativeModel({ 
-    model: 'gemini-1.5-pro',
+    model: 'gemini-2.5-pro',
     generationConfig: {
       temperature: 0.7,
       topP: 0.95,
