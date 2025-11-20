@@ -44,32 +44,58 @@ export default function Home() {
     {
       id: 'section1',
       title: 'セクション1: 記述統計とグラフ読解',
-      description: 'ヒストグラム、箱ひげ図、度数分布表、幹葉図、外れ値'
+      description: 'ヒストグラム、箱ひげ図、度数分布表、幹葉図、外れ値',
+      sets: [
+        { id: 1, path: '/grade3/section1/set1', questions: 10 },
+        { id: 2, path: '/grade3/section1/set2', questions: 10 },
+        { id: 3, path: '/grade3/section1/set3', questions: 10 }
+      ]
     },
     {
       id: 'section2',
       title: 'セクション2: 散布図・相関・単回帰分析',
-      description: '散布図、相関係数、線形単回帰分析、決定係数、残差'
+      description: '散布図、相関係数、線形単回帰分析、決定係数、残差',
+      sets: [
+        { id: 1, path: '/grade3/section2/set1', questions: 10 },
+        { id: 2, path: '/grade3/section2/set2', questions: 10 },
+        { id: 3, path: '/grade3/section2/set3', questions: 10 }
+      ]
     },
     {
       id: 'section3',
       title: 'セクション3: データの変換と統計量',
-      description: '1次変換、偏差値、標準化、変動係数'
+      description: '1次変換、偏差値、標準化、変動係数',
+      sets: [
+        { id: 1, path: '/grade3/section3/set1', questions: 10 },
+        { id: 2, path: '/grade3/section3/set2', questions: 10 }
+      ]
     },
     {
       id: 'section4',
       title: 'セクション4: 確率と確率分布',
-      description: '基本的な確率、条件付き確率、二項分布'
+      description: '基本的な確率、条件付き確率、二項分布',
+      sets: [
+        { id: 1, path: '/grade3/section4/set1', questions: 10 },
+        { id: 2, path: '/grade3/section4/set2', questions: 10 }
+      ]
     },
     {
       id: 'section5',
       title: 'セクション5: 推測統計の基礎',
-      description: '標本分布、信頼区間、仮説検定の基礎'
+      description: '標本分布、信頼区間、仮説検定の基礎',
+      sets: [
+        { id: 1, path: '/grade3/section5/set1', questions: 10 },
+        { id: 2, path: '/grade3/section5/set2', questions: 10 }
+      ]
     },
     {
       id: 'section6',
       title: 'セクション6: クロス集計表・実験計画',
-      description: 'クロス集計表、標本調査、実験計画の基礎'
+      description: 'クロス集計表、標本調査、実験計画の基礎',
+      sets: [
+        { id: 1, path: '/grade3/section6/set1', questions: 10 },
+        { id: 2, path: '/grade3/section6/set2', questions: 10 }
+      ]
     }
   ];
 
@@ -355,6 +381,29 @@ export default function Home() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
               {grade3Exams.map((exam) => (
                 <ExamCard key={exam.id} exam={exam} />
+              ))}
+            </div>
+
+            <h3 className="text-xl font-bold text-gray-800 mb-4">📚 セクション別問題</h3>
+            <div className="space-y-4 mb-4">
+              {grade3Sections.map((section) => (
+                <div key={section.id} className="bg-white rounded-lg border-2 border-green-200 p-5">
+                  <h4 className="text-lg font-bold text-gray-800 mb-2">{section.title}</h4>
+                  <p className="text-sm text-gray-600 mb-4">{section.description}</p>
+                  <div className={`grid gap-3 ${section.sets.length === 3 ? 'grid-cols-3' : 'grid-cols-2'}`}>
+                    {section.sets.map((set) => (
+                      <Link
+                        key={set.id}
+                        to={set.path}
+                        onClick={() => window.scrollTo(0, 0)}
+                        className="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-4 rounded-lg text-center hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg"
+                      >
+                        <div className="font-bold text-lg mb-1">{set.id}/{section.sets.length}</div>
+                        <div className="text-xs opacity-90">{set.questions}問</div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
 
