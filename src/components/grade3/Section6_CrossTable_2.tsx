@@ -13,13 +13,7 @@ export default function Section6_CrossTable_2() {
         "調査に回答した学生"
       ],
       correct: 2,
-      explanation: "母集団は、調査の対象となる全体の集合です。この場合、大学の学生5000人全体が母集団です。抽出された500人は標本です。",
-      chartType: 'bar',
-      barData: [
-        { category: '母集団', value: 5000 },
-        { category: '標本', value: 500 }
-      ],
-      chartLabels: { x: '', y: '人数' }
+      explanation: "母集団は、調査の対象となる全体の集合です。この場合、大学の学生5000人全体が母集団です。抽出された500人は標本です。"
     },
     {
       id: 2,
@@ -31,13 +25,7 @@ export default function Section6_CrossTable_2() {
         "母集団を完全に把握するため"
       ],
       correct: 2,
-      explanation: "無作為抽出の主な目的は、母集団の特性を公平に反映する、偏りのない代表的な標本を得ることです。",
-      chartType: 'bar',
-      barData: [
-        { category: '無作為抽出', value: 1 },
-        { category: '有意抽出', value: 1 }
-      ],
-      chartLabels: { x: '抽出方法', y: '' }
+      explanation: "無作為抽出の主な目的は、母集団の特性を公平に反映する、偏りのない代表的な標本を得ることです。"
     },
     {
       id: 3,
@@ -49,15 +37,7 @@ export default function Section6_CrossTable_2() {
         "集落抽出"
       ],
       correct: 2,
-      explanation: "一定の間隔（この場合10人おき）で対象を選ぶ方法を系統抽出（または系統サンプリング）といいます。",
-      chartType: 'bar',
-      barData: [
-        { category: '1番目', value: 1 },
-        { category: '11番目', value: 1 },
-        { category: '21番目', value: 1 },
-        { category: '31番目', value: 1 }
-      ],
-      chartLabels: { x: '選ばれる順番', y: '' }
+      explanation: "一定の間隔（この場合10人おき）で対象を選ぶ方法を系統抽出（または系統サンプリング）といいます。"
     },
     {
       id: 4,
@@ -69,13 +49,7 @@ export default function Section6_CrossTable_2() {
         "年齢の若い人には方法Aを割り当てる"
       ],
       correct: 2,
-      explanation: "無作為割り付けにより、グループ間の偏りを最小化し、公平な比較ができます。これが実験計画の基本原則です。",
-      chartType: 'bar',
-      barData: [
-        { category: 'グループA', value: 50 },
-        { category: 'グループB', value: 50 }
-      ],
-      chartLabels: { x: '', y: '人数' }
+      explanation: "無作為割り付けにより、グループ間の偏りを最小化し、公平な比較ができます。これが実験計画の基本原則です。"
     },
     {
       id: 5,
@@ -87,13 +61,7 @@ export default function Section6_CrossTable_2() {
         "質問項目が多すぎる"
       ],
       correct: 2,
-      explanation: "サンプリングバイアスは、標本が母集団の特性を適切に反映していないときに生じます。例えば、特定のグループが過剰または過少に含まれる場合などです。",
-      chartType: 'bar',
-      barData: [
-        { category: '偏りあり', value: 1 },
-        { category: '偏りなし', value: 1 }
-      ],
-      chartLabels: { x: '標本の状態', y: '' }
+      explanation: "サンプリングバイアスは、標本が母集団の特性を適切に反映していないときに生じます。例えば、特定のグループが過剰または過少に含まれる場合などです。"
     },
     {
       id: 6,
@@ -105,13 +73,7 @@ export default function Section6_CrossTable_2() {
         "10代と20代の体重"
       ],
       correct: 2,
-      explanation: "対応のあるデータは、同じ対象を2回測定した場合や、ペアを組んだ対象のデータです。治療前後の同じ患者のデータはその典型例です。",
-      chartType: 'bar',
-      barData: [
-        { category: '治療前', value: 140 },
-        { category: '治療後', value: 125 }
-      ],
-      chartLabels: { x: '', y: '血圧（平均）' }
+      explanation: "対応のあるデータは、同じ対象を2回測定した場合や、ペアを組んだ対象のデータです。治療前後の同じ患者のデータはその典型例です。"
     },
     {
       id: 7,
@@ -123,13 +85,7 @@ export default function Section6_CrossTable_2() {
         "標本サイズを増やすため"
       ],
       correct: 3,
-      explanation: "無作為化の主な目的は、年齢・性別など の交絡因子（第3の変数）の影響を各グループに均等に分散させ、公平な比較を可能にすることです。",
-      chartType: 'bar',
-      barData: [
-        { category: '無作為化あり', value: 90 },
-        { category: '無作為化なし', value: 60 }
-      ],
-      chartLabels: { x: '', y: '信頼性（概念）' }
+      explanation: "無作為化の主な目的は、年齢・性別など の交絡因子（第3の変数）の影響を各グループに均等に分散させ、公平な比較を可能にすることです。"
     },
     {
       id: 8,
@@ -141,13 +97,7 @@ export default function Section6_CrossTable_2() {
         "全数調査は常に標本調査より優れている"
       ],
       correct: 3,
-      explanation: "標本調査は時間とコストの面で有利ですが、サンプリング誤差が生じます。全数調査にはサンプリング誤差はありませんが、時間とコストがかかり、非標本誤差（測定誤差など）が生じる可能性があります。",
-      chartType: 'bar',
-      barData: [
-        { category: '標本調査', value: 1 },
-        { category: '全数調査', value: 1 }
-      ],
-      chartLabels: { x: '調査方法', y: '' }
+      explanation: "標本調査は時間とコストの面で有利ですが、サンプリング誤差が生じます。全数調査にはサンプリング誤差はありませんが、時間とコストがかかり、非標本誤差（測定誤差など）が生じる可能性があります。"
     },
     {
       id: 9,
@@ -159,13 +109,7 @@ export default function Section6_CrossTable_2() {
         "年齢層ごとに人数を定めて無作為抽出する"
       ],
       correct: 2,
-      explanation: "自主的に回答する人だけを対象にすると、関心の高い人や特定の意見を持つ人に偏る可能性が高く、サンプリングバイアスが生じやすいです。",
-      chartType: 'bar',
-      barData: [
-        { category: '無作為抽出', value: 10 },
-        { category: '自主回答', value: 80 }
-      ],
-      chartLabels: { x: '', y: 'バイアスリスク（概念）' }
+      explanation: "自主的に回答する人だけを対象にすると、関心の高い人や特定の意見を持つ人に偏る可能性が高く、サンプリングバイアスが生じやすいです。"
     },
     {
       id: 10,
@@ -177,13 +121,7 @@ export default function Section6_CrossTable_2() {
         "ブランク"
       ],
       correct: 1,
-      explanation: "見た目は同じだが有効成分を含まない偽薬をプラシーボ（プラセボ）といいます。これにより、心理的効果（プラシーボ効果）を考慮した評価ができます。",
-      chartType: 'bar',
-      barData: [
-        { category: '新薬グループ', value: 50 },
-        { category: 'プラシーボグループ', value: 50 }
-      ],
-      chartLabels: { x: '', y: '人数' }
+      explanation: "見た目は同じだが有効成分を含まない偽薬をプラシーボ（プラセボ）といいます。これにより、心理的効果（プラシーボ効果）を考慮した評価ができます。"
     }
   ];
 

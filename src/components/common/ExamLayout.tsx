@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom';
 import { Question } from '../../hooks/useExam';
 import { ScatterPlot, BarChartComponent, LineChartComponent, BoxPlot, Histogram } from './Charts';
 
+function shouldRenderChart(q: Question): boolean {
+  if (!q || !q.chartType) return false;
+  // Render charts only when問題文に明確な図表参照がある場合
+  const text = q.question || '';
+  const graphKeyword = /(ヒストグラム|箱ひげ図|散布図|折れ線グラフ|棒グラフ|度数分布|累積相対度数|図|表)/;
+  return graphKeyword.test(text);
+}
+
 interface ExamLayoutProps {
   title: string;
   backLink?: string;
@@ -142,35 +150,35 @@ export function ResultScreen({
                         {q.question}
                       </p>
 
-                      {q.chartType === 'scatter' && q.chartData && (
+                      {shouldRenderChart(q) && q.chartType === 'scatter' && q.chartData && (
                         <ScatterPlot 
                           data={q.chartData} 
                           xLabel={q.chartLabels?.x || 'X'}
                           yLabel={q.chartLabels?.y || 'Y'}
                         />
                       )}
-                      {q.chartType === 'bar' && q.barData && (
+                      {shouldRenderChart(q) && q.chartType === 'bar' && q.barData && (
                         <BarChartComponent 
                           data={q.barData}
                           xLabel={q.chartLabels?.x || 'Category'}
                           yLabel={q.chartLabels?.y || 'Value'}
                         />
                       )}
-                      {q.chartType === 'histogram' && q.barData && (
+                      {shouldRenderChart(q) && q.chartType === 'histogram' && q.barData && (
                         <Histogram 
                           data={q.barData}
                           xLabel={q.chartLabels?.x || '階級'}
                           yLabel={q.chartLabels?.y || '度数'}
                         />
                       )}
-                      {q.chartType === 'line' && q.chartData && (
+                      {shouldRenderChart(q) && q.chartType === 'line' && q.chartData && (
                         <LineChartComponent 
                           data={q.chartData}
                           xLabel={q.chartLabels?.x || 'X'}
                           yLabel={q.chartLabels?.y || 'Y'}
                         />
                       )}
-                      {q.chartType === 'boxplot' && q.boxPlotData && (
+                      {shouldRenderChart(q) && q.chartType === 'boxplot' && q.boxPlotData && (
                         <BoxPlot 
                           data={q.boxPlotData}
                         />
@@ -283,35 +291,35 @@ export function QuestionCard({
           {question.question}
         </h2>
 
-        {question.chartType === 'scatter' && question.chartData && (
+        {shouldRenderChart(question) && question.chartType === 'scatter' && question.chartData && (
           <ScatterPlot 
             data={question.chartData} 
             xLabel={question.chartLabels?.x || 'X'}
             yLabel={question.chartLabels?.y || 'Y'}
           />
         )}
-        {question.chartType === 'bar' && question.barData && (
+        {shouldRenderChart(question) && question.chartType === 'bar' && question.barData && (
           <BarChartComponent 
             data={question.barData}
             xLabel={question.chartLabels?.x || 'Category'}
             yLabel={question.chartLabels?.y || 'Value'}
           />
         )}
-        {question.chartType === 'histogram' && question.barData && (
+        {shouldRenderChart(question) && question.chartType === 'histogram' && question.barData && (
           <Histogram 
             data={question.barData}
             xLabel={question.chartLabels?.x || '階級'}
             yLabel={question.chartLabels?.y || '度数'}
           />
         )}
-        {question.chartType === 'line' && question.chartData && (
+        {shouldRenderChart(question) && question.chartType === 'line' && question.chartData && (
           <LineChartComponent 
             data={question.chartData}
             xLabel={question.chartLabels?.x || 'X'}
             yLabel={question.chartLabels?.y || 'Y'}
           />
         )}
-        {question.chartType === 'boxplot' && question.boxPlotData && (
+        {shouldRenderChart(question) && question.chartType === 'boxplot' && question.boxPlotData && (
           <BoxPlot 
             data={question.boxPlotData}
           />
