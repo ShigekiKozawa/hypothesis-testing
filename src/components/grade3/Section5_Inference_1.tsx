@@ -95,7 +95,7 @@ export default function Section5_Inference_1() {
       id: 10,
       question: "母標準偏差σ=20の母集団から、サンプルサイズn=25の標本を取ったとき、標本平均の標準誤差を求めてください。",
       options: ["0.8", "4", "5", "20"],
-      correct: 2,
+      correct: 4,
       explanation: "標準誤差 = σ/√n = 20/√25 = 20/5 = 4です。"
     }
   ];

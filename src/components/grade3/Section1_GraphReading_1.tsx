@@ -166,7 +166,7 @@ export default function Section1_GraphReading_1() {
         "データBの方が範囲が大きい",
         "データAの最小値はデータBのQ1より小さい"
       ],
-      correct: 2,
+      correct: 3,
       explanation: "データAの四分位範囲は60-40=20、データBは70-50=20で同じです。データBの範囲は90-30=60、データAは80-20=60で、実は同じです。したがって「データBの方が範囲が大きい」は誤りです。",
       chartType: 'boxplot',
       boxPlotData: { min: 20, q1: 40, median: 50, q3: 60, max: 80 },

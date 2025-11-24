@@ -38,7 +38,7 @@ export default function Section4_Probability_2() {
       id: 4,
       question: "ある選手のフリースロー成功率は0.8です。5回のフリースローで成功する回数の期待値はいくつですか。",
       options: ["0.8", "1.6", "4", "5"],
-      correct: 3,
+      correct: 1,
       explanation: "二項分布の期待値はnp = 5 × 0.8 = 4です。平均的に4回成功すると期待されます。"
     },
     {
@@ -71,7 +71,7 @@ export default function Section4_Probability_2() {
       id: 8,
       question: "サイコロを12回振るとき、1の目が出る回数の期待値はいくつですか。",
       options: ["1", "2", "6", "12"],
-      correct: 2,
+      correct: 4,
       explanation: "二項分布の期待値はnp = 12 × (1/6) = 2です。平均的に2回、1の目が出ると期待されます。"
     },
     {
