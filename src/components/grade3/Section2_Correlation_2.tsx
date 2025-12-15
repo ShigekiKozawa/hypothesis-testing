@@ -17,7 +17,7 @@ export default function Section2_Correlation_2() {
         { x: 20, y: 50 },
         { x: 25, y: 60 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '説明変数X', y: '目的変数Y' }
     },
     {
       id: 2,
@@ -37,7 +37,7 @@ export default function Section2_Correlation_2() {
         { x: 30, y: 45 },
         { x: 40, y: 55 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '説明変数X', y: '目的変数Y' }
     },
     {
       id: 3,
@@ -58,7 +58,7 @@ export default function Section2_Correlation_2() {
         { x: 40, y: 81 },
         { x: 50, y: 98 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '説明変数X', y: '目的変数Y' }
     },
     {
       id: 4,
@@ -79,7 +79,7 @@ export default function Section2_Correlation_2() {
         { x: 25, y: 46 },
         { x: 30, y: 51 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '説明変数X', y: '目的変数Y' }
     },
     {
       id: 5,
@@ -99,7 +99,7 @@ export default function Section2_Correlation_2() {
         { x: 15, y: 5 },
         { x: 20, y: -10 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '説明変数X', y: '目的変数Y' }
     },
     {
       id: 6,
@@ -119,7 +119,7 @@ export default function Section2_Correlation_2() {
         { x: 30, y: 70 },
         { x: 40, y: 90 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '説明変数X', y: '目的変数Y' }
     },
     {
       id: 7,
@@ -139,7 +139,7 @@ export default function Section2_Correlation_2() {
         { x: 30, y: 58 },
         { x: 40, y: 79 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '説明変数X', y: '目的変数Y' }
     },
     {
       id: 8,
@@ -155,7 +155,7 @@ export default function Section2_Correlation_2() {
         { x: 40, y: 61 },
         { x: 50, y: 78 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '説明変数X', y: '目的変数Y' }
     },
     {
       id: 9,
@@ -171,7 +171,7 @@ export default function Section2_Correlation_2() {
         { x: 30, y: 35 },
         { x: 40, y: 40 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '説明変数X', y: '目的変数Y' }
     },
     {
       id: 10,
@@ -192,7 +192,7 @@ export default function Section2_Correlation_2() {
         { x: 40, y: 70 },
         { x: 50, y: 85 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '説明変数X', y: '目的変数Y' }
     }
   ];
 

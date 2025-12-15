@@ -1283,6 +1283,12 @@ export async function generateQuestions(
 - 重回帰分析（単回帰のみ出題）
 - 分散分析（ANOVA）の詳細な計算`;
 
+  prompt += `
+【Project Rulesとの整合】
+- 3級問題生成では、範囲外とする項目（不偏分散、カイ二乗、F/t検定、偏相関、power、多重比較など）を絶対に含めないでください。
+- ルールは ` + "`PROJECT_RULES.md`" + ` および `.cursor/rules/ai-question-rules.mdc` にも記載しています。新しい言い回しを追加する前に必ずそちらを参照してください。
+`;
+
   let prompt = '';
 
   if (request.type === 'section') {

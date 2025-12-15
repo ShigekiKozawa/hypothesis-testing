@@ -105,3 +105,13 @@ src/
 2. `src/App.tsx` にルートを追加: `<Route path="/grade4/exam1" element={<Grade4Exam1 />} />`
 3. `src/pages/Home.tsx` の `grade4Exams` 配列に試験情報を追加
 
+## Documentation
+
+- `docs/README.md`：このリポジトリのドキュメント一覧と役割
+- `docs/PROJECT_RULES.md`：「出題禁止事項」などGrade3問題生成に関する最新ルール
+- `docs/HOW_TO_GENERATE_QUESTIONS.md`：Geminiプロンプト生成の手順と注意点（最新ルールへのリンク付き）
+- `docs/DEVELOPMENT_GUIDE.md` / `docs/REFACTORING_GUIDE.md`：開発者向けの作業フロー・リファクタリングガイド
+- `docs/GRADE3_EXAM_REFERENCE.md` / `docs/GRADE4_EXAM_REFERENCE.md`：各級の出題範囲と構成
+- `docs/GRADE3_SECTION_FILES.md` / `docs/GRADE3_NEW_SECTIONS.md`：セクションの対応ファイル一覧
+- `docs/API_SECURITY.md`：Gemini API キー管理とセキュリティポリシー
+

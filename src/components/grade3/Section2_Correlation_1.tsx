@@ -25,7 +25,7 @@ export default function Section2_Correlation_1() {
         { x: 40, y: 65 },
         { x: 45, y: 70 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 2,
@@ -46,7 +46,7 @@ export default function Section2_Correlation_1() {
         { x: 40, y: 48 },
         { x: 50, y: 51 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 3,
@@ -69,7 +69,7 @@ export default function Section2_Correlation_1() {
         { x: 60, y: 20 },
         { x: 70, y: 10 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 4,
@@ -90,7 +90,7 @@ export default function Section2_Correlation_1() {
         { x: 45, y: 60 },
         { x: 55, y: 70 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 5,
@@ -112,7 +112,7 @@ export default function Section2_Correlation_1() {
         { x: 50, y: 55 },
         { x: 60, y: 20 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 6,
@@ -135,7 +135,7 @@ export default function Section2_Correlation_1() {
         { x: 60, y: 35 },
         { x: 70, y: 50 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 7,
@@ -158,7 +158,7 @@ export default function Section2_Correlation_1() {
         { x: 60, y: 25 },
         { x: 70, y: 15 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 8,
@@ -180,7 +180,7 @@ export default function Section2_Correlation_1() {
         { x: 25, y: 50 },
         { x: 30, y: 60 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 9,
@@ -196,7 +196,7 @@ export default function Section2_Correlation_1() {
         { x: 40, y: 50 },
         { x: 50, y: 60 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 10,

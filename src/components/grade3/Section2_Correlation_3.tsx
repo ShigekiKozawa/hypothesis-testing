@@ -21,7 +21,7 @@ export default function Section2_Correlation_3() {
         { x: 30, y: 55 },
         { x: 40, y: 70 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 2,
@@ -37,7 +37,7 @@ export default function Section2_Correlation_3() {
         { x: 25, y: 62 },
         { x: 30, y: 70 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 3,
@@ -58,7 +58,7 @@ export default function Section2_Correlation_3() {
         { x: 4, y: 40 },
         { x: 5, y: 50 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X（分→秒変換）', y: '変数Y' }
     },
     {
       id: 4,
@@ -74,7 +74,7 @@ export default function Section2_Correlation_3() {
         { x: 40, y: 20 },
         { x: 50, y: 10 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 5,
@@ -94,7 +94,7 @@ export default function Section2_Correlation_3() {
         { x: 30, y: 40 },
         { x: 40, y: 50 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 6,
@@ -114,7 +114,7 @@ export default function Section2_Correlation_3() {
         { x: 30, y: 48 },
         { x: 40, y: 61 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 7,
@@ -134,7 +134,7 @@ export default function Section2_Correlation_3() {
         { x: 30, y: 45 },
         { x: 40, y: 60 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     },
     {
       id: 8,
@@ -196,7 +196,7 @@ export default function Section2_Correlation_3() {
         { x: 40, y: 55 },
         { x: 50, y: 65 }
       ],
-      chartLabels: { x: 'X', y: 'Y' }
+      chartLabels: { x: '変数X', y: '変数Y' }
     }
   ];
 
