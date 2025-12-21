@@ -108,8 +108,11 @@ src/
 ## Documentation
 
 - `docs/README.md`：このリポジトリのドキュメント一覧と役割
+- **`docs/GRADE3_SCOPE_DETAILED.md`** ⭐️：統計検定3級の全セクション・トピック・禁止事項を詳細に記載（最新の仕様書）
+- **`docs/NOTATION_GUIDELINES.md`** ⭐️：問題作成・変更時に確認すべき表記の統一ルール
 - `docs/PROJECT_RULES.md`：「出題禁止事項」などGrade3問題生成に関する最新ルール
 - `docs/HOW_TO_GENERATE_QUESTIONS.md`：Geminiプロンプト生成の手順と注意点（最新ルールへのリンク付き）
+- **`docs/LANGCHAIN_INTEGRATION_DESIGN.md`**：LangChainエコシステムを活用した適応的問題生成システムの設計書（今後の実装計画）
 - `docs/DEVELOPMENT_GUIDE.md` / `docs/REFACTORING_GUIDE.md`：開発者向けの作業フロー・リファクタリングガイド
 - `docs/GRADE3_EXAM_REFERENCE.md` / `docs/GRADE4_EXAM_REFERENCE.md`：各級の出題範囲と構成
 - `docs/GRADE3_SECTION_FILES.md` / `docs/GRADE3_NEW_SECTIONS.md`：セクションの対応ファイル一覧

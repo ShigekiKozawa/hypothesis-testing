@@ -5,7 +5,7 @@ export default function Section2_Correlation_1() {
   const questions: Question[] = [
     {
       id: 1,
-      question: "次の散布図から、2つの変数XとYの相関関係について最も適切な記述はどれですか。\n\n散布図：Xが増加するとYも増加する傾向があり、点はやや直線に近い分布を示している。",
+      question: "次の散布図から、2つの変数XとYの相関関係について最も適切な記述はどれですか。\n\n散布図：Xが増加するとYも増加する傾向があり、点はほぼ直線上に並んでいる。",
       options: [
         "強い正の相関がある",
         "弱い正の相関がある",
@@ -13,7 +13,7 @@ export default function Section2_Correlation_1() {
         "負の相関がある"
       ],
       correct: 1,
-      explanation: "Xが増加するとYも増加し、点がやや直線に近いので、弱い正の相関があります。完全な直線状なら強い正の相関となります。",
+      explanation: "Xが増加するとYも増加し、点がほぼ直線上に並んでいるので、強い正の相関があります（相関係数r ≒ 0.9以上）。",
       chartType: 'scatter',
       chartData: [
         { x: 10, y: 25 },
@@ -200,22 +200,10 @@ export default function Section2_Correlation_1() {
     },
     {
       id: 10,
-      question: "次の散布図で、相関係数rとして最も適切な値はどれですか。\n\n散布図：やや正の相関が見られるが、点のばらつきは大きい。",
-      options: ["r ≒ 0.1", "r ≒ 0.4", "r ≒ 0.7", "r ≒ 0.95"],
-      correct: 2,
-      explanation: "やや正の相関があるが点のばらつきが大きい場合、相関係数は0.3～0.5程度の中程度の値となります。r ≒ 0.4が最も適切です。",
-      chartType: 'scatter',
-      chartData: [
-        { x: 10, y: 25 },
-        { x: 15, y: 40 },
-        { x: 20, y: 30 },
-        { x: 25, y: 50 },
-        { x: 30, y: 45 },
-        { x: 35, y: 60 },
-        { x: 40, y: 55 },
-        { x: 45, y: 70 }
-      ],
-      chartLabels: { x: 'X', y: 'Y' }
+      question: "2変数XとYの共分散が30、Xの標準偏差が5、Yの標準偏差が6のとき、相関係数rはいくつですか。\n\n※相関係数の公式：r = 共分散 / (Xの標準偏差 × Yの標準偏差)",
+      options: ["0.5", "0.6", "1.0", "5"],
+      correct: 3,
+      explanation: "r = 共分散 / (Xの標準偏差 × Yの標準偏差) = 30 / (5 × 6) = 30 / 30 = 1.0です。相関係数が1なので、XとYには完全な正の相関があります。"
     }
   ];
 

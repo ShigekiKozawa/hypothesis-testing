@@ -15,8 +15,11 @@
 
 ## 4. 参考資料
 - `docs/API_SECURITY.md`：Gemini API キーの取り扱いとセキュリティ留意点。
+- **`docs/GRADE3_SCOPE_DETAILED.md`**（⭐️推奨）：統計検定3級の出題範囲を14セクション詳細に記載。禁止トピック・問題形式・グラフ使用基準を網羅した最新仕様書。
+- **`docs/NOTATION_GUIDELINES.md`**（⭐️必須）：問題作成・変更時に確認すべき表記の統一ルール。数値・単位・数式・文章表現のガイドライン。
 - `docs/GRADE3_EXAM_REFERENCE.md` / `docs/GRADE4_EXAM_REFERENCE.md`：級別の出題範囲や構成、知っておくべき基礎情報。
 - `docs/GRADE3_SECTION_FILES.md` / `docs/GRADE3_NEW_SECTIONS.md`：Grade 3 のセクションごとの実ファイル・新設セクションを記載。
+- **`docs/LANGCHAIN_INTEGRATION_DESIGN.md`**：LangChainエコシステムを活用した適応的問題生成システムの設計書（今後の実装計画）。
 
 ## 5. ルールの補足
 - `.cursor/rules/ai-question-rules.mdc`：AI問題生成における禁止トピック・図表の扱いなど、Gemini へのプロンプトにも参照させる運用ルール。
